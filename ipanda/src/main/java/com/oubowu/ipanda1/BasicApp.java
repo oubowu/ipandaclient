@@ -7,6 +7,10 @@ import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
 import com.oubowu.ipanda.BuildConfig;
+import com.oubowu.ipanda.di.component.AppComponent;
+import com.oubowu.ipanda.di.component.DaggerAppComponent;
+import com.oubowu.ipanda.di.module.AppModule;
+import com.oubowu.ipanda.di.module.IpandaApiModule;
 import com.oubowu.ipanda.util.LoggerPrinterPlus;
 import com.oubowu.ipanda1.db.AppDatabase;
 
@@ -16,6 +20,8 @@ import com.oubowu.ipanda1.db.AppDatabase;
 public class BasicApp extends Application {
 
     private AppExecutors mAppExecutors;
+
+    private static AppComponent sAppComponent;
 
     @Override
     public void onCreate() {
@@ -34,6 +40,13 @@ public class BasicApp extends Application {
                 return BuildConfig.DEBUG;
             }
         });
+
+        sAppComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).ipandaApiModule(new IpandaApiModule()).build();
+
+    }
+
+    public static AppComponent getAppComponent() {
+        return sAppComponent;
     }
 
     public AppDatabase getDatabase() {

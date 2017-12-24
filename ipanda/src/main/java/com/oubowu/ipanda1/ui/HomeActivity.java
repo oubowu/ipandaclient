@@ -15,11 +15,12 @@ import com.orhanobut.logger.Logger;
 import com.oubowu.ipanda.R;
 import com.oubowu.ipanda.bean.TabIndex;
 import com.oubowu.ipanda.databinding.ActivityHomeBinding;
-import com.oubowu.ipanda.di.component.DaggerIpandaApiComponent;
-import com.oubowu.ipanda.di.module.IpandaApiModule;
-import com.oubowu.ipanda.http.Hosts;
+import com.oubowu.ipanda.di.component.DaggerHomeRepositoryComponent;
+import com.oubowu.ipanda.di.module.HomeRepositoryModule;
 import com.oubowu.ipanda.http.IpandaApi;
-import com.oubowu.ipanda.http.service.IpandaService;
+import com.oubowu.ipanda.repository.HomeRepository;
+import com.oubowu.ipanda.viewmodel.HomeViewModel;
+import com.oubowu.ipanda1.BasicApp;
 import com.oubowu.ipanda1.arxjava.ui.UserActivity;
 import com.oubowu.ipanda1.db.entity.ProductEntity;
 import com.oubowu.ipanda1.model.Product;
@@ -27,14 +28,9 @@ import com.oubowu.ipanda1.ui.adapter.ProductAdapter;
 import com.oubowu.ipanda1.ui.callback.ProductClickCallback;
 import com.oubowu.ipanda1.viewmodel.ProductListViewModel;
 
-import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
-
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -44,8 +40,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private ProductAdapter mProductAdapter;
 
-    @Inject
-    IpandaApi mIpandaApi;
+    //    @Inject
+    //    IpandaApi mIpandaApi;
 
     private ProductClickCallback mProductClickCallback = new ProductClickCallback() {
         @Override
@@ -73,32 +69,28 @@ public class HomeActivity extends AppCompatActivity {
 
         subscribeUi(viewModel);
 
-        DaggerIpandaApiComponent.builder().ipandaApiModule(new IpandaApiModule()).build().inject(this);
-
-        IpandaService ipandaService = mIpandaApi.retrofitStudio(Hosts.IPANDA_KEHUDUAN).create(IpandaService.class);
-        ipandaService.getTabIndex().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).flatMap(stringListMap -> {
-            Logger.d(stringListMap);
-            if (stringListMap != null && !stringListMap.isEmpty()) {
-                Collection<List<TabIndex>> values = stringListMap.values();
-                if (!values.isEmpty()) {
-                    Log.e("HomeActivity","80行-onCreate(): "+" ");
-                    List<TabIndex> tabIndexList = values.iterator().next();
-                    return Observable.just(tabIndexList);
-                }
+        HomeViewModel homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+        homeViewModel.getTabIndex().observe(this, new Observer<List<TabIndex>>() {
+            @Override
+            public void onChanged(@Nullable List<TabIndex> tabIndices) {
+                Logger.e("数据回调");
+                Logger.d(tabIndices);
             }
-            return null;
-        }).subscribe(tabIndices -> {
-            Logger.d(tabIndices);
-//            ipandaService.getHomeIndex(tabIndices.get(0).url).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(homeIndex -> {
-//
-//            });
-        }, throwable -> {
-            Log.e("HomeActivity", "90行-onCreate(): " + " ", throwable);
         });
 
+        DaggerHomeRepositoryComponent.builder().homeRepositoryModule(new HomeRepositoryModule()).appComponent(BasicApp.getAppComponent()).build().inject(this);
 
+        Log.e("xxx", "81行-onCreate(): " + mHomeRepository);
+        Log.e("xxx", "80行-onCreate(): " + mIpandaApi);
 
     }
+
+    @Inject
+    HomeRepository mHomeRepository;
+
+    @Inject
+    IpandaApi mIpandaApi;
+
 
     private void subscribeUi(ProductListViewModel viewModel) {
         // 数据更改时更新列表

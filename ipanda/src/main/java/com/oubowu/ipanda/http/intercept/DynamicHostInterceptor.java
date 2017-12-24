@@ -3,7 +3,6 @@ package com.oubowu.ipanda.http.intercept;
 import android.support.annotation.NonNull;
 import android.util.SparseArray;
 
-import com.orhanobut.logger.Logger;
 import com.oubowu.ipanda.http.Hosts;
 
 import java.io.IOException;
@@ -44,9 +43,9 @@ public class DynamicHostInterceptor implements Interceptor {
 
         Object tag = request.tag();
 
-         String host = url.host();
+        // String host = url.host();
 
-        Logger.e(mDynamicHosts.get(mHost)+";"+url.url().getPath());
+        // Logger.e(mDynamicHosts.get(mHost)+";"+url.url().getPath());
 
         return chain.proceed(request.newBuilder().url(mDynamicHosts.get(mHost) + url.url().getPath()).method(method, body).headers(headers).tag(tag).build());
 

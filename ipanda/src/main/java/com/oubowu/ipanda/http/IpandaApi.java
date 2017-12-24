@@ -27,20 +27,17 @@ public class IpandaApi {
 
     private final Retrofit mRetrofit;
 
-    private OkHttpClient mOkHttpClient;
-    private SparseArray<String> mDynamicHosts;
     private DynamicHostInterceptor mDynamicHostInterceptor;
 
     @Inject
     public IpandaApi(SparseArray<String> dynamicHosts) {
-        mDynamicHosts = dynamicHosts;
 
         mRetrofit = new Retrofit.Builder().baseUrl("http://www.ipanda.com/").addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).client(setupClient(dynamicHosts)).build();
 
     }
 
-    public Retrofit retrofitStudio(@Hosts.HostsChecker int host) {
+    public Retrofit getRetrofit(@Hosts.HostsChecker int host) {
         mDynamicHostInterceptor.setHost(host);
         return mRetrofit;
     }
@@ -54,7 +51,7 @@ public class IpandaApi {
         mDynamicHostInterceptor = new DynamicHostInterceptor(dynamicHosts);
         //            Authenticator authenticator = new TokenAuthenticator(context);
 
-        mOkHttpClient = new OkHttpClient.Builder()
+        return new OkHttpClient.Builder()
                 //                    .dispatcher(new Dispatcher(GlobalConfig.HTTP_EXECUTOR))
                 //                    .cache(getHttpCache())
                 //                    .authenticator(authenticator)
@@ -65,11 +62,12 @@ public class IpandaApi {
                 //                    .addNetworkInterceptor(layoutInterceptor)
                 //                    .addNetworkInterceptor(hmacInterceptor)
                 //                    .addNetworkInterceptor(cookieInterceptor)
-                .addInterceptor(new LogInterceptor()).connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS).readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)
-                .writeTimeout(WRITE_TIME_OUT, TimeUnit.SECONDS).retryOnConnectionFailure(true).build();
-
-
-        return mOkHttpClient;
+                .addInterceptor(new LogInterceptor())
+                .connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)
+                .readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)
+                .writeTimeout(WRITE_TIME_OUT, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(true)
+                .build();
     }
 
     // 有1.addInterceptor ,和2.addNetworkInterceptor这两种。他们的区别简单的说下，不知道也没关系，addNetworkInterceptor添加的是网络拦截器，他会在在request和resposne是分别被调用一次，
