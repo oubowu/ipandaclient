@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Ipanda</string>
+    <string name="action_settings">Settings</string>
+    <string name="product_price">Price: $%d</string>
+</resources>
