@@ -2,7 +2,6 @@ package com.oubowu.ipanda.viewmodel;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
-import android.util.Log;
 
 import com.oubowu.ipanda.bean.TabIndex;
 import com.oubowu.ipanda.di.component.DaggerHomeRepositoryComponent;
@@ -31,8 +30,8 @@ public class HomeViewModel extends ViewModel {
     }
 
     public LiveData<List<TabIndex>> getTabIndex() {
-        Log.e("xxx", "33行-getTabIndex(): " + mHomeRepository);
-        Log.e("xxx", "33行-getTabIndex(): " + mIpandaApi);
+        // Log.e("xxx", "33行-getTabIndex(): " + mHomeRepository);
+        // Log.e("xxx", "33行-getTabIndex(): " + mIpandaApi);
         return mHomeRepository.getTabIndex();
     }
 

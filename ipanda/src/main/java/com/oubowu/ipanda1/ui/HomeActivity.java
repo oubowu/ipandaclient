@@ -8,19 +8,14 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
 import com.oubowu.ipanda.R;
-import com.oubowu.ipanda.bean.TabIndex;
 import com.oubowu.ipanda.databinding.ActivityHomeBinding;
-import com.oubowu.ipanda.di.component.DaggerHomeRepositoryComponent;
-import com.oubowu.ipanda.di.module.HomeRepositoryModule;
 import com.oubowu.ipanda.http.IpandaApi;
 import com.oubowu.ipanda.repository.HomeRepository;
 import com.oubowu.ipanda.viewmodel.HomeViewModel;
-import com.oubowu.ipanda1.BasicApp;
 import com.oubowu.ipanda1.arxjava.ui.UserActivity;
 import com.oubowu.ipanda1.db.entity.ProductEntity;
 import com.oubowu.ipanda1.model.Product;
@@ -70,18 +65,10 @@ public class HomeActivity extends AppCompatActivity {
         subscribeUi(viewModel);
 
         HomeViewModel homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
-        homeViewModel.getTabIndex().observe(this, new Observer<List<TabIndex>>() {
-            @Override
-            public void onChanged(@Nullable List<TabIndex> tabIndices) {
-                Logger.e("数据回调");
-                Logger.d(tabIndices);
-            }
+        homeViewModel.getTabIndex().observe(this, tabIndices -> {
+            Logger.e("数据回调");
+            Logger.d(tabIndices);
         });
-
-        DaggerHomeRepositoryComponent.builder().homeRepositoryModule(new HomeRepositoryModule()).appComponent(BasicApp.getAppComponent()).build().inject(this);
-
-        Log.e("xxx", "81行-onCreate(): " + mHomeRepository);
-        Log.e("xxx", "80行-onCreate(): " + mIpandaApi);
 
     }
 
