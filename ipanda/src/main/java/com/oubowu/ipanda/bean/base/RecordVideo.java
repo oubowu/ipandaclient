@@ -188,4 +188,9 @@ public class RecordVideo {
         public String country_code;
         public String ip;
     }
+
+    @Override
+    public String toString() {
+        return "RecordVideo{" + "play_channel='" + play_channel + '\'' + ", f_pgmtime='" + f_pgmtime + '\'' + ", tag='" + tag + '\'' + ", cdn_info=" + cdn_info + ", editer_name='" + editer_name + '\'' + ", version='" + version + '\'' + ", is_fn_hot='" + is_fn_hot + '\'' + ", title='" + title + '\'' + ", is_protected='" + is_protected + '\'' + ", hls_url='" + hls_url + '\'' + ", hls_cdn_info=" + hls_cdn_info + ", client_sid='" + client_sid + '\'' + ", is_ipad_support='" + is_ipad_support + '\'' + ", video=" + video + ", is_invalid_copyright='" + is_invalid_copyright + '\'' + ", produce_id='" + produce_id + '\'' + ", default_stream='" + default_stream + '\'' + ", ack='" + ack + '\'' + ", is_fn_multi_stream=" + is_fn_multi_stream + ", embed='" + embed + '\'' + ", asp_error_code=" + asp_error_code + ", column='" + column + '\'' + ", lc=" + lc + ", publicX='" + publicX + '\'' + ", is_p2p_use=" + is_p2p_use + ", produce='" + produce + '\'' + '}';
+    }
 }

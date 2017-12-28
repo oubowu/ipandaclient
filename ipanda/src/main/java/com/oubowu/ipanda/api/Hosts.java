@@ -1,4 +1,4 @@
-package com.oubowu.ipanda.http;
+package com.oubowu.ipanda.api;
 
 import android.support.annotation.IntDef;
 

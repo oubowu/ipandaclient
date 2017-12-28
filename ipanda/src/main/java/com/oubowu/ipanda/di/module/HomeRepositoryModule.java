@@ -1,16 +1,14 @@
 package com.oubowu.ipanda.di.module;
 
-import com.oubowu.ipanda.http.Hosts;
-import com.oubowu.ipanda.http.IpandaApi;
-import com.oubowu.ipanda.http.service.IpandaService;
-
-import dagger.Module;
-import dagger.Provides;
+import com.oubowu.ipanda.api.Hosts;
+import com.oubowu.ipanda.api.IpandaApi;
+import com.oubowu.ipanda.api.service.IpandaService;
 
 /**
  * Created by Oubowu on 2017/12/25 0:58.
  */
-@Module
+@Deprecated
+//@Module
 public class HomeRepositoryModule {
 
     /*@Provides
@@ -22,7 +20,7 @@ public class HomeRepositoryModule {
         return hosts;
     }
 */
-    @Provides
+//    @Provides
     public IpandaService provideIpandaService(IpandaApi ipandaApi) {
         return ipandaApi.getRetrofit(Hosts.IPANDA_KEHUDUAN).create(IpandaService.class);
     }
