@@ -1,10 +1,8 @@
 package com.oubowu.ipanda.api.intercept;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
-import android.util.SparseArray;
-
-import com.oubowu.ipanda.api.Hosts;
 
 import java.io.IOException;
 
@@ -18,13 +16,7 @@ import okhttp3.Response;
  */
 public class DynamicHostInterceptor implements Interceptor {
 
-    private SparseArray<String> mDynamicHosts;
-
-    @Hosts.HostsChecker
-    private int mHost;
-
-    public DynamicHostInterceptor(SparseArray<String> dynamicHosts) {
-        mDynamicHosts = dynamicHosts;
+    public DynamicHostInterceptor() {
     }
 
     @Override
@@ -55,17 +47,17 @@ public class DynamicHostInterceptor implements Interceptor {
 
         // Logger.e(oldRequest.url().host());
 
-        Log.e("DynamicHostInterceptor","57行-intercept(): "+mHost);
+        String realHost = oldRequest.header("realHost");
 
-        HttpUrl.Builder newHostBuilder = oldRequest.url().newBuilder().host(mDynamicHosts.get(mHost));
+        Log.e("xxx",realHost);
 
-        Request request = oldRequest.newBuilder().method(oldRequest.method(), oldRequest.body()).url(newHostBuilder.build()).build();
+        if (!TextUtils.isEmpty(realHost)) {
+            HttpUrl.Builder newHostBuilder = oldRequest.url().newBuilder().host(realHost);
+            Request request = oldRequest.newBuilder().method(oldRequest.method(), oldRequest.body()).url(newHostBuilder.build()).build();
+            return chain.proceed(request);
+        } else {
+            return chain.proceed(oldRequest);
+        }
 
-        return chain.proceed(request);
-
-    }
-
-    public void setHost(@Hosts.HostsChecker int host) {
-        mHost = host;
     }
 }

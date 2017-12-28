@@ -1,14 +1,15 @@
 package com.oubowu.ipanda1.ui;
 
 import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
@@ -17,7 +18,7 @@ import com.oubowu.ipanda.api.response.ApiResponse;
 import com.oubowu.ipanda.api.service.IpandaService;
 import com.oubowu.ipanda.bean.TabIndex;
 import com.oubowu.ipanda.databinding.ActivityHomeBinding;
-import com.oubowu.ipanda.di.qualifier.Service;
+import com.oubowu.ipanda.viewmodel.HomeViewModel;
 import com.oubowu.ipanda1.arxjava.ui.UserActivity;
 import com.oubowu.ipanda1.db.entity.ProductEntity;
 import com.oubowu.ipanda1.model.Product;
@@ -29,6 +30,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+// 架构：UI负责从ViewModule取数据进行UI更新；ViewModule负责从Repository中取数据；Repository负责具体的数据业务请求，一般有网络和本地数据业务逻辑
+// UI<---ViewModule<----Repository
 public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = "HomeActivity";
@@ -66,57 +69,23 @@ public class HomeActivity extends AppCompatActivity {
 
         subscribeUi(viewModel);
 
-        //        HomeViewModel homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
-        //        homeViewModel.getTabIndex().observe(this, tabIndices -> {
-        //            Logger.e("数据回调");
-        //            Logger.d(tabIndices);
-        //        });
-
-        //        SparseArray<String> hosts = new SparseArray<>(Hosts.COUNT);
-        //        hosts.put(Hosts.IPANDA_KEHUDUAN, "www.ipanda.com");
-        //        hosts.put(Hosts.CNTV_APPS, "vdn.apps.cntv.cn");
-        //        hosts.put(Hosts.CNTV_LIVE, "vdn.live.cntv.cn");
-        //        IpandaApi api = new IpandaApi(hosts);
-
-        //        LiveData<ApiResponse<List<TabIndex>>> liveData = api.getRetrofit(Hosts.IPANDA_KEHUDUAN).create(IpandaService.class).getTabIndex();
-
-        LiveData<ApiResponse<List<TabIndex>>> liveData = mIpandaClientService.getTabIndex();
-        liveData.observe(this, new Observer<ApiResponse<List<TabIndex>>>() {
+        HomeViewModel homeViewModel = ViewModelProviders.of(this, mFactory).get(HomeViewModel.class);
+        homeViewModel.getTabIndex().observe(this, new Observer<ApiResponse<List<TabIndex>>>() {
             @Override
             public void onChanged(@Nullable ApiResponse<List<TabIndex>> listApiResponse) {
                 Logger.d(listApiResponse);
             }
         });
 
-        //        LiveData<ApiResponse<RecordVideo>> detail = mIpandaApi.getRetrofit(Hosts.CNTV_APPS).create(IpandaService.class)
-        //                .getPandaBroadcastDetail("29abf1c6e9624cb19568808256662b3b");
-//        LiveData<ApiResponse<RecordVideo>> detail = mCntvAppsService.getPandaBroadcastDetail("29abf1c6e9624cb19568808256662b3b");
-//        detail.observe(this, new Observer<ApiResponse<RecordVideo>>() {
-//            @Override
-//            public void onChanged(@Nullable ApiResponse<RecordVideo> recordVideoApiResponse) {
-//                Logger.d(recordVideoApiResponse.toString());
-//            }
-//        });
+        Log.e("xxx",mIpandaService+" ");
 
     }
 
-    //    @Inject
-    //    HomeRepository mHomeRepository;
-
-    //    @Inject
-    //    IpandaApi mIpandaApi;
+    @Inject
+    IpandaService mIpandaService;
 
     @Inject
-    @Service("IPANDA_KEHUDUAN")
-    IpandaService mIpandaClientService;
-
-    @Inject
-    @Service("CNTV_APPS")
-    IpandaService mCntvAppsService;
-
-    @Inject
-    @Service("CNTV_LIVE")
-    IpandaService mCntvLiveService;
+    ViewModelProvider.Factory mFactory;
 
     private void subscribeUi(ProductListViewModel viewModel) {
         // 数据更改时更新列表

@@ -6,6 +6,8 @@ import com.oubowu.ipanda.api.response.ApiResponse;
 import com.oubowu.ipanda.bean.base.LiveVideo;
 
 import retrofit2.http.GET;
+import retrofit2.http.HEAD;
+import retrofit2.http.Headers;
 import retrofit2.http.Query;
 
 /**
@@ -21,6 +23,7 @@ public interface CntvLiveService {
      * @param client  客户端
      * @return 直播信息
      */
+    @Headers("realHost:vdn.live.cntv.cn")
     @GET("api2/live.do")
     LiveData<ApiResponse<LiveVideo>> getLiveShowDetail(@Query("channel") String channel, @Query("client") String client);
 
@@ -32,6 +35,7 @@ public interface CntvLiveService {
      * @param client  客户端
      * @return 直播信息
      */
+    @HEAD("realHost:vdn.live.cntv.cn")
     @GET("api2/live.do")
     LiveData<ApiResponse<LiveVideo>> getChinaLiveDetail(@Query("channel") String channel, @Query("client") String client);
 

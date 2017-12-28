@@ -6,6 +6,7 @@ import com.oubowu.ipanda.api.response.ApiResponse;
 import com.oubowu.ipanda.bean.base.RecordVideo;
 
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Query;
 
 /**
@@ -20,6 +21,7 @@ public interface CntvAppsService {
      * @param pid 视频id
      * @return 视频信息
      */
+    @Headers("realHost:vdn.apps.cntv.cn")
     @GET("api/getVideoInfoForCBox.do")
     LiveData<ApiResponse<RecordVideo>> getBannerDetail(@Query("pid") String pid);
 
@@ -30,6 +32,7 @@ public interface CntvAppsService {
      * @param pid 视频id
      * @return 视频信息
      */
+    @Headers("realHost:vdn.apps.cntv.cn")
     @GET("api/getVideoInfoForCBox.do")
     LiveData<ApiResponse<RecordVideo>> getPandaBroadcastDetail(@Query("pid") String pid);
 
@@ -40,6 +43,7 @@ public interface CntvAppsService {
      * @param pid 视频id
      * @return 视频信息
      */
+    @Headers("realHost:vdn.apps.cntv.cn")
     @GET("api/getVideoInfoForCBox.do")
     LiveData<ApiResponse<RecordVideo>> getWonderfulMomentDetail(@Query("pid") String pid);
 
@@ -50,6 +54,7 @@ public interface CntvAppsService {
      * @param pid 视频id
      * @return 视频信息
      */
+    @Headers("realHost:vdn.apps.cntv.cn")
     @GET("api/getVideoInfoForCBox.do")
     LiveData<ApiResponse<RecordVideo>> getGungunVideoDetail(@Query("pid") String pid);
 

@@ -1,7 +1,5 @@
 package com.oubowu.ipanda.api;
 
-import android.util.SparseArray;
-
 import com.oubowu.ipanda.api.calladapter.LiveDataCallAdapterFactory;
 import com.oubowu.ipanda.api.converter.MyGsonConverterFactory;
 import com.oubowu.ipanda.api.intercept.DynamicHostInterceptor;
@@ -9,13 +7,16 @@ import com.oubowu.ipanda.api.intercept.LogInterceptor;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
 /**
  * Created by Oubowu on 2017/12/21 16:13.
  */
-//@Singleton
+@Singleton
 public class IpandaApi {
 
     public static final long CONNECT_TIME_OUT = 30L;
@@ -26,26 +27,24 @@ public class IpandaApi {
 
     private DynamicHostInterceptor mDynamicHostInterceptor;
 
-    //    @Inject
-    public IpandaApi(SparseArray<String> dynamicHosts) {
-
+    @Inject
+    public IpandaApi() {
         mRetrofit = new Retrofit.Builder().baseUrl("http://www.ipanda.com/").addConverterFactory(MyGsonConverterFactory.create()/*GsonConverterFactory.create()*/)
-                .addCallAdapterFactory(LiveDataCallAdapterFactory.create()/*RxJava2CallAdapterFactory.create()*/).client(setupClient(dynamicHosts)).build();
+                .addCallAdapterFactory(LiveDataCallAdapterFactory.create()/*RxJava2CallAdapterFactory.create()*/).client(setupClient()).build();
 
     }
 
-    public Retrofit getRetrofit(@Hosts.HostsChecker int host) {
-        mDynamicHostInterceptor.setHost(host);
+    public Retrofit getRetrofit() {
         return mRetrofit;
     }
 
-    private OkHttpClient setupClient(SparseArray<String> dynamicHosts) {
+    private OkHttpClient setupClient() {
         //            HttpLoggingInterceptor loggingInterceptor = getHttpLoggingInterceptor();
         //            Interceptor layoutInterceptor = getLayoutInterceptor();
         //            Interceptor hmacInterceptor = getHMACInterceptor();
         //            Interceptor cookieInterceptor = getCookieInterceptor();
 
-        mDynamicHostInterceptor = new DynamicHostInterceptor(dynamicHosts);
+        mDynamicHostInterceptor = new DynamicHostInterceptor();
         //            Authenticator authenticator = new TokenAuthenticator(context);
 
         return new OkHttpClient.Builder()

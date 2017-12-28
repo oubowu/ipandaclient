@@ -3,30 +3,28 @@ package com.oubowu.ipanda.viewmodel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
+import com.oubowu.ipanda.api.response.ApiResponse;
 import com.oubowu.ipanda.bean.TabIndex;
+import com.oubowu.ipanda.repository.HomeRepository;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Created by Oubowu on 2017/12/24 23:59.
  */
 public class HomeViewModel extends ViewModel {
 
-//    @Inject
-//    HomeRepository mHomeRepository;
+    private HomeRepository mHomeRepository;
 
-//    @Inject
-//    IpandaApi mIpandaApi;
-
-    public HomeViewModel() {
-//        DaggerHomeRepositoryComponent.builder().homeRepositoryModule(new HomeRepositoryModule()).appComponent(BasicApp.getAppComponent()).build().inject(this);
+    @Inject
+    public HomeViewModel(HomeRepository homeRepository) {
+        mHomeRepository = homeRepository;
     }
 
-    public LiveData<List<TabIndex>> getTabIndex() {
-        // Log.e("xxx", "33行-getTabIndex(): " + mHomeRepository);
-        // Log.e("xxx", "33行-getTabIndex(): " + mIpandaApi);
-//        return mHomeRepository.getTabIndex();
-        return null;
+    public LiveData<ApiResponse<List<TabIndex>>> getTabIndex() {
+        return mHomeRepository.getTabIndex();
     }
 
 }

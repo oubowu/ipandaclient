@@ -3,8 +3,6 @@ package com.oubowu.ipanda.api.response;
 
 import android.support.annotation.Nullable;
 
-import com.orhanobut.logger.Logger;
-
 import java.io.IOException;
 
 import okhttp3.ResponseBody;
@@ -31,7 +29,7 @@ public class ApiResponse<T> {
 
     public ApiResponse(Response<T> response) {
         mCode = response.code();
-        Logger.e(mCode+";"+response.isSuccessful());
+        // Logger.e(mCode+";"+response.isSuccessful());
         if (response.isSuccessful()) {
             mBody = response.body();
             mErrorMessage = null;
