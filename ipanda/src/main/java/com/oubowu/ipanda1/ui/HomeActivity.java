@@ -13,8 +13,6 @@ import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
 import com.oubowu.ipanda.R;
-import com.oubowu.ipanda.api.bean.TabIndex;
-import com.oubowu.ipanda.bean.Resource;
 import com.oubowu.ipanda.databinding.ActivityHomeBinding;
 import com.oubowu.ipanda.viewmodel.HomeViewModel;
 import com.oubowu.ipanda1.arxjava.ui.UserActivity;
@@ -76,27 +74,23 @@ public class HomeActivity extends AppCompatActivity {
         //            }
         //        });
 
-        homeViewModel.getTabIndex().observe(this, new Observer<Resource<List<TabIndex>>>() {
-            @Override
-            public void onChanged(@Nullable Resource<List<TabIndex>> resource) {
+        homeViewModel.getTabIndex().observe(this, resource -> {
 
-                if (resource != null) {
-                    switch (resource.status) {
-                        case SUCCESS:
-                            Toast.makeText(HomeActivity.this, "请求成功", Toast.LENGTH_SHORT).show();
-                            break;
-                        case ERROR:
-                            Toast.makeText(HomeActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
-                            break;
-                        case LOADING:
-                            Toast.makeText(HomeActivity.this, "加载中......", Toast.LENGTH_SHORT).show();
-                            break;
-                    }
-                    Logger.d(resource.status + ";" + resource.message);
-                    Logger.d(resource.data);
+            if (resource != null) {
+                switch (resource.status) {
+                    case SUCCESS:
+                        Toast.makeText(HomeActivity.this, "请求成功", Toast.LENGTH_SHORT).show();
+                        break;
+                    case ERROR:
+                        Toast.makeText(HomeActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+                        break;
+                    case LOADING:
+                        Toast.makeText(HomeActivity.this, "加载中......", Toast.LENGTH_SHORT).show();
+                        break;
                 }
-
+                Logger.d(resource);
             }
+
         });
 
     }

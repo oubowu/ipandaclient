@@ -4,6 +4,8 @@ package com.oubowu.ipanda.bean;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.oubowu.ipanda.util.LoggerInfoUtils;
+
 /**
  * Created by Oubowu on 2017/12/30 22:21.
  */
@@ -38,6 +40,6 @@ public class Resource<T> {
 
     @Override
     public String toString() {
-        return "Resource{\n" + "status=" + status + ",\n message='" + message + '\'' + ",\n data=" + (data != null ? data.toString() : null) + "\n}";
+        return "Resource{\n" + "status=" + status + ",\n message='" + message + '\'' + ",\n data=" + LoggerInfoUtils.toString(data) + "\n}";
     }
 }
