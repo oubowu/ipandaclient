@@ -1,4 +1,4 @@
-package com.oubowu.ipanda.bean.home;
+package com.oubowu.ipanda.api.bean.home;
 
 import java.util.List;
 

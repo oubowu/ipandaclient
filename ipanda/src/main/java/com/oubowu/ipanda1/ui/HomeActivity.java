@@ -9,14 +9,12 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
 import com.oubowu.ipanda.R;
-import com.oubowu.ipanda.api.response.ApiResponse;
-import com.oubowu.ipanda.api.service.IpandaService;
-import com.oubowu.ipanda.bean.TabIndex;
+import com.oubowu.ipanda.api.bean.TabIndex;
+import com.oubowu.ipanda.bean.Resource;
 import com.oubowu.ipanda.databinding.ActivityHomeBinding;
 import com.oubowu.ipanda.viewmodel.HomeViewModel;
 import com.oubowu.ipanda1.arxjava.ui.UserActivity;
@@ -70,19 +68,38 @@ public class HomeActivity extends AppCompatActivity {
         subscribeUi(viewModel);
 
         HomeViewModel homeViewModel = ViewModelProviders.of(this, mFactory).get(HomeViewModel.class);
-        homeViewModel.getTabIndex().observe(this, new Observer<ApiResponse<List<TabIndex>>>() {
+
+        //        homeViewModel.getTabIndex().observe(this, new Observer<ApiResponse<List<TabIndex>>>() {
+        //            @Override
+        //            public void onChanged(@Nullable ApiResponse<List<TabIndex>> listApiResponse) {
+        //                Logger.d(listApiResponse);
+        //            }
+        //        });
+
+        homeViewModel.getTabIndex().observe(this, new Observer<Resource<List<TabIndex>>>() {
             @Override
-            public void onChanged(@Nullable ApiResponse<List<TabIndex>> listApiResponse) {
-                Logger.d(listApiResponse);
+            public void onChanged(@Nullable Resource<List<TabIndex>> resource) {
+
+                if (resource != null) {
+                    switch (resource.status) {
+                        case SUCCESS:
+                            Toast.makeText(HomeActivity.this, "请求成功", Toast.LENGTH_SHORT).show();
+                            break;
+                        case ERROR:
+                            Toast.makeText(HomeActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+                            break;
+                        case LOADING:
+                            Toast.makeText(HomeActivity.this, "加载中......", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                    Logger.d(resource.status + ";" + resource.message);
+                    Logger.d(resource.data);
+                }
+
             }
         });
 
-        Log.e("xxx",mIpandaService+" ");
-
     }
-
-    @Inject
-    IpandaService mIpandaService;
 
     @Inject
     ViewModelProvider.Factory mFactory;

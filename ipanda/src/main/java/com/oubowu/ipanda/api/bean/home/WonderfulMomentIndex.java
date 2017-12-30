@@ -1,6 +1,6 @@
-package com.oubowu.ipanda.bean.home;
+package com.oubowu.ipanda.api.bean.home;
 
-import com.oubowu.ipanda.bean.base.VideoList;
+import com.oubowu.ipanda.api.bean.base.VideoList;
 
 /**
  * Created by Oubowu on 2017/12/21 11:14.

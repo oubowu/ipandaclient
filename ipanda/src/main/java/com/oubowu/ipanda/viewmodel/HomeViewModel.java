@@ -3,8 +3,8 @@ package com.oubowu.ipanda.viewmodel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.oubowu.ipanda.api.response.ApiResponse;
-import com.oubowu.ipanda.bean.TabIndex;
+import com.oubowu.ipanda.api.bean.TabIndex;
+import com.oubowu.ipanda.bean.Resource;
 import com.oubowu.ipanda.repository.HomeRepository;
 
 import java.util.List;
@@ -23,7 +23,11 @@ public class HomeViewModel extends ViewModel {
         mHomeRepository = homeRepository;
     }
 
-    public LiveData<ApiResponse<List<TabIndex>>> getTabIndex() {
+//    public LiveData<ApiResponse<List<TabIndex>>> getTabIndex() {
+//        return mHomeRepository.getTabIndex();
+//    }
+
+    public LiveData<Resource<List<TabIndex>>> getTabIndex() {
         return mHomeRepository.getTabIndex();
     }
 

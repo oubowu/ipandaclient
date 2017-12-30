@@ -7,6 +7,7 @@ import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.oubowu.ipanda1.BasicApp;
 import com.oubowu.ipanda1.db.entity.ProductEntity;
@@ -36,6 +37,9 @@ public class ProductListViewModel extends AndroidViewModel {
                 mObservableProducts.setValue(productEntities);
             }
         });
+
+        LiveData<ProductEntity> liveData = ((BasicApp) application).getRepository().loadProduct(12333);
+        Log.e("xxx",liveData+";");
 
     }
 

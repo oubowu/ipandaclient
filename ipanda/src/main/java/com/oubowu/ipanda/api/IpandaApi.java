@@ -1,7 +1,7 @@
 package com.oubowu.ipanda.api;
 
 import com.oubowu.ipanda.api.calladapter.LiveDataCallAdapterFactory;
-import com.oubowu.ipanda.api.converter.MyGsonConverterFactory;
+import com.oubowu.ipanda.api.converter.IpandaGsonConverterFactory;
 import com.oubowu.ipanda.api.intercept.DynamicHostInterceptor;
 import com.oubowu.ipanda.api.intercept.LogInterceptor;
 
@@ -19,18 +19,16 @@ import retrofit2.Retrofit;
 @Singleton
 public class IpandaApi {
 
-    public static final long CONNECT_TIME_OUT = 30L;
-    public static final long READ_TIME_OUT = 30L;
-    public static final long WRITE_TIME_OUT = 30L;
+    private static final long CONNECT_TIME_OUT = 30L;
+    private static final long READ_TIME_OUT = 30L;
+    private static final long WRITE_TIME_OUT = 30L;
 
     private final Retrofit mRetrofit;
 
-    private DynamicHostInterceptor mDynamicHostInterceptor;
-
     @Inject
     public IpandaApi() {
-        mRetrofit = new Retrofit.Builder().baseUrl("http://www.ipanda.com/").addConverterFactory(MyGsonConverterFactory.create()/*GsonConverterFactory.create()*/)
-                .addCallAdapterFactory(LiveDataCallAdapterFactory.create()/*RxJava2CallAdapterFactory.create()*/).client(setupClient()).build();
+        mRetrofit = new Retrofit.Builder().baseUrl("http://www.ipanda.com/").addConverterFactory(IpandaGsonConverterFactory.create())
+                .addCallAdapterFactory(LiveDataCallAdapterFactory.create()).client(setupClient()).build();
 
     }
 
@@ -44,7 +42,6 @@ public class IpandaApi {
         //            Interceptor hmacInterceptor = getHMACInterceptor();
         //            Interceptor cookieInterceptor = getCookieInterceptor();
 
-        mDynamicHostInterceptor = new DynamicHostInterceptor();
         //            Authenticator authenticator = new TokenAuthenticator(context);
 
         return new OkHttpClient.Builder()
@@ -52,7 +49,7 @@ public class IpandaApi {
                 //                    .cache(getHttpCache())
                 //                    .authenticator(authenticator)
                 //                    .addInterceptor(loggingInterceptor)
-                .addInterceptor(mDynamicHostInterceptor)
+                .addInterceptor(new DynamicHostInterceptor())
                 //                    .addInterceptor(getCacheInterceptor())
                 //                    .addNetworkInterceptor(getCacheInterceptor())
                 //                    .addNetworkInterceptor(layoutInterceptor)

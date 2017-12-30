@@ -13,26 +13,26 @@ import retrofit2.Response;
  */
 public class ApiResponse<T> {
 
-    public final int mCode;
+    public final int code;
 
     @Nullable
-    public final T mBody;
+    public final T body;
 
     @Nullable
-    public final String mErrorMessage;
+    public final String errorMessage;
 
     public ApiResponse(Throwable error) {
-        mCode = 500;
-        mBody = null;
-        mErrorMessage = error.getMessage();
+        code = 500;
+        body = null;
+        errorMessage = error.getMessage();
     }
 
     public ApiResponse(Response<T> response) {
-        mCode = response.code();
+        code = response.code();
         // Logger.e(mCode+";"+response.isSuccessful());
         if (response.isSuccessful()) {
-            mBody = response.body();
-            mErrorMessage = null;
+            body = response.body();
+            errorMessage = null;
         } else {
             String msg = null;
             ResponseBody errorBody = response.errorBody();
@@ -46,21 +46,21 @@ public class ApiResponse<T> {
             if (msg == null || msg.trim().length() == 0) {
                 msg = response.message();
             }
-            mErrorMessage = msg;
-            mBody = null;
+            errorMessage = msg;
+            body = null;
         }
     }
 
     public boolean isSuccessful() {
-        return mCode >= 200 && mCode < 300;
+        return code >= 200 && code < 300;
     }
 
     @Override
     public String toString() {
-        if (mBody != null) {
-            return mBody.toString();
-        } else if (mErrorMessage != null) {
-            return mErrorMessage;
+        if (body != null) {
+            return body.toString();
+        } else if (errorMessage != null) {
+            return errorMessage;
         }
         return super.toString();
     }

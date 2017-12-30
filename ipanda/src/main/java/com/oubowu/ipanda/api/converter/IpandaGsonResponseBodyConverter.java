@@ -18,11 +18,11 @@ import retrofit2.Converter;
 /**
  * Created by Oubowu on 2017/12/27 13:23.
  */
-public class MyGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
+public class IpandaGsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
     private final Gson gson;
     private final TypeAdapter<T> adapter;
 
-    MyGsonResponseBodyConverter(Gson gson, TypeAdapter<T> adapter) {
+    IpandaGsonResponseBodyConverter(Gson gson, TypeAdapter<T> adapter) {
         this.gson = gson;
         this.adapter = adapter;
     }

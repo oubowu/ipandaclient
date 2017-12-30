@@ -17,14 +17,14 @@ import retrofit2.Converter;
 /**
  * Created by Oubowu on 2017/12/27 13:25.
  */
-public class MyGsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
+public class IpandaGsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
     private static final MediaType MEDIA_TYPE = MediaType.parse("application/json; charset=UTF-8");
     private static final Charset UTF_8 = Charset.forName("UTF-8");
 
     private final Gson gson;
     private final TypeAdapter<T> adapter;
 
-    MyGsonRequestBodyConverter(Gson gson, TypeAdapter<T> adapter) {
+    IpandaGsonRequestBodyConverter(Gson gson, TypeAdapter<T> adapter) {
         this.gson = gson;
         this.adapter = adapter;
     }

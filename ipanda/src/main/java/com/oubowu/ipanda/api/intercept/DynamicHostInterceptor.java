@@ -2,7 +2,6 @@ package com.oubowu.ipanda.api.intercept;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.io.IOException;
 
@@ -49,7 +48,7 @@ public class DynamicHostInterceptor implements Interceptor {
 
         String realHost = oldRequest.header("realHost");
 
-        Log.e("xxx",realHost);
+        // Log.e("xxx",realHost);
 
         if (!TextUtils.isEmpty(realHost)) {
             HttpUrl.Builder newHostBuilder = oldRequest.url().newBuilder().host(realHost);

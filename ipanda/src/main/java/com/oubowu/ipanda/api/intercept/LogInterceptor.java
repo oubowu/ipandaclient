@@ -1,6 +1,7 @@
 package com.oubowu.ipanda.api.intercept;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.orhanobut.logger.Logger;
 
@@ -38,6 +39,8 @@ public class LogInterceptor implements Interceptor {
 
         final Response response = chain.proceed(request);
 
+        Log.e("Oubowu","-----------------------------------------------------------------------------------------------------------------------------");
+
         Logger.e("请求网址: \n" + request.url() + " \n " + "请求头部信息：\n" + request.headers() + "响应头部信息：\n" + response.headers());
 
         final ResponseBody responseBody = response.body();
@@ -66,6 +69,9 @@ public class LogInterceptor implements Interceptor {
             if (contentLength != 0 && charset != null) {
                 Logger.json(buffer.clone().readString(charset));
             }
+
+            Log.e("Oubowu","-----------------------------------------------------------------------------------------------------------------------------");
+
         }
 
         return response;
