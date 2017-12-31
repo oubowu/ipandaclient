@@ -9,7 +9,7 @@ import android.support.annotation.WorkerThread;
 
 import com.oubowu.ipanda.api.response.ApiResponse;
 import com.oubowu.ipanda.bean.Resource;
-import com.oubowu.ipanda.util.CompareUtil;
+import com.oubowu.ipanda.util.CommonUtil;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
@@ -30,24 +30,20 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
         Observable//
                 .create((ObservableOnSubscribe<LiveData<ResultType>>) e -> {
                     // 从数据库加载数据
-                    // Log.e("NetworkBoundResource","从数据库加载数据");
                     LiveData<ResultType> dbSource = loadFromDb();
                     e.onNext(dbSource);
                 }).subscribeOn(Schedulers.io())//
                 .observeOn(AndroidSchedulers.mainThread())//
                 .subscribe(dbSource -> {
                     // 监听数据库加载的数据
-                    // Log.e("NetworkBoundResource","监听数据库加载的数据");
                     mResult.addSource(dbSource, data -> {
                         // 数据库数据变化了的话，首先移除监听
                         mResult.removeSource(dbSource);
                         if (shouldCall(data)) {
                             // 若需要从网络请求数据，加载网络数据
-                            // Log.e("NetworkBoundResource","若需要从网络请求数据，加载网络数据");
                             fetchFromNetwork(dbSource);
                         } else {
                             // 不需要从网络加载，监听数据库数据变化并赋值
-                            // Log.e("NetworkBoundResource","不需要从网络加载，监听数据库数据变化并赋值");
                             mResult.addSource(dbSource, newData -> setValue(Resource.success(newData)));
                         }
                     });
@@ -55,7 +51,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
     }
 
     private void setValue(Resource<ResultType> data) {
-        if (!CompareUtil.equals(mResult.getValue(), data)) {
+        if (!CommonUtil.equals(mResult.getValue(), data)) {
             // 没变化，不需要重新设置值
             mResult.setValue(data);
         }
@@ -89,7 +85,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
                             });
                         });
             } else {
-                // 网络请求失败
+                // 网络请求失败，使用数据库的数据
                 onCallFailed();
                 mResult.addSource(dbSource, newData -> setValue(Resource.error(response != null ? response.errorMessage : null, newData)));
             }

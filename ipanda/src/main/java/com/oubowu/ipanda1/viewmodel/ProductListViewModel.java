@@ -39,7 +39,7 @@ public class ProductListViewModel extends AndroidViewModel {
         });
 
         LiveData<ProductEntity> liveData = ((BasicApp) application).getRepository().loadProduct(12333);
-        Log.e("xxx",liveData+";");
+        // Log.e("xxx",liveData+";");
 
     }
 

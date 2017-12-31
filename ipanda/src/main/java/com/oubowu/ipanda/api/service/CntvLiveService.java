@@ -3,7 +3,7 @@ package com.oubowu.ipanda.api.service;
 import android.arch.lifecycle.LiveData;
 
 import com.oubowu.ipanda.api.response.ApiResponse;
-import com.oubowu.ipanda.api.bean.base.LiveVideo;
+import com.oubowu.ipanda.bean.base.LiveVideo;
 
 import retrofit2.http.GET;
 import retrofit2.http.HEAD;

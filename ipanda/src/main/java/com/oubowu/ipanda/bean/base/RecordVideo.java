@@ -1,4 +1,4 @@
-package com.oubowu.ipanda.api.bean.base;
+package com.oubowu.ipanda.bean.base;
 
 import com.google.gson.annotations.SerializedName;
 

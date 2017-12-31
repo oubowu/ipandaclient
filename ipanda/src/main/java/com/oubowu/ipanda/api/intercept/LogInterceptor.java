@@ -27,19 +27,20 @@ public class LogInterceptor implements Interceptor {
         Request request = chain.request();
 
 
-//        Request.Builder requestBuilder = request.newBuilder();
-//        requestBuilder.addHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36 QQBrowser/4.2.4976.400");
-//        requestBuilder.addHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-//        requestBuilder.addHeader("Accept-Encoding","gzip, deflate, sdch");
-//        requestBuilder.addHeader("Accept-Language","zh-CN,zh;q=0.8");
-//        requestBuilder.addHeader("Cache-Control","max-age=0");
-//        requestBuilder.addHeader("Connection","keep-alive");
-//        requestBuilder.addHeader("Upgrade-Insecure-Requests","1");
-//        request = requestBuilder.build();
+        //        Request.Builder requestBuilder = request.newBuilder();
+        //        requestBuilder.addHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36 QQBrowser/4.2.4976.400");
+        //        requestBuilder.addHeader("Accept","text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+        //        requestBuilder.addHeader("Accept-Encoding","gzip, deflate, sdch");
+        //        requestBuilder.addHeader("Accept-Language","zh-CN,zh;q=0.8");
+        //        requestBuilder.addHeader("Cache-Control","max-age=0");
+        //        requestBuilder.addHeader("Connection","keep-alive");
+        //        requestBuilder.addHeader("Upgrade-Insecure-Requests","1");
+        //        request = requestBuilder.build();
 
         final Response response = chain.proceed(request);
 
-        Log.e("Oubowu","-----------------------------------------------------------------------------------------------------------------------------");
+        Log.e("Oubowu",
+                "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
 
         Logger.e("请求网址: \n" + request.url() + " \n " + "请求头部信息：\n" + request.headers() + "响应头部信息：\n" + response.headers());
 
@@ -70,7 +71,8 @@ public class LogInterceptor implements Interceptor {
                 Logger.json(buffer.clone().readString(charset));
             }
 
-            Log.e("Oubowu","-----------------------------------------------------------------------------------------------------------------------------");
+            Log.e("Oubowu",
+                    "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
 
         }
 

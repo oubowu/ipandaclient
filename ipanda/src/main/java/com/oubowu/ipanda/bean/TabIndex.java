@@ -1,10 +1,15 @@
-package com.oubowu.ipanda.api.bean;
+package com.oubowu.ipanda.bean;
+
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 /**
  * Created by Oubowu on 2017/12/20 16:34.
  * <p>五个分类的索引</p>
  * http://www.ipanda.com/kehuduan/xzbqy/index.json
  */
+@Entity(tableName = "tab_index")
 public class TabIndex {
 
     /**
@@ -14,6 +19,8 @@ public class TabIndex {
      * url : http://www.ipanda.com/kehuduan/shouye/index.json
      */
 
+    @NonNull
+    @PrimaryKey
     public String title;
     public String noimage;
     public String image;

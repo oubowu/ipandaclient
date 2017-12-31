@@ -1,17 +1,21 @@
 package com.oubowu.ipanda.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.oubowu.ipanda.api.bean.TabIndex;
 import com.oubowu.ipanda.api.response.ApiResponse;
 import com.oubowu.ipanda.api.service.IpandaService;
 import com.oubowu.ipanda.bean.Resource;
+import com.oubowu.ipanda.bean.TabIndex;
+import com.oubowu.ipanda.db.IpandaDb;
+import com.oubowu.ipanda.db.dao.TabIndexDao;
+import com.oubowu.ipanda.util.CommonUtil;
+import com.oubowu.ipanda.util.MapUtil;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -24,21 +28,21 @@ public class HomeRepository {
 
     private IpandaService mIpandaClientService;
 
-    @Inject
-    public HomeRepository(IpandaService ipandaClientService) {
-        mIpandaClientService = ipandaClientService;
-        Log.e("xxx", mIpandaClientService + " ");
-    }
+    private IpandaDb mIpandaDb;
 
-    //    public LiveData<ApiResponse<List<TabIndex>>> getTabIndex() {
-    //        return mIpandaClientService.getTabIndex();
-    //    }
+    private TabIndexDao mTabIndexDao;
+
+    @Inject
+    public HomeRepository(IpandaService ipandaClientService, IpandaDb ipandaDb, TabIndexDao tabIndexDao) {
+        mIpandaClientService = ipandaClientService;
+        mIpandaDb = ipandaDb;
+        mTabIndexDao = tabIndexDao;
+        // Log.e("xxx", mIpandaClientService + " ");
+    }
 
     public LiveData<Resource<List<TabIndex>>> getTabIndex() {
 
-        return new NetworkBoundResource<List<TabIndex>, List<TabIndex>>() {
-
-            private List<TabIndex> mResponse;
+        return new NetworkBoundResource<List<TabIndex>, Map<String, List<TabIndex>>>() {
 
             @Override
             protected void onCallFailed() {
@@ -46,30 +50,28 @@ public class HomeRepository {
             }
 
             @Override
-            protected void saveCallResponseToDb(@NonNull List<TabIndex> response) {
-                mResponse = response;
+            protected void saveCallResponseToDb(@NonNull Map<String, List<TabIndex>> response) {
+                // mResponse = response;
                 Log.e("HomeRepository", "保存请求成功数据到数据库");
-
+                mIpandaDb.runInTransaction(() -> mTabIndexDao.insertTabIndexes(MapUtil.getFirstElement(response)));
             }
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<List<TabIndex>>> createCall() {
+            protected LiveData<ApiResponse<Map<String, List<TabIndex>>>> createCall() {
                 return mIpandaClientService.getTabIndex();
             }
 
             @Override
             protected boolean shouldCall(@Nullable List<TabIndex> data) {
-                return data == null;
+                return CommonUtil.isEmpty(data);
             }
 
             @SuppressWarnings("unchecked")
             @Override
             protected LiveData<List<TabIndex>> loadFromDb() {
-                Log.e("HomeRepository","从数据库加载");
-                MutableLiveData liveData = new MutableLiveData<List<TabIndex>>();
-                liveData.postValue(mResponse);
-                return liveData;
+                Log.e("HomeRepository", "从数据库加载");
+                return mTabIndexDao.queryTabIndexes();
             }
         }.asLiveData();
 

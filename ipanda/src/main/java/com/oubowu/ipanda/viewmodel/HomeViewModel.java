@@ -3,7 +3,7 @@ package com.oubowu.ipanda.viewmodel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.oubowu.ipanda.api.bean.TabIndex;
+import com.oubowu.ipanda.bean.TabIndex;
 import com.oubowu.ipanda.bean.Resource;
 import com.oubowu.ipanda.repository.HomeRepository;
 

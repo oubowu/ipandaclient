@@ -1,9 +1,13 @@
 package com.oubowu.ipanda.di.module;
 
+import android.app.Application;
+
 import com.oubowu.ipanda.api.IpandaApi;
 import com.oubowu.ipanda.api.service.CntvAppsService;
 import com.oubowu.ipanda.api.service.CntvLiveService;
 import com.oubowu.ipanda.api.service.IpandaService;
+import com.oubowu.ipanda.db.IpandaDb;
+import com.oubowu.ipanda.db.dao.TabIndexDao;
 
 import javax.inject.Singleton;
 
@@ -17,23 +21,17 @@ import dagger.Provides;
 @Module(includes = {ViewModelModule.class})
 public class AppModule {
 
-    //    private Context mContext;
-    //
-    //    public AppModule(Context context) {
-    //        this.mContext = context;
-    //    }
-    //
-    //    @Provides
-    //    @Singleton
-    //    public Context provideContext() {
-    //        return mContext;
-    //    }
+    @Singleton
+    @Provides
+    public IpandaDb provideIpandaDb(Application application) {
+        return IpandaDb.buildDatabase(application);
+    }
 
-    //    @Singleton
-    //    @Provides
-    //    public IpandaApi provideIpandaApi() {
-    //        return new IpandaApi();
-    //    }
+    @Singleton
+    @Provides
+    public TabIndexDao provideTabIndexDao(IpandaDb ipandaDb) {
+        return ipandaDb.tabIndexDao();
+    }
 
     @Singleton
     @Provides

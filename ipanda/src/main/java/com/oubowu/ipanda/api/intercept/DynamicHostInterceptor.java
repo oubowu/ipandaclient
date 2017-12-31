@@ -15,36 +15,11 @@ import okhttp3.Response;
  */
 public class DynamicHostInterceptor implements Interceptor {
 
-    public DynamicHostInterceptor() {
-    }
-
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
 
-        //        Request request = chain.request();
-        //
-        //        HttpUrl url = request.url();
-        //
-        //        String method = request.method();
-        //
-        //        Headers headers = request.headers();
-        //
-        //        RequestBody body = request.body();
-        //
-        //        Object tag = request.tag();
-        //
-        //        // String host = url.host();
-        //
-        //        URL realUrl = url.url();
-        //
-        //
-        //        Logger.e(mDynamicHosts.get(mHost)+";"+ realUrl.getPath()+";"+realUrl.getQuery());
-        //
-        //        return chain.proceed(request.newBuilder().url(mDynamicHosts.get(mHost) + realUrl.getPath()+realUrl.getQuery()).method(method, body).headers(headers).tag(tag).build());
 
         Request oldRequest = chain.request();
-
-        // Logger.e(oldRequest.url().host());
 
         String realHost = oldRequest.header("realHost");
 

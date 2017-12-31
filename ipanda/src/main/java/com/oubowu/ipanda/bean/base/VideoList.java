@@ -1,4 +1,4 @@
-package com.oubowu.ipanda.api.bean.base;
+package com.oubowu.ipanda.bean.base;
 
 /**
  * Created by Oubowu on 2017/12/21 11:14.

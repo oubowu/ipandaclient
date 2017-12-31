@@ -3,11 +3,12 @@ package com.oubowu.ipanda.api.service;
 import android.arch.lifecycle.LiveData;
 
 import com.oubowu.ipanda.api.response.ApiResponse;
-import com.oubowu.ipanda.api.bean.TabIndex;
-import com.oubowu.ipanda.api.bean.base.VideoList;
-import com.oubowu.ipanda.api.bean.home.HomeIndex;
+import com.oubowu.ipanda.bean.TabIndex;
+import com.oubowu.ipanda.bean.base.VideoList;
+import com.oubowu.ipanda.bean.home.HomeIndex;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -27,7 +28,7 @@ public interface IpandaService {
      */
     @Headers("realHost:www.ipanda.com")
     @GET("kehuduan/dibubiaoqian/index.json")
-    LiveData<ApiResponse<List<TabIndex>>> getTabIndex();
+    LiveData<ApiResponse<Map<String,List<TabIndex>>>> getTabIndex();
 
     /**
      * 首页-索引：(来自1的tab标签)
@@ -38,7 +39,7 @@ public interface IpandaService {
      */
     @Headers("realHost:www.ipanda.com")
     @GET
-    LiveData<ApiResponse<HomeIndex>> getHomeIndex(@Url String url);
+    LiveData<ApiResponse<Map<String,HomeIndex>>> getHomeIndex(@Url String url);
 
     /**
      * 首页-精彩一刻(来自2的cctv的listurl字段)
@@ -49,7 +50,7 @@ public interface IpandaService {
      */
     @Headers("realHost:www.ipanda.com")
     @GET
-    LiveData<ApiResponse<List<VideoList>>> getWonderfulMomentIndex(@Url String url);
+    LiveData<ApiResponse<Map<String,List<VideoList>>>> getWonderfulMomentIndex(@Url String url);
 
     /**
      * 首页-滚滚视频(来自2的list的listUrl字段)
@@ -60,6 +61,6 @@ public interface IpandaService {
      */
     @Headers("realHost:www.ipanda.com")
     @GET
-    LiveData<ApiResponse<List<VideoList>>> getGungunVideoIndex(@Url String url);
+    LiveData<ApiResponse<Map<String,List<VideoList>>>> getGungunVideoIndex(@Url String url);
 
 }

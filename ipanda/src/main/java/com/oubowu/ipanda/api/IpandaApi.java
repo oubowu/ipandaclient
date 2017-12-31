@@ -1,7 +1,6 @@
 package com.oubowu.ipanda.api;
 
 import com.oubowu.ipanda.api.calladapter.LiveDataCallAdapterFactory;
-import com.oubowu.ipanda.api.converter.IpandaGsonConverterFactory;
 import com.oubowu.ipanda.api.intercept.DynamicHostInterceptor;
 import com.oubowu.ipanda.api.intercept.LogInterceptor;
 
@@ -12,6 +11,7 @@ import javax.inject.Singleton;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Oubowu on 2017/12/21 16:13.
@@ -27,7 +27,7 @@ public class IpandaApi {
 
     @Inject
     public IpandaApi() {
-        mRetrofit = new Retrofit.Builder().baseUrl("http://www.ipanda.com/").addConverterFactory(IpandaGsonConverterFactory.create())
+        mRetrofit = new Retrofit.Builder().baseUrl("http://www.ipanda.com/").addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(LiveDataCallAdapterFactory.create()).client(setupClient()).build();
 
     }
