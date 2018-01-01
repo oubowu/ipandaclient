@@ -75,6 +75,74 @@ public class HomeRepository {
             }
         }.asLiveData();
 
+
+        /*return new NetworkBoundResource<List<TabIndex>, Map<String, List<TabIndex>>>() {
+
+            MediatorLiveData<List<TabIndex>> mTabLiveData;
+
+            @Override
+            protected void onCallFailed() {
+                Log.e("HomeRepository", "网络请求失败");
+            }
+
+            @Override
+            protected void saveCallResponseToDb(@NonNull Map<String, List<TabIndex>> response) {
+                List<TabIndex> tabIndices = MapUtil.getFirstElement(response);
+                mTabLiveData.postValue(tabIndices);
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<Map<String, List<TabIndex>>>> createCall() {
+                return mIpandaClientService.getTabIndex();
+            }
+
+            @Override
+            protected boolean shouldCall(@Nullable List<TabIndex> data) {
+                return true;
+            }
+
+            @Override
+            protected LiveData<List<TabIndex>> loadFromDb() {
+                if (mTabLiveData == null) {
+                    mTabLiveData = new MediatorLiveData<>();
+                    mTabLiveData.postValue(null);
+                }
+                return mTabLiveData;
+            }
+        }.asLiveData();*/
+
+        /*return new NetworkBoundResource<List<TabIndex>, Map<String, List<TabIndex>>>() {
+
+            @Override
+            protected void onCallFailed() {
+                Log.e("HomeRepository", "网络请求失败");
+            }
+
+            @Override
+            protected void saveCallResponseToDb(@NonNull Map<String, List<TabIndex>> response) {
+
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<Map<String, List<TabIndex>>>> createCall() {
+                return null;
+            }
+
+            @Override
+            protected boolean shouldCall(@Nullable List<TabIndex> data) {
+                return false;
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected LiveData<List<TabIndex>> loadFromDb() {
+                Log.e("HomeRepository", "从数据库加载");
+                return mTabIndexDao.queryTabIndexes();
+            }
+        }.asLiveData();*/
+
     }
 
 

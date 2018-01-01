@@ -1,1 +1,1 @@
-include /*':app', ':app2', */':ipanda'
+include /*':app', ':app2', ':ipanda1', */':ipanda'

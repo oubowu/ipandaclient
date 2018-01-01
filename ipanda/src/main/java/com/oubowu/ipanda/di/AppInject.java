@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 
+import com.oubowu.ipanda.BasicApp;
 import com.oubowu.ipanda.di.component.DaggerAppComponent;
-import com.oubowu.ipanda1.BasicApp;
 
 import dagger.android.AndroidInjection;
 

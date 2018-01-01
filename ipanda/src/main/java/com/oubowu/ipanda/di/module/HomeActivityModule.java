@@ -1,6 +1,7 @@
 package com.oubowu.ipanda.di.module;
 
-import com.oubowu.ipanda1.ui.HomeActivity;
+
+import com.oubowu.ipanda.ui.HomeActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

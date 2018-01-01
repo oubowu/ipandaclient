@@ -2,9 +2,9 @@ package com.oubowu.ipanda.di.component;
 
 import android.app.Application;
 
+import com.oubowu.ipanda.BasicApp;
 import com.oubowu.ipanda.di.module.AppModule;
 import com.oubowu.ipanda.di.module.HomeActivityModule;
-import com.oubowu.ipanda1.BasicApp;
 
 import javax.inject.Singleton;
 

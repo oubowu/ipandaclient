@@ -2,4 +2,9 @@
     <string name="app_name">Ipanda</string>
     <string name="action_settings">Settings</string>
     <string name="product_price">Price: $%d</string>
+    <string name="menu_home">首页资讯</string>
+    <string name="menu_panda_live">熊猫直播</string>
+    <string name="menu_panda_video">熊猫视频</string>
+    <string name="menu_panda_news">熊猫播报</string>
+    <string name="menu_china_live">直播中国</string>
 </resources>

@@ -21,7 +21,7 @@ public class TabIndex {
 
     @NonNull
     @PrimaryKey
-    public String title;
+    public String title = "";
     public String noimage;
     public String image;
     public String url;

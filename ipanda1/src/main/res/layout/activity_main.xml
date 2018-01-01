@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="user"
+            type="com.example.ipanda1.test.User"/>
+
+        <!--绑定基本数据类型及String-->
+        <!--name:   和java代码中的对象是类似的，名字自定义-->
+        <!--type:   和java代码中的类型是一致的-->
+        <variable
+            name="buttonContent"
+            type="String"/>
+
+        <variable
+            name="buttonEnabled"
+            type="boolean"/>
+
+
+        <variable
+            name="event"
+            type="com.example.ipanda1.test.EventListener"/>
+
+        <variable
+            name="title1"
+            type="String"/>
+
+        <variable
+            name="title2"
+            type="String"/>
+
+        <variable
+            name="title3"
+            type="String"/>
+
+        <variable
+            name="title4"
+            type="String"/>
+
+        <!--调用静态方法，需要先导入需要的包    当然java中的lang包可以不用导包-->
+        <import type="com.example.ipanda1.test.Utils"/>
+
+        <import type="com.example.ipanda1.test.Obs"/>
+
+        <variable
+            name="obs"
+            type="com.example.ipanda1.test.Obs"/>
+
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.oubowu.ipanda.MainActivity">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:title="@{obs.title}"
+                app:subtitle="@{obs.subTitle}"
+                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <include
+            android:id="@+id/content"
+            layout="@layout/content_main"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@android:drawable/ic_dialog_email"/>
+
+        <Button
+            android:id="@+id/main_tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:layout_margin="16dp"
+            android:clickable="@{buttonEnabled}"
+            android:text="@{`hello `+buttonContent}"/>
+
+        <TextView
+            android:id="@+id/tv_abc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@{user.name}"/>
+
+
+        <!--我们需要展示的布局-->
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:layout_marginTop="?attr/actionBarSize"
+                      android:orientation="vertical">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{event::click1}"
+                android:text="@{title1}"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{event::click2}"
+                android:text="@{title2}"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->event.cilck3(title4)}"
+                android:text="@{title3}"/>
+
+            <Button
+                android:id="@+id/main_btn5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{Utils.getName(user)}"/>
+
+        </LinearLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+
+</layout>

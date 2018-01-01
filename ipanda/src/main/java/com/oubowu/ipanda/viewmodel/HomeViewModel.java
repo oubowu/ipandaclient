@@ -23,10 +23,6 @@ public class HomeViewModel extends ViewModel {
         mHomeRepository = homeRepository;
     }
 
-//    public LiveData<ApiResponse<List<TabIndex>>> getTabIndex() {
-//        return mHomeRepository.getTabIndex();
-//    }
-
     public LiveData<Resource<List<TabIndex>>> getTabIndex() {
         return mHomeRepository.getTabIndex();
     }

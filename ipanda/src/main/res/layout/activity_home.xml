@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,14 +11,11 @@
     </data>
 
     <android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.oubowu.ipanda1.ui.HomeActivity">
+        tools:context="com.oubowu.ipanda.ui.HomeActivity">
 
-        <TextView
+        <!--<TextView
             android:id="@+id/loading_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -32,7 +31,27 @@
             android:layout_height="match_parent"
             android:contentDescription="Products list"
             app:layoutManager="LinearLayoutManager"
-            app:visibleGone="@{!isLoading}"/>
+            app:visibleGone="@{!isLoading}"/>-->
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/navigation"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_gravity="start"
+            android:layout_marginBottom="0dp"
+            app:elevation="@dimen/fab_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:menu="@menu/navigation_items"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="#333333"
+            app:layout_constraintBottom_toTopOf="@id/navigation"/>
 
     </android.support.constraint.ConstraintLayout>
 
