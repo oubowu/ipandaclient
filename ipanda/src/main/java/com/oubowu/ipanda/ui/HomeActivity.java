@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -47,11 +48,13 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // setContentView(R.layout.activity_home);
 
         StatusBarUtil.transparencyBar(this);
-        StatusBarUtil.StatusBarLightMode(this,3);
-
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+            StatusBarUtil.setStatusBarColor(this, R.color.transparent);
+        } else {
+            StatusBarUtil.StatusBarLightMode(this, 3);
+        }
 
         mHomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_home);
 

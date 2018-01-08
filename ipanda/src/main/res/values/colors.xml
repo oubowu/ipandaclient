@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="transparent">#00ffffff</color>
 
+    <color name="statusBarColorLollipop">#FFD5D5D5</color>
+
 </resources>
