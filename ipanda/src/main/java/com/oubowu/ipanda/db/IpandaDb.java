@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
 import com.orhanobut.logger.Logger;
-import com.oubowu.ipanda.bean.TabIndex;
+import com.oubowu.ipanda.util.TabIndex;
 import com.oubowu.ipanda.db.dao.TabIndexDao;
 
 /**

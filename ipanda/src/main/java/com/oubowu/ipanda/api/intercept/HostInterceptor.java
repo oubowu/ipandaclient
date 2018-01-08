@@ -13,7 +13,7 @@ import okhttp3.Response;
 /**
  * Created by Oubowu on 2017/12/22 12:02.
  */
-public class DynamicHostInterceptor implements Interceptor {
+public class HostInterceptor implements Interceptor {
 
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {

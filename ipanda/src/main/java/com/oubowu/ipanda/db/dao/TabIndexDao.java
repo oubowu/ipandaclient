@@ -6,7 +6,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
-import com.oubowu.ipanda.bean.TabIndex;
+import com.oubowu.ipanda.util.TabIndex;
 
 import java.util.List;
 

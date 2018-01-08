@@ -1,7 +1,7 @@
 package com.oubowu.ipanda.api;
 
 import com.oubowu.ipanda.api.calladapter.LiveDataCallAdapterFactory;
-import com.oubowu.ipanda.api.intercept.DynamicHostInterceptor;
+import com.oubowu.ipanda.api.intercept.HostInterceptor;
 import com.oubowu.ipanda.api.intercept.LogInterceptor;
 
 import java.util.concurrent.TimeUnit;
@@ -49,14 +49,18 @@ public class IpandaApi {
                 //                    .cache(getHttpCache())
                 //                    .authenticator(authenticator)
                 //                    .addInterceptor(loggingInterceptor)
-                .addInterceptor(new DynamicHostInterceptor())
+                .addInterceptor(new HostInterceptor())
                 //                    .addInterceptor(getCacheInterceptor())
                 //                    .addNetworkInterceptor(getCacheInterceptor())
                 //                    .addNetworkInterceptor(layoutInterceptor)
                 //                    .addNetworkInterceptor(hmacInterceptor)
                 //                    .addNetworkInterceptor(cookieInterceptor)
-                .addInterceptor(new LogInterceptor()).connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS).readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)
-                .writeTimeout(WRITE_TIME_OUT, TimeUnit.SECONDS).retryOnConnectionFailure(true).build();
+                .addInterceptor(new LogInterceptor()) //
+                .connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS) //
+                .readTimeout(READ_TIME_OUT, TimeUnit.SECONDS) //
+                .writeTimeout(WRITE_TIME_OUT, TimeUnit.SECONDS) //
+                .retryOnConnectionFailure(true) //
+                .build();
     }
 
     // 有1.addInterceptor ,和2.addNetworkInterceptor这两种。他们的区别简单的说下，不知道也没关系，addNetworkInterceptor添加的是网络拦截器，他会在在request和resposne是分别被调用一次，

@@ -1,4 +1,4 @@
-package com.oubowu.ipanda.repository;
+package com.oubowu.ipanda.util;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
@@ -8,8 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
 
 import com.oubowu.ipanda.api.response.ApiResponse;
-import com.oubowu.ipanda.bean.Resource;
-import com.oubowu.ipanda.util.CommonUtil;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;

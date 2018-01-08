@@ -7,8 +7,9 @@ import android.util.Log;
 
 import com.oubowu.ipanda.api.response.ApiResponse;
 import com.oubowu.ipanda.api.service.IpandaService;
-import com.oubowu.ipanda.bean.Resource;
-import com.oubowu.ipanda.bean.TabIndex;
+import com.oubowu.ipanda.util.NetworkBoundResource;
+import com.oubowu.ipanda.util.Resource;
+import com.oubowu.ipanda.util.TabIndex;
 import com.oubowu.ipanda.db.IpandaDb;
 import com.oubowu.ipanda.db.dao.TabIndexDao;
 import com.oubowu.ipanda.util.CommonUtil;

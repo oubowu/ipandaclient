@@ -1,10 +1,10 @@
-package com.oubowu.ipanda.bean;
+package com.oubowu.ipanda.util;
 
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.oubowu.ipanda.util.LoggerInfoUtils;
+import com.oubowu.ipanda.bean.Status;
 
 /**
  * Created by Oubowu on 2017/12/30 22:21.

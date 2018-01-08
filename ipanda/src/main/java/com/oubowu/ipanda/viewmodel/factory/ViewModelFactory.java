@@ -1,4 +1,4 @@
-package com.oubowu.ipanda.viewmodel;
+package com.oubowu.ipanda.viewmodel.factory;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
@@ -15,13 +15,13 @@ import javax.inject.Singleton;
  * Created by Oubowu on 2017/12/28 23:38.
  */
 @Singleton
-public class IpandaViewModelFactory implements ViewModelProvider.Factory {
+public class ViewModelFactory implements ViewModelProvider.Factory {
 
     private Map<Class<? extends ViewModel>, Provider<ViewModel>> creators;
 
     // creators由ViewModelModule提供
     @Inject
-    public IpandaViewModelFactory(Map<Class<? extends ViewModel>, Provider<ViewModel>> creators) {
+    public ViewModelFactory(Map<Class<? extends ViewModel>, Provider<ViewModel>> creators) {
         this.creators = creators;
     }
 

@@ -17,11 +17,12 @@ import com.orhanobut.logger.Logger;
 import com.oubowu.ipanda.R;
 import com.oubowu.ipanda.api.response.ApiResponse;
 import com.oubowu.ipanda.api.service.IpandaService;
-import com.oubowu.ipanda.bean.TabIndex;
 import com.oubowu.ipanda.bean.home.HomeIndex;
 import com.oubowu.ipanda.databinding.ActivityHomeBinding;
 import com.oubowu.ipanda.util.BottomNavigationViewHelper;
 import com.oubowu.ipanda.util.MapUtil;
+import com.oubowu.ipanda.util.StatusBarUtil;
+import com.oubowu.ipanda.util.TabIndex;
 import com.oubowu.ipanda.viewmodel.HomeViewModel;
 
 import java.util.List;
@@ -48,6 +49,10 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // setContentView(R.layout.activity_home);
 
+        StatusBarUtil.transparencyBar(this);
+        StatusBarUtil.StatusBarLightMode(this,3);
+
+
         mHomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_home);
 
         initBottomNavigationView();
@@ -57,7 +62,7 @@ public class HomeActivity extends AppCompatActivity {
     @SuppressLint("RestrictedApi")
     private void initBottomNavigationView() {
 
-        mNavigationView = mHomeBinding.navigation;
+        mNavigationView = mHomeBinding.bnv;
         BottomNavigationViewHelper.disableShiftMode(mNavigationView);
 
         HomeViewModel homeViewModel = ViewModelProviders.of(this, mFactory).get(HomeViewModel.class);

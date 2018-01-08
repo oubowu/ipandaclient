@@ -3,7 +3,7 @@ package com.oubowu.ipanda.api.service;
 import android.arch.lifecycle.LiveData;
 
 import com.oubowu.ipanda.api.response.ApiResponse;
-import com.oubowu.ipanda.bean.TabIndex;
+import com.oubowu.ipanda.util.TabIndex;
 import com.oubowu.ipanda.bean.base.VideoList;
 import com.oubowu.ipanda.bean.home.HomeIndex;
 
