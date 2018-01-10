@@ -1,8 +1,10 @@
 package com.oubowu.ipanda.util;
 
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * Created by Oubowu on 2017/12/30 23:00.
@@ -21,6 +23,14 @@ public class CommonUtil {
 
     public static boolean isEmpty(@Nullable Collection collection) {
         return collection == null || collection.isEmpty();
+    }
+
+    public static boolean isEmpty(@Nullable CharSequence c) {
+        return TextUtils.isEmpty(c);
+    }
+
+    public static boolean isEmpty(@Nullable Map map) {
+        return map == null || map.isEmpty();
     }
 
 }

@@ -7,4 +7,13 @@
 
     <color name="statusBarColorLollipop">#FFD5D5D5</color>
 
+    <color name="backgroundColor">#ebebeb</color>
+
+    <color name="colorPrimary1">#ffffff</color>
+    <color name="colorPrimaryDark1">#eceff1</color>
+    <color name="colorAccent1">#0084ff</color>
+
+    <color name="white">#ffffff</color>
+
+
 </resources>

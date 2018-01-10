@@ -12,7 +12,7 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 public abstract class HomeActivityModule {
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = {FragmentModule.class}/*注入到HomeActivity的module*/)
     abstract HomeActivity contributesHomeActivity();
 
 }

@@ -7,6 +7,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
+        <item name="android:windowBackground">@color/backgroundColor</item>
+
         <!-- 使用内容转场动画 -->
         <item name="android:windowContentTransitions">true</item>
         <!--并且允许覆盖转场动画-->
@@ -21,10 +23,20 @@
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
+        <item name="colorPrimary">@color/colorPrimary1</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark1</item>
+        <item name="colorAccent">@color/colorAccent1</item>
+
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="BottomNavigationViewTheme" parent="Widget.Design.BottomNavigationView">
+        <item name="colorPrimary">@color/colorAccent1</item>
+    </style>
+
 
 </resources>

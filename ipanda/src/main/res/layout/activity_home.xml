@@ -4,6 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="isLoading"
             type="boolean"/>
@@ -12,14 +13,14 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:fitsSystemWindows="false"
         tools:context="com.oubowu.ipanda.ui.HomeActivity">
 
-        <TextView
+        <!--<TextView
             android:text="@string/action_settings"
+            android:textColor="@color/colorAccent"
+            android:fitsSystemWindows="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"/>-->
 
         <FrameLayout
             android:id="@+id/fl_container"
@@ -27,6 +28,7 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="56dp"
             android:layout_weight="1"
+            android:fitsSystemWindows="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         </FrameLayout>
@@ -44,7 +46,11 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_gravity="bottom"
+            app:itemBackground="@color/white"
+            android:theme="@style/BottomNavigationViewTheme"
             app:menu="@menu/navigation_items"/>
+        <!--app:itemIconTint="@color/blue"
+        app:itemTextColor="@color/blue"-->
 
     </android.support.design.widget.CoordinatorLayout>
 

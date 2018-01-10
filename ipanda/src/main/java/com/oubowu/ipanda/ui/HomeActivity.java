@@ -5,9 +5,11 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.MenuBuilder;
 import android.util.Log;
@@ -22,6 +24,7 @@ import com.oubowu.ipanda.bean.home.HomeIndex;
 import com.oubowu.ipanda.databinding.ActivityHomeBinding;
 import com.oubowu.ipanda.util.BottomNavigationViewHelper;
 import com.oubowu.ipanda.util.MapUtil;
+import com.oubowu.ipanda.util.NavigationController;
 import com.oubowu.ipanda.util.StatusBarUtil;
 import com.oubowu.ipanda.util.TabIndex;
 import com.oubowu.ipanda.viewmodel.HomeViewModel;
@@ -31,11 +34,21 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
+
 // 架构：UI负责从ViewModule取数据进行UI更新；ViewModule负责从Repository中取数据；Repository负责具体的数据业务请求，一般有网络和本地数据业务逻辑
 // UI<---ViewModule<----Repository
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements HasSupportFragmentInjector,HostFragment.OnFragmentInteractionListener {
 
     ActivityHomeBinding mHomeBinding;
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> mFragmentDispatchingAndroidInjector;
+
+    @Inject
+    NavigationController mNavigationController;
 
     @Inject
     ViewModelProvider.Factory mFactory;
@@ -51,8 +64,9 @@ public class HomeActivity extends AppCompatActivity {
 
         StatusBarUtil.transparencyBar(this);
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
-            StatusBarUtil.setStatusBarColor(this, R.color.transparent);
+            StatusBarUtil.setStatusBarColor(this, R.color.statusBarColorLollipop);
         } else {
+            StatusBarUtil.setStatusBarColor(this, R.color.colorPrimaryDark1);
             StatusBarUtil.StatusBarLightMode(this, 3);
         }
 
@@ -94,6 +108,7 @@ public class HomeActivity extends AppCompatActivity {
                                 }
                                 return true;
                             });
+                            mNavigationController.navigateToHost();
                         }
                         Logger.d(resource);
                         // Toast.makeText(HomeActivity.this, "请求成功", Toast.LENGTH_SHORT).show();
@@ -110,4 +125,14 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return mFragmentDispatchingAndroidInjector;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+
+    }
 }
