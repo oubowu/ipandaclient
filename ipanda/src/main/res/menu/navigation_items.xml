@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/action_search"
+        android:id="@+id/action_home"
         android:icon="@drawable/ic_home"
-        android:orderInCategory="1"
+        android:orderInCategory="0"
         android:title="@string/menu_home"/>
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_panda_live"
         android:icon="@drawable/ic_panda_live"
-        android:orderInCategory="2"
+        android:orderInCategory="1"
         android:title="@string/menu_panda_live"/>
     <item
-        android:id="@+id/action_navigation"
+        android:id="@+id/action_panda_video"
         android:icon="@drawable/ic_panda_video"
-        android:orderInCategory="3"
+        android:orderInCategory="2"
         android:title="@string/menu_panda_video"/>
 
     <item
-        android:id="@+id/action_settings1"
+        android:id="@+id/action_panda_news"
         android:icon="@drawable/ic_panda_news"
-        android:orderInCategory="4"
+        android:orderInCategory="3"
         android:title="@string/menu_panda_news"/>
     <item
-        android:id="@+id/action_navigation1"
+        android:id="@+id/action_china_live"
         android:icon="@drawable/ic_china_live"
-        android:orderInCategory="5"
+        android:orderInCategory="4"
         android:title="@string/menu_china_live"/>
 </menu>

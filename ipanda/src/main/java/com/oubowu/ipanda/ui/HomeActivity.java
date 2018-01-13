@@ -1,7 +1,6 @@
 package com.oubowu.ipanda.ui;
 
 import android.annotation.SuppressLint;
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
@@ -18,19 +17,14 @@ import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
 import com.oubowu.ipanda.R;
-import com.oubowu.ipanda.api.response.ApiResponse;
-import com.oubowu.ipanda.api.service.IpandaService;
-import com.oubowu.ipanda.bean.home.HomeIndex;
 import com.oubowu.ipanda.databinding.ActivityHomeBinding;
 import com.oubowu.ipanda.util.BottomNavigationViewHelper;
-import com.oubowu.ipanda.util.MapUtil;
 import com.oubowu.ipanda.util.NavigationController;
 import com.oubowu.ipanda.util.StatusBarUtil;
 import com.oubowu.ipanda.util.TabIndex;
 import com.oubowu.ipanda.viewmodel.HomeViewModel;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -40,7 +34,7 @@ import dagger.android.support.HasSupportFragmentInjector;
 
 // 架构：UI负责从ViewModule取数据进行UI更新；ViewModule负责从Repository中取数据；Repository负责具体的数据业务请求，一般有网络和本地数据业务逻辑
 // UI<---ViewModule<----Repository
-public class HomeActivity extends AppCompatActivity implements HasSupportFragmentInjector,HostFragment.OnFragmentInteractionListener {
+public class HomeActivity extends AppCompatActivity implements HasSupportFragmentInjector, HostFragment.OnFragmentInteractionListener {
 
     ActivityHomeBinding mHomeBinding;
 
@@ -52,9 +46,6 @@ public class HomeActivity extends AppCompatActivity implements HasSupportFragmen
 
     @Inject
     ViewModelProvider.Factory mFactory;
-
-    @Inject
-    IpandaService mIpandaService;
 
     private BottomNavigationView mNavigationView;
 
@@ -80,6 +71,32 @@ public class HomeActivity extends AppCompatActivity implements HasSupportFragmen
     private void initBottomNavigationView() {
 
         mNavigationView = mHomeBinding.bnv;
+
+        mNavigationView.setOnNavigationItemSelectedListener(item -> {
+            Log.e("HomeActivity", "85行-onNavigationItemSelected(): " + item.getOrder());
+            switch (item.getOrder()) {
+                case 0:
+                    mNavigationController.navigateToHost("熊猫频道", item.getTitleCondensed().toString());
+                    break;
+                case 1:
+
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+
+                    break;
+                case 4:
+
+                    break;
+            }
+            return true;
+        });
+        mNavigationView.setOnNavigationItemReselectedListener(item -> {
+            // 防止重新点击
+        });
+
         BottomNavigationViewHelper.disableShiftMode(mNavigationView);
 
         HomeViewModel homeViewModel = ViewModelProviders.of(this, mFactory).get(HomeViewModel.class);
@@ -93,25 +110,15 @@ public class HomeActivity extends AppCompatActivity implements HasSupportFragmen
                         if (list != null && !list.isEmpty() && list.size() == menuBuilder.size()) {
                             for (int i = 0; i < menuBuilder.size(); i++) {
                                 MenuItem item = menuBuilder.getItem(i);
+                                if (i == 0) {
+                                    mNavigationController.navigateToHost("熊猫频道", list.get(i).url);
+                                }
                                 item.setTitle(list.get(i).title);
                                 item.setTitleCondensed(list.get(i).url);
                             }
-                            mNavigationView.setOnNavigationItemSelectedListener(item -> {
-                                Log.e("xxx", item.getTitleCondensed().toString());
-                                if (item.getOrder() == 1) {
-                                    LiveData<ApiResponse<Map<String, HomeIndex>>> data = mIpandaService.getHomeIndex(item.getTitleCondensed().toString());
-                                    data.observe(HomeActivity.this, mapApiResponse -> {
-                                        if (mapApiResponse != null) {
-                                            HomeIndex homeIndex = MapUtil.getFirstElement(mapApiResponse.body);
-                                        }
-                                    });
-                                }
-                                return true;
-                            });
-                            mNavigationController.navigateToHost();
                         }
+
                         Logger.d(resource);
-                        // Toast.makeText(HomeActivity.this, "请求成功", Toast.LENGTH_SHORT).show();
                         break;
                     case ERROR:
                         Toast.makeText(HomeActivity.this, "请求失败", Toast.LENGTH_SHORT).show();

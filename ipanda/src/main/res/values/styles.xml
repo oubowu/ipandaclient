@@ -38,5 +38,16 @@
         <item name="colorPrimary">@color/colorAccent1</item>
     </style>
 
+    <!-- ToolBar主题，menu的item字体为白色 -->
+    <style name="ToolbarStyle" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">@color/toolbarSelectTextColor</item>
+        <item name="android:textColorSecondary">@color/toolbarNormalTextColor</item>
+        <item name="actionMenuTextColor">@color/toolbarSelectTextColor</item>
+
+        <item name="colorPrimary">@color/toolbarBgColor</item>
+
+
+    </style>
+
 
 </resources>

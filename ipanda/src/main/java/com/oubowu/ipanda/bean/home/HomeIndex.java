@@ -29,11 +29,21 @@ public class HomeIndex {
     public List<BigImgBean> bigImg;
     public List<ListBeanXX> list;
 
+    @Override
+    public String toString() {
+        return "HomeIndex{" + "area=" + area + ", pandaeye=" + pandaeye + ", pandalive=" + pandalive + ", walllive=" + walllive + ", chinalive=" + chinalive + ", interactive=" + interactive + ", cctv=" + cctv + ", bigImg=" + bigImg + ", list=" + list + '}';
+    }
+
     public static class AreaBean {
         public List<?> listscroll;
         public List<?> listh;
         public List<?> lists;
         public List<?> topiclist;
+
+        @Override
+        public String toString() {
+            return "AreaBean{" + "listscroll=" + listscroll + ", listh=" + listh + ", lists=" + lists + ", topiclist=" + topiclist + '}';
+        }
     }
 
     public static class PandaeyeBean {
@@ -46,6 +56,11 @@ public class HomeIndex {
         public String title;
         public String pandaeyelogo;
         public List<ItemsBean> items;
+
+        @Override
+        public String toString() {
+            return "PandaeyeBean{" + "title='" + title + '\'' + ", pandaeyelogo='" + pandaeyelogo + '\'' + ", items=" + items + '}';
+        }
 
         public static class ItemsBean {
             /**
@@ -67,6 +82,11 @@ public class HomeIndex {
             public String pid;
             public String vid;
             public String order;
+
+            @Override
+            public String toString() {
+                return "ItemsBean{" + "title='" + title + '\'' + ", bgcolor='" + bgcolor + '\'' + ", brief='" + brief + '\'' + ", url='" + url + '\'' + ", id='" + id + '\'' + ", pid='" + pid + '\'' + ", vid='" + vid + '\'' + ", order='" + order + '\'' + '}';
+            }
         }
     }
 
@@ -78,6 +98,11 @@ public class HomeIndex {
 
         public String title;
         public List<ListBean> list;
+
+        @Override
+        public String toString() {
+            return "PandaliveBean{" + "title='" + title + '\'' + ", list=" + list + '}';
+        }
 
         public static class ListBean {
             /**
@@ -95,6 +120,11 @@ public class HomeIndex {
             public String id;
             public String vid;
             public String order;
+
+            @Override
+            public String toString() {
+                return "ListBean{" + "image='" + image + '\'' + ", url='" + url + '\'' + ", title='" + title + '\'' + ", id='" + id + '\'' + ", vid='" + vid + '\'' + ", order='" + order + '\'' + '}';
+            }
         }
     }
 
@@ -106,6 +136,11 @@ public class HomeIndex {
 
         public String title;
         public List<?> list;
+
+        @Override
+        public String toString() {
+            return "WallliveBean{" + "title='" + title + '\'' + ", list=" + list + '}';
+        }
     }
 
     public static class ChinaliveBean {
@@ -116,6 +151,11 @@ public class HomeIndex {
 
         public String title;
         public List<ListBeanX> list;
+
+        @Override
+        public String toString() {
+            return "ChinaliveBean{" + "title='" + title + '\'' + ", list=" + list + '}';
+        }
 
         public static class ListBeanX {
             /**
@@ -133,12 +173,22 @@ public class HomeIndex {
             public String id;
             public String vid;
             public String order;
+
+            @Override
+            public String toString() {
+                return "ListBeanX{" + "image='" + image + '\'' + ", url='" + url + '\'' + ", title='" + title + '\'' + ", id='" + id + '\'' + ", vid='" + vid + '\'' + ", order='" + order + '\'' + '}';
+            }
         }
     }
 
     public static class InteractiveBean {
         public List<?> interactiveone;
         public List<?> interactivetwo;
+
+        @Override
+        public String toString() {
+            return "InteractiveBean{" + "interactiveone=" + interactiveone + ", interactivetwo=" + interactivetwo + '}';
+        }
     }
 
     public static class CctvBean {
@@ -151,6 +201,11 @@ public class HomeIndex {
         public String title;
         public String listurl;
         public List<?> listlive;
+
+        @Override
+        public String toString() {
+            return "CctvBean{" + "title='" + title + '\'' + ", listurl='" + listurl + '\'' + ", listlive=" + listlive + '}';
+        }
     }
 
     public static class BigImgBean {
@@ -175,6 +230,11 @@ public class HomeIndex {
         public String pid;
         public String vid;
         public String order;
+
+        @Override
+        public String toString() {
+            return "BigImgBean{" + "image='" + image + '\'' + ", title='" + title + '\'' + ", url='" + url + '\'' + ", id='" + id + '\'' + ", type='" + type + '\'' + ", stype='" + stype + '\'' + ", pid='" + pid + '\'' + ", vid='" + vid + '\'' + ", order='" + order + '\'' + '}';
+        }
     }
 
     public static class ListBeanXX {
@@ -189,5 +249,10 @@ public class HomeIndex {
         public String title;
         public String type;
         public String order;
+
+        @Override
+        public String toString() {
+            return "ListBeanXX{" + "listUrl='" + listUrl + '\'' + ", title='" + title + '\'' + ", type='" + type + '\'' + ", order='" + order + '\'' + '}';
+        }
     }
 }

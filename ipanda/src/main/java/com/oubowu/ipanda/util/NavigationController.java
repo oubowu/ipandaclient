@@ -23,9 +23,9 @@ public class NavigationController {
         mFragmentManager = homeActivity.getSupportFragmentManager();
     }
 
-    public void navigateToHost() {
-        Log.e("NavigationController","27行-navigateToHost(): "+" ");
-        HostFragment hostFragment = HostFragment.newInstance("", "");
+    public void navigateToHost(String name, String url) {
+        Log.e("NavigationController","跳转首页碎片");
+        HostFragment hostFragment = HostFragment.newInstance(name, url);
         mFragmentManager.beginTransaction().replace(mContainerId, hostFragment, HostFragment.class.getSimpleName()).commitAllowingStateLoss();
     }
 

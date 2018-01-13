@@ -9,7 +9,7 @@ import com.oubowu.ipanda.bean.Status;
 /**
  * Created by Oubowu on 2017/12/30 22:21.
  */
-public class Resource<T> {
+public class    Resource<T> {
 
     @NonNull
     public final Status status;

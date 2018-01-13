@@ -15,13 +15,6 @@
         android:layout_height="match_parent"
         tools:context="com.oubowu.ipanda.ui.HomeActivity">
 
-        <!--<TextView
-            android:text="@string/action_settings"
-            android:textColor="@color/colorAccent"
-            android:fitsSystemWindows="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>-->
-
         <FrameLayout
             android:id="@+id/fl_container"
             android:layout_width="match_parent"
@@ -36,9 +29,9 @@
         <View
             android:id="@+id/v_line"
             android:layout_width="match_parent"
-            android:layout_height="0.2dp"
+            android:layout_height="0.1dp"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="56.2dp"
+            android:layout_marginBottom="56.1dp"
             android:background="#333333"/>
 
         <android.support.design.widget.BottomNavigationView
@@ -49,8 +42,6 @@
             app:itemBackground="@color/white"
             android:theme="@style/BottomNavigationViewTheme"
             app:menu="@menu/navigation_items"/>
-        <!--app:itemIconTint="@color/blue"
-        app:itemTextColor="@color/blue"-->
 
     </android.support.design.widget.CoordinatorLayout>
 
