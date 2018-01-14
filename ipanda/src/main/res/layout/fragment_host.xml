@@ -20,19 +20,19 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ToolbarStyle"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            android:theme="@style/ToolbarStyle"
-            android:background="?attr/colorPrimary"
             app:toolbarTitle="@{title}">
 
         </android.support.v7.widget.Toolbar>
 
-        <android.support.v4.view.ViewPager
+        <com.oubowu.ipanda.ui.widget.CarouselViewPager
+            android:id="@+id/carouselViewPager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-        </android.support.v4.view.ViewPager>
+        </com.oubowu.ipanda.ui.widget.CarouselViewPager>
 
     </LinearLayout>
 

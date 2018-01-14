@@ -67,6 +67,11 @@ public class HomeActivity extends AppCompatActivity implements HasSupportFragmen
 
     }
 
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
+
     @SuppressLint("RestrictedApi")
     private void initBottomNavigationView() {
 

@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.orhanobut.logger.Logger;
 import com.oubowu.ipanda.R;
 import com.oubowu.ipanda.databinding.FragmentHostBinding;
 import com.oubowu.ipanda.di.Injectable;
@@ -23,7 +22,7 @@ import com.oubowu.ipanda.viewmodel.HostViewModel;
 import javax.inject.Inject;
 
 
-public class HostFragment extends Fragment implements Injectable{
+public class HostFragment extends Fragment implements Injectable {
 
     private static final String NAME = "name";
     private static final String URL = "url";
@@ -32,6 +31,8 @@ public class HostFragment extends Fragment implements Injectable{
     private String mUrl;
 
     private OnFragmentInteractionListener mListener;
+
+    private FragmentHostBinding mBinding;
 
     @Inject
     ViewModelProvider.Factory mFactory;
@@ -62,11 +63,11 @@ public class HostFragment extends Fragment implements Injectable{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        FragmentHostBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_host, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_host, container, false);
 
-        binding.setTitle(mName);
+        mBinding.setTitle(mName);
 
-        return binding.getRoot();
+        return mBinding.getRoot();
     }
 
     @Override
@@ -79,7 +80,10 @@ public class HostFragment extends Fragment implements Injectable{
             if (homeIndexResource != null) {
                 switch (homeIndexResource.status) {
                     case SUCCESS:
-                        Logger.d(homeIndexResource.data);
+                        // Logger.d(homeIndexResource.data);
+                        if (homeIndexResource.data != null) {
+                            mBinding.carouselViewPager.setList(homeIndexResource.data.bigImg);
+                        }
                         break;
                     case ERROR:
                         Toast.makeText(getActivity(), "请求失败", Toast.LENGTH_SHORT).show();
