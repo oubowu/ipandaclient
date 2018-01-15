@@ -6,4 +6,7 @@
         <attr name="hollowCircleColor" format="color|reference"/>
         <attr name="solidCircleColor" format="color|reference"/>
     </declare-styleable>
+    <declare-styleable name="DependenceBehavior">
+        <attr name="dependenceId" format="reference"/>
+    </declare-styleable>
 </resources>

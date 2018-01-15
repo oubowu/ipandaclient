@@ -22,6 +22,8 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:theme="@style/ToolbarStyle"
+            app:dependenceId="@id/toolbar"
+            app:layout_behavior="com.oubowu.ipanda.util.DependenceBehavior"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:toolbarTitle="@{title}">
@@ -31,13 +33,18 @@
         <com.oubowu.ipanda.ui.widget.CarouselViewPager
             android:id="@+id/carouselViewPager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:dependenceId="@id/toolbar"
+            app:layout_behavior="com.oubowu.ipanda.util.DependenceBehavior"
+            >
         </com.oubowu.ipanda.ui.widget.CarouselViewPager>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:dependenceId="@id/carouselViewPager"
+            app:layout_behavior="com.oubowu.ipanda.util.DependenceBehavior">
 
         </android.support.v7.widget.RecyclerView>
 
