@@ -69,11 +69,11 @@ public class DescImage extends android.support.v7.widget.AppCompatImageView {
             // 我设置着色器开始的位置为（0，0），结束位置为（getWidth(), 0）表示我的着色器要给整个View在水平方向上渲染
             mLinearGradient = new LinearGradient(0, getMeasuredHeight(), 0, getMeasuredHeight() - mTextPadding * 2 - (mFontMetrics.bottom - mFontMetrics.top), colors, null, Shader.TileMode.REPEAT);
             mPaint.setShader(mLinearGradient);
-            mRectF.set(0, getMeasuredHeight() - mTextPadding * 2 - (mFontMetrics.bottom - mFontMetrics.top), getMeasuredWidth(), getMeasuredHeight());
+            mRectF.set(0, getHeight() - mTextPadding * 2 - (mFontMetrics.bottom - mFontMetrics.top), getWidth(), getHeight());
         }
         canvas.drawRect(mRectF, mPaint);
 
-        canvas.drawText(mDesc, mTextPadding, getMeasuredHeight() - mTextPadding + (mFontMetrics.descent + mFontMetrics.ascent) / 2, mTextPaint);
+        canvas.drawText(mDesc, mTextPadding, getHeight() - mTextPadding + (mFontMetrics.descent + mFontMetrics.ascent) / 2, mTextPaint);
 
     }
 

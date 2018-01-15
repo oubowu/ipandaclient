@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -36,16 +35,17 @@ public class BindingAdapters {
         if (context instanceof AppCompatActivity) {
             AppCompatActivity activity = (AppCompatActivity) context;
             activity.setSupportActionBar(toolbar);
-            Log.e("BindingAdapters", "26行-setToolbarTitle(): " + title);
-        } else {
-            Log.e("BindingAdapters", "27行-setToolbarTitle(): " + " ");
+            // Log.e("BindingAdapters", "26行-setToolbarTitle(): " + title);
         }
+        //else {
+        // Log.e("BindingAdapters", "27行-setToolbarTitle(): " + " ");
+        //}
         toolbar.setTitle(title);
     }
 
-    @BindingAdapter("loadImg")
+    @BindingAdapter("loadDescImage")
     public static void loadImg(DescImage imageView, HomeIndex.BigImgBean bigImgBean) {
-        imageView.setDesc(bigImgBean.order+":"+bigImgBean.title);
+        imageView.setDesc(bigImgBean.title);
         Glide.with(imageView).load(bigImgBean.image).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {

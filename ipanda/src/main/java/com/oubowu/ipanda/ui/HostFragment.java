@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +19,11 @@ import android.widget.Toast;
 import com.oubowu.ipanda.R;
 import com.oubowu.ipanda.databinding.FragmentHostBinding;
 import com.oubowu.ipanda.di.Injectable;
+import com.oubowu.ipanda.ui.adapter.FragmentDataBindingComponent;
+import com.oubowu.ipanda.ui.adapter.HostAdapter;
 import com.oubowu.ipanda.viewmodel.HostViewModel;
+
+import java.util.Arrays;
 
 import javax.inject.Inject;
 
@@ -36,6 +42,8 @@ public class HostFragment extends Fragment implements Injectable {
 
     @Inject
     ViewModelProvider.Factory mFactory;
+
+    private Context mContext;
 
 
     public HostFragment() {
@@ -95,6 +103,15 @@ public class HostFragment extends Fragment implements Injectable {
             }
         });
 
+        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+        mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
+        HostAdapter hostAdapter = new HostAdapter(new FragmentDataBindingComponent(this));
+        mBinding.recyclerView.setAdapter(hostAdapter);
+        hostAdapter.replace(
+                Arrays.asList("1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111",
+                        "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111",
+                        "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111"));
+
     }
 
     public void onButtonPressed(Uri uri) {
@@ -106,6 +123,7 @@ public class HostFragment extends Fragment implements Injectable {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        mContext = context;
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -117,6 +135,8 @@ public class HostFragment extends Fragment implements Injectable {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        // 取消所有异步任务
+        mContext = null;
     }
 
     public interface OnFragmentInteractionListener {

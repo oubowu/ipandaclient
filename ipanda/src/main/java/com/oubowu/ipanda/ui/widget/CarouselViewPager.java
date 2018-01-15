@@ -42,7 +42,7 @@ public class CarouselViewPager extends RelativeLayout {
 
     private int mCurrentPosition = 1;
     private int mLastPosition;
-    long mAutoTimeMillis;
+    long mAutoScrollTimeMillis;
 
     private ViewPager.OnPageChangeListener mPageChangeListener;
 
@@ -97,7 +97,7 @@ public class CarouselViewPager extends RelativeLayout {
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:
                 default:
-                    mAutoTimeMillis = System.currentTimeMillis();
+                    mAutoScrollTimeMillis = System.currentTimeMillis();
                     mAuto = true;
                     break;
             }
@@ -139,17 +139,17 @@ public class CarouselViewPager extends RelativeLayout {
         };
 
         mDisposable = Observable //
-                .interval(3, 3, TimeUnit.SECONDS) //
+                .interval(4, 4, TimeUnit.SECONDS) //
                 .observeOn(AndroidSchedulers.mainThread()) //
                 .subscribe(aLong -> {
                     if (mPagerAdapter != null && mPagerAdapter.getCount() > 1 && mAuto) {
                         long currentTimeMillis = System.currentTimeMillis();
-                        if (currentTimeMillis - mAutoTimeMillis >= 2000) {
+                        if (currentTimeMillis - mAutoScrollTimeMillis >= 2000) {
                             mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
                         }
                     }
                 });
-//        mDisposable.dispose();
+        // mDisposable.dispose();
 
         mBinding.indicatorContainer.attachViewPager(mViewPager);
 
@@ -184,7 +184,7 @@ public class CarouselViewPager extends RelativeLayout {
                 ItemCarousePagerBinding binding = (ItemCarousePagerBinding) object;
                 ViewPager pager = (ViewPager) container;
                 ViewGroup.LayoutParams pagerLayoutParams = pager.getLayoutParams();
-                binding.banner.measure(0,0);
+                binding.banner.measure(0, 0);
                 if (pagerLayoutParams.height != binding.banner.getMeasuredHeight()) {
                     pagerLayoutParams.height = binding.banner.getMeasuredHeight();
                     pager.setLayoutParams(pagerLayoutParams);
@@ -204,21 +204,20 @@ public class CarouselViewPager extends RelativeLayout {
             return binding.getRoot() == view;
         }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return String.valueOf(position + 1);
-        }
-
         public void setList(List<HomeIndex.BigImgBean> list) {
             mList = list;
             if (mList != null && mList.size() > 1) {
 
+                // 取首
                 HomeIndex.BigImgBean firstBigImgBean = mList.get(0);
 
+                // 取尾
                 HomeIndex.BigImgBean lastBigImgBean = mList.get(mList.size() - 1);
 
+                // 首添加到尾部
                 mList.add(firstBigImgBean);
 
+                // 尾添加到首部
                 mList.add(0, lastBigImgBean);
 
             }

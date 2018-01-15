@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-
+    <declare-styleable name="PagerIndicator">
+        <attr name="hollowCircleStrokeWidth" format="dimension"/>
+        <attr name="hollowCircleRadius" format="dimension"/>
+        <attr name="hollowCircleColor" format="color|reference"/>
+        <attr name="solidCircleColor" format="color|reference"/>
+    </declare-styleable>
 </resources>

@@ -16,10 +16,17 @@
         <com.oubowu.ipanda.ui.widget.PagerIndicator
             android:id="@+id/indicatorContainer"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="32dp"
             android:layout_alignBottom="@+id/viewPager"
             android:layout_alignRight="@+id/viewPager"
-            android:padding="8dp"/>
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            app:hollowCircleColor="@color/white"
+            app:hollowCircleRadius="5dp"
+            app:hollowCircleStrokeWidth="1.5dp"
+            app:solidCircleColor="@color/colorAccent1"/>
 
     </merge>
 
