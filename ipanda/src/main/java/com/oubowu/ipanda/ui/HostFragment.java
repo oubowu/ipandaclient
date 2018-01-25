@@ -4,26 +4,29 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.oubowu.ipanda.R;
+import com.oubowu.ipanda.bean.home.HomeIndex;
 import com.oubowu.ipanda.databinding.FragmentHostBinding;
 import com.oubowu.ipanda.di.Injectable;
 import com.oubowu.ipanda.ui.adapter.FragmentDataBindingComponent;
 import com.oubowu.ipanda.ui.adapter.HostAdapter;
+import com.oubowu.ipanda.util.BarBehavior;
 import com.oubowu.ipanda.viewmodel.HostViewModel;
-
-import java.util.Arrays;
+import com.oubowu.stickyitemdecoration.StickyHeadContainer;
+import com.oubowu.stickyitemdecoration.StickyItemDecoration;
+import com.oushangfeng.pinnedsectionitemdecoration.SmallPinnedHeaderItemDecoration;
 
 import javax.inject.Inject;
 
@@ -44,6 +47,8 @@ public class HostFragment extends Fragment implements Injectable {
     ViewModelProvider.Factory mFactory;
 
     private Context mContext;
+
+    private HostAdapter mHostAdapter;
 
 
     public HostFragment() {
@@ -82,6 +87,36 @@ public class HostFragment extends Fragment implements Injectable {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+
+        RecyclerView recyclerView = mBinding.recyclerView;
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+        SmallPinnedHeaderItemDecoration itemDecoration = new SmallPinnedHeaderItemDecoration.Builder(R.id.header_tag, HostAdapter.TYPE_PANDA_NEWS,
+                HostAdapter.TYPE_VIDEO_GRID, HostAdapter.TYPE_VIDEO_LIST).setDividerId(R.drawable.divider_host_fragment).enableDivider(true).create();
+        itemDecoration.disableDrawHeader(true);
+        recyclerView.addItemDecoration(itemDecoration);
+
+        final StickyHeadContainer container = mBinding.stickyHeadContainer;
+        container.setDataCallback(pos -> {
+            HomeIndex homeIndex = mHostAdapter.getHomeIndex();
+            switch (pos) {
+                case 0:
+                    mBinding.setStickyTitle(homeIndex.pandaeye.title);
+                    break;
+                case 1:
+                    mBinding.setStickyTitle(homeIndex.pandalive.title);
+                    break;
+                case 2:
+                    mBinding.setStickyTitle(homeIndex.chinalive.title);
+                    break;
+                default:
+                    break;
+            }
+        });
+        recyclerView.addItemDecoration(new StickyItemDecoration(container, HostAdapter.TYPE_PANDA_NEWS, HostAdapter.TYPE_VIDEO_GRID, HostAdapter.TYPE_VIDEO_LIST));
+
+        mHostAdapter = new HostAdapter(new FragmentDataBindingComponent(this));
+        recyclerView.setAdapter(mHostAdapter);
+
         HostViewModel hostViewModel = ViewModelProviders.of(this, mFactory).get(HostViewModel.class);
 
         hostViewModel.getHomeIndex(mUrl).observe(this, homeIndexResource -> {
@@ -91,10 +126,11 @@ public class HostFragment extends Fragment implements Injectable {
                         // Logger.d(homeIndexResource.data);
                         if (homeIndexResource.data != null) {
                             mBinding.carouselViewPager.setList(homeIndexResource.data.bigImg);
+                            mHostAdapter.replace(homeIndexResource.data);
                         }
                         break;
                     case ERROR:
-                        Toast.makeText(getActivity(), "请求失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "请求失败" + homeIndexResource.message, Toast.LENGTH_SHORT).show();
                         break;
                     case LOADING:
                         Toast.makeText(getActivity(), "加载中......", Toast.LENGTH_SHORT).show();
@@ -103,20 +139,21 @@ public class HostFragment extends Fragment implements Injectable {
             }
         });
 
-        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
-        mBinding.recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
-        HostAdapter hostAdapter = new HostAdapter(new FragmentDataBindingComponent(this));
-        mBinding.recyclerView.setAdapter(hostAdapter);
-        hostAdapter.replace(
-                Arrays.asList("1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111",
-                        "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111",
-                        "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111", "1111"));
+        CoordinatorLayout.LayoutParams clp = (CoordinatorLayout.LayoutParams) mBinding.toolbar.getLayoutParams();
+        CoordinatorLayout.Behavior behavior = clp.getBehavior();
+        if (behavior != null && behavior instanceof BarBehavior) {
+            ((BarBehavior) behavior).setOnNestedScrollListener((dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type) -> {
+                if (mListener != null) {
+                    mListener.onNestedScrollListener(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type);
+                }
+            });
+        }
 
     }
 
-    public void onButtonPressed(Uri uri) {
+    public void onButtonPressed() {
         if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+            mListener.onButtonPressed();
         }
     }
 
@@ -140,6 +177,8 @@ public class HostFragment extends Fragment implements Injectable {
     }
 
     public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
+        void onNestedScrollListener(int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type);
+
+        void onButtonPressed();
     }
 }

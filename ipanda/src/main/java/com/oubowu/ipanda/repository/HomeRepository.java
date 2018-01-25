@@ -1,19 +1,19 @@
 package com.oubowu.ipanda.repository;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.oubowu.ipanda.api.response.ApiResponse;
 import com.oubowu.ipanda.api.service.IpandaService;
+import com.oubowu.ipanda.db.IpandaDb;
+import com.oubowu.ipanda.db.dao.TabIndexDao;
+import com.oubowu.ipanda.util.MapUtil;
 import com.oubowu.ipanda.util.NetworkBoundResource;
 import com.oubowu.ipanda.util.Resource;
 import com.oubowu.ipanda.util.TabIndex;
-import com.oubowu.ipanda.db.IpandaDb;
-import com.oubowu.ipanda.db.dao.TabIndexDao;
-import com.oubowu.ipanda.util.CommonUtil;
-import com.oubowu.ipanda.util.MapUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -43,7 +43,7 @@ public class HomeRepository {
 
     public LiveData<Resource<List<TabIndex>>> getTabIndex() {
 
-        return new NetworkBoundResource<List<TabIndex>, Map<String, List<TabIndex>>>() {
+        /*return new NetworkBoundResource<List<TabIndex>, Map<String, List<TabIndex>>>() {
 
             @Override
             protected void onCallFailed() {
@@ -74,10 +74,10 @@ public class HomeRepository {
                 Log.e("HomeRepository", "从数据库加载");
                 return mTabIndexDao.queryTabIndexes();
             }
-        }.asLiveData();
+        }.asLiveData();*/
 
 
-        /*return new NetworkBoundResource<List<TabIndex>, Map<String, List<TabIndex>>>() {
+        return new NetworkBoundResource<List<TabIndex>, Map<String, List<TabIndex>>>() {
 
             MediatorLiveData<List<TabIndex>> mTabLiveData;
 
@@ -111,7 +111,7 @@ public class HomeRepository {
                 }
                 return mTabLiveData;
             }
-        }.asLiveData();*/
+        }.asLiveData();
 
         /*return new NetworkBoundResource<List<TabIndex>, Map<String, List<TabIndex>>>() {
 

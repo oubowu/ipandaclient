@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
@@ -48,6 +47,8 @@ public class HomeActivity extends AppCompatActivity implements HasSupportFragmen
     ViewModelProvider.Factory mFactory;
 
     private BottomNavigationView mNavigationView;
+
+    private float mFirstBottomNavigationTopY = Integer.MIN_VALUE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +127,7 @@ public class HomeActivity extends AppCompatActivity implements HasSupportFragmen
                         Logger.d(resource);
                         break;
                     case ERROR:
-                        Toast.makeText(HomeActivity.this, "请求失败", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HomeActivity.this, "请求失败"+resource.message, Toast.LENGTH_SHORT).show();
                         break;
                     case LOADING:
                         Toast.makeText(HomeActivity.this, "加载中......", Toast.LENGTH_SHORT).show();
@@ -142,9 +143,18 @@ public class HomeActivity extends AppCompatActivity implements HasSupportFragmen
         return mFragmentDispatchingAndroidInjector;
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
 
+    @Override
+    public void onNestedScrollListener(int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
+        if (mFirstBottomNavigationTopY == Integer.MIN_VALUE) {
+            mFirstBottomNavigationTopY = mNavigationView.getY();
+        }
+        mNavigationView
+                .setY(Math.max(Math.min(mNavigationView.getY() + dyConsumed, mFirstBottomNavigationTopY + mNavigationView.getHeight()), mFirstBottomNavigationTopY));
+    }
+
+    @Override
+    public void onButtonPressed() {
 
     }
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.oubowu.ipanda.ui.widget.VideoImageView
+    android:id="@+id/video_image_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="100dp"
+    android:layout_height="wrap_content"
+    tools:src="@drawable/xxx">
+
+</com.oubowu.ipanda.ui.widget.VideoImageView>
+

@@ -5,24 +5,25 @@
 
     <merge>
 
-        <android.support.v4.view.ViewPager
+        <com.oubowu.ipanda.ui.widget.FixViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
+            android:minHeight="200dp"
             tools:background="@color/colorPrimaryDark">
 
-        </android.support.v4.view.ViewPager>
+        </com.oubowu.ipanda.ui.widget.FixViewPager>
 
         <com.oubowu.ipanda.ui.widget.PagerIndicator
             android:id="@+id/indicatorContainer"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
             android:layout_alignBottom="@+id/viewPager"
-            android:layout_alignRight="@+id/viewPager"
+            android:layout_alignEnd="@+id/viewPager"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp"
+            android:paddingBottom="1dp"
+            android:paddingTop="1dp"
             app:hollowCircleColor="@color/white"
             app:hollowCircleRadius="5dp"
             app:hollowCircleStrokeWidth="1.5dp"

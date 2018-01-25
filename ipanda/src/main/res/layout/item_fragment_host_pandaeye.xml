@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <data>
+
+        <variable
+            name="pandaeye"
+            type="com.oubowu.ipanda.bean.home.HomeIndex.PandaeyeBean"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottom_navigation_rect"
+        android:elevation="2dp">
+
+        <include
+            layout="@layout/include_fragment_host_tag"
+            app:title='@{pandaeye.title}'/>
+
+        <ImageView
+            android:id="@+id/pandaEyeBanner"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:layout_below="@+id/header_tag"
+            android:padding="8dp"
+            app:loadImageUrl="@{pandaeye.pandaeyelogo}"
+            tools:src="@mipmap/ic_launcher"/>
+
+        <com.oushangfeng.marqueelayout.MarqueeLayout
+            android:id="@+id/marqueeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/pandaEyeBanner"
+            android:layout_alignTop="@+id/pandaEyeBanner"
+            android:layout_toEndOf="@+id/pandaEyeBanner">
+
+        </com.oushangfeng.marqueelayout.MarqueeLayout>
+
+
+    </RelativeLayout>
+</layout>
+

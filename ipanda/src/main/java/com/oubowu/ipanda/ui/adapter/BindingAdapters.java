@@ -16,7 +16,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.oubowu.ipanda.bean.home.HomeIndex;
-import com.oubowu.ipanda.ui.widget.DescImage;
+import com.oubowu.ipanda.ui.widget.DescImageView;
 import com.oubowu.ipanda.util.MeasureUtil;
 
 /**
@@ -35,17 +35,12 @@ public class BindingAdapters {
         if (context instanceof AppCompatActivity) {
             AppCompatActivity activity = (AppCompatActivity) context;
             activity.setSupportActionBar(toolbar);
-            // Log.e("BindingAdapters", "26行-setToolbarTitle(): " + title);
         }
-        //else {
-        // Log.e("BindingAdapters", "27行-setToolbarTitle(): " + " ");
-        //}
         toolbar.setTitle(title);
     }
 
     @BindingAdapter("loadDescImage")
-    public static void loadImg(DescImage imageView, HomeIndex.BigImgBean bigImgBean) {
-        imageView.setDesc(bigImgBean.title);
+    public static void loadImg(DescImageView imageView, HomeIndex.BigImgBean bigImgBean) {
         Glide.with(imageView).load(bigImgBean.image).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -54,14 +49,17 @@ public class BindingAdapters {
 
             @Override
             public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                if (imageView.getScaleType() != ImageView.ScaleType.FIT_XY) {
-                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                if (imageView.getScaleType() != ImageView.ScaleType.CENTER_CROP) {
+                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 }
                 ViewGroup.LayoutParams params = imageView.getLayoutParams();
                 int w = params.width = MeasureUtil.getScreenSize(imageView.getContext()).x;
                 float scale = (float) w / (float) resource.getIntrinsicWidth();
                 params.height = Math.round(resource.getIntrinsicHeight() * scale);
                 imageView.setLayoutParams(params);
+
+                imageView.setDesc(bigImgBean.title);
+
                 return false;
             }
         }).into(imageView);

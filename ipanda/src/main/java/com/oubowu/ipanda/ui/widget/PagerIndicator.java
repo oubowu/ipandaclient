@@ -103,7 +103,7 @@ public class PagerIndicator extends View {
         mWidth = measureSize(widthMeasureSpec, (int) mDefaultWidth);
         mHeight = measureSize(heightMeasureSpec, (int) mDefaultHeight);
 
-        setMeasuredDimension(mWidth, mHeight);
+        setMeasuredDimension(mWidth, mHeight+getPaddingTop()+getPaddingBottom());
 
     }
 

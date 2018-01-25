@@ -33,7 +33,7 @@ public class CarouselViewPager extends RelativeLayout {
 
     private CarousePagerBinding mBinding;
 
-    private ViewPager mViewPager;
+    private FixViewPager mViewPager;
 
     private CarouselPagerAdapter mPagerAdapter;
 
@@ -103,6 +103,13 @@ public class CarouselViewPager extends RelativeLayout {
             }
             return false;
         });
+
+//        mViewPager.addOnLayoutChangeListener(new OnLayoutChangeListener() {
+//            @Override
+//            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+//                Log.e("xxx","111行-onLayoutChange(): "+bottom);
+//            }
+//        });
 
         mPageChangeListener = new ViewPager.OnPageChangeListener() {
             // 滑动状态改变的方法 state :draaging 拖拽 idle 静止 settling 惯性过程
@@ -176,20 +183,6 @@ public class CarouselViewPager extends RelativeLayout {
             ItemCarousePagerBinding binding = DataBindingUtil.inflate(mInflater, R.layout.item_carouse_pager, container, true);
             binding.setBannerInfo(mList.get(position));
             return binding;
-        }
-
-        @Override
-        public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-            if (mList != null) {
-                ItemCarousePagerBinding binding = (ItemCarousePagerBinding) object;
-                ViewPager pager = (ViewPager) container;
-                ViewGroup.LayoutParams pagerLayoutParams = pager.getLayoutParams();
-                binding.banner.measure(0, 0);
-                if (pagerLayoutParams.height != binding.banner.getMeasuredHeight()) {
-                    pagerLayoutParams.height = binding.banner.getMeasuredHeight();
-                    pager.setLayoutParams(pagerLayoutParams);
-                }
-            }
         }
 
         @Override

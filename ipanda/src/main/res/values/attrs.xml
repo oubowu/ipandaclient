@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <declare-styleable name="PagerIndicator">
         <attr name="hollowCircleStrokeWidth" format="dimension"/>
         <attr name="hollowCircleRadius" format="dimension"/>
         <attr name="hollowCircleColor" format="color|reference"/>
         <attr name="solidCircleColor" format="color|reference"/>
     </declare-styleable>
-    <declare-styleable name="DependenceBehavior">
+
+    <declare-styleable name="FollowRecyclerViewBehavior">
         <attr name="dependenceId" format="reference"/>
+        <attr name="followId" format="reference"/>
+        <attr name="dividerId" format="reference"/>
     </declare-styleable>
+
+    <declare-styleable name="BarBehavior">
+        <attr name="direction" format="enum">
+            <enum name="same" value="1"/>
+            <enum name="reverse" value="2"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="FlexImageLayout">
+        <attr name="spacing" format="dimension"/>
+    </declare-styleable>
+
 </resources>

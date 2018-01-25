@@ -1,5 +1,7 @@
 package com.oubowu.ipanda.bean.home;
 
+import com.oubowu.ipanda.bean.base.HomeVideoGrid;
+
 import java.util.List;
 
 /**
@@ -90,42 +92,47 @@ public class HomeIndex {
         }
     }
 
-    public static class PandaliveBean {
-        /**
-         * title : 直播秀场
-         * list : [{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/7/1496819411078_710.jpg","url":"","title":"成都直播：熊猫幼年园","id":"xiongmao03","vid":"http://www.ipanda.com/kehuduan/PAGE14501769230331752/PAGE1450178789681331211/index.json","order":"1"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/7/1496819535396_274.jpg","url":"","title":"成都直播：熊猫母子园","id":"xiongmao07","vid":"http://www.ipanda.com/kehuduan/PAGE14501769230331752/PAGE1450178789681331211/index.json","order":"2"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/1/14/1452765227283_786.jpg","url":"","title":"成都直播：熊猫一号别墅","id":"xiongmao09","vid":"http://www.ipanda.com/kehuduan/PAGE14501769230331752/PAGE1450178789681331211/index.json","order":"3"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/7/1496821082388_857.jpg","url":"","title":"成都直播：熊猫幼儿园","id":"xiongmao05","vid":"http://www.ipanda.com/kehuduan/PAGE14501769230331752/PAGE1450178789681331211/index.json","order":"4"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/7/1496819694216_948.jpg","url":"","title":"雅安基地幼儿园","id":"xiongmao18","vid":"http://www.ipanda.com/kehuduan/PAGE14501769230331752/PAGE145017878968133121/index.json","order":"5"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/12/20/1513745114543_395.jpg","url":"","title":"卧龙直播：熊猫\u201c宝宝\u201d","id":"xiongmao15","vid":"http://www.ipanda.com/kehuduan/PAGE14501769230331752/PAGE1450178789681331211/index.json","order":"6"}]
-         */
+    //    public static class PandaliveBean {
+    //        /**
+    //         * title : 直播秀场
+    //         * list : [{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/7/1496819411078_710.jpg","url":"","title":"成都直播：熊猫幼年园","id":"xiongmao03","vid":"http://www.ipanda.com/kehuduan/PAGE14501769230331752/PAGE1450178789681331211/index.json","order":"1"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/7/1496819535396_274.jpg","url":"","title":"成都直播：熊猫母子园","id":"xiongmao07","vid":"http://www.ipanda.com/kehuduan/PAGE14501769230331752/PAGE1450178789681331211/index.json","order":"2"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/1/14/1452765227283_786.jpg","url":"","title":"成都直播：熊猫一号别墅","id":"xiongmao09","vid":"http://www.ipanda.com/kehuduan/PAGE14501769230331752/PAGE1450178789681331211/index.json","order":"3"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/7/1496821082388_857.jpg","url":"","title":"成都直播：熊猫幼儿园","id":"xiongmao05","vid":"http://www.ipanda.com/kehuduan/PAGE14501769230331752/PAGE1450178789681331211/index.json","order":"4"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/7/1496819694216_948.jpg","url":"","title":"雅安基地幼儿园","id":"xiongmao18","vid":"http://www.ipanda.com/kehuduan/PAGE14501769230331752/PAGE145017878968133121/index.json","order":"5"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/12/20/1513745114543_395.jpg","url":"","title":"卧龙直播：熊猫\u201c宝宝\u201d","id":"xiongmao15","vid":"http://www.ipanda.com/kehuduan/PAGE14501769230331752/PAGE1450178789681331211/index.json","order":"6"}]
+    //         */
+    //
+    //        public String title;
+    ////        public List<ListBean> list;
+    //
+    //        public List<VideoList> list;
+    //
+    //        @Override
+    //        public String toString() {
+    //            return "PandaliveBean{" + "title='" + title + '\'' + ", list=" + list + '}';
+    //        }
+    //
+    ////        public static class ListBean {
+    ////            /**
+    ////             * image : http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/7/1496819411078_710.jpg
+    ////             * url :
+    ////             * title : 成都直播：熊猫幼年园
+    ////             * id : xiongmao03
+    ////             * vid : http://www.ipanda.com/kehuduan/PAGE14501769230331752/PAGE1450178789681331211/index.json
+    ////             * order : 1
+    ////             */
+    ////
+    ////            public String image;
+    ////            public String url;
+    ////            public String title;
+    ////            public String id;
+    ////            public String vid;
+    ////            public String order;
+    ////
+    ////            @Override
+    ////            public String toString() {
+    ////                return "ListBean{" + "image='" + image + '\'' + ", url='" + url + '\'' + ", title='" + title + '\'' + ", id='" + id + '\'' + ", vid='" + vid + '\'' + ", order='" + order + '\'' + '}';
+    ////            }
+    ////        }
+    //    }
 
-        public String title;
-        public List<ListBean> list;
-
-        @Override
-        public String toString() {
-            return "PandaliveBean{" + "title='" + title + '\'' + ", list=" + list + '}';
-        }
-
-        public static class ListBean {
-            /**
-             * image : http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/7/1496819411078_710.jpg
-             * url :
-             * title : 成都直播：熊猫幼年园
-             * id : xiongmao03
-             * vid : http://www.ipanda.com/kehuduan/PAGE14501769230331752/PAGE1450178789681331211/index.json
-             * order : 1
-             */
-
-            public String image;
-            public String url;
-            public String title;
-            public String id;
-            public String vid;
-            public String order;
-
-            @Override
-            public String toString() {
-                return "ListBean{" + "image='" + image + '\'' + ", url='" + url + '\'' + ", title='" + title + '\'' + ", id='" + id + '\'' + ", vid='" + vid + '\'' + ", order='" + order + '\'' + '}';
-            }
-        }
+    public static class PandaliveBean extends HomeVideoGrid {
     }
 
     public static class WallliveBean {
@@ -143,42 +150,47 @@ public class HomeIndex {
         }
     }
 
-    public static class ChinaliveBean {
-        /**
-         * title : 直播中国
-         * list : [{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/9/19/1474274866009_775.jpg","url":"","title":"【直播】张家界","id":"zjjmht","vid":"http://livechina.ipanda.com/zhangjiajie/01/index.shtml","order":"1"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/9/19/1474274669741_123.jpg","url":"","title":"【直播】凤凰古城","id":"fhgcdgm","vid":"http://livechina.ipanda.com/fenghuang/01/index.shtml","order":"2"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/5/19/1463646740047_989.jpg","url":"","title":"【直播】中央电视塔","id":"ztd","vid":"http://livechina.ipanda.com/zhongta/02/index.shtml","order":"3"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/5/19/1463646628905_109.jpg","url":"","title":"【直播】悬空寺","id":"hsxksqj","vid":"http://livechina.ipanda.com/hengshan/01/index.shtml","order":"4"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/5/19/1463646593298_50.jpg","url":"","title":"【直播】黄果树","id":"hgsljtgpt","vid":"http://livechina.ipanda.com/huangguoshu/02/index.shtml","order":"5"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/5/19/1463646137373_456.jpg","url":"","title":"【直播】黄龙","id":"hlwxt","vid":"http://www.ipanda.com/kehuduan/liebiao/huanglong/index.json","order":"6"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/1/19/1453182053209_224.jpg","url":"","title":"【直播】泰山","id":"taishan01","vid":"http://www.ipanda.com/kehuduan/liebiao/PAGE1451288906969388/index.json","order":"7"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/1/19/1453182136725_375.jpg","url":"","title":"【直播】黄山","id":"hssxf","vid":"http://www.ipanda.com/kehuduan/liebiao/huangshan/index.json","order":"8"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/1/19/1453182395917_608.jpg","url":"","title":"【直播】峨眉山","id":"emsarm","vid":"http://www.ipanda.com/kehuduan/liebiao/emeishan/index.json","order":"9"}]
-         */
+    //    public static class ChinaliveBean {
+    //        /**
+    //         * title : 直播中国
+    //         * list : [{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/9/19/1474274866009_775.jpg","url":"","title":"【直播】张家界","id":"zjjmht","vid":"http://livechina.ipanda.com/zhangjiajie/01/index.shtml","order":"1"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/9/19/1474274669741_123.jpg","url":"","title":"【直播】凤凰古城","id":"fhgcdgm","vid":"http://livechina.ipanda.com/fenghuang/01/index.shtml","order":"2"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/5/19/1463646740047_989.jpg","url":"","title":"【直播】中央电视塔","id":"ztd","vid":"http://livechina.ipanda.com/zhongta/02/index.shtml","order":"3"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/5/19/1463646628905_109.jpg","url":"","title":"【直播】悬空寺","id":"hsxksqj","vid":"http://livechina.ipanda.com/hengshan/01/index.shtml","order":"4"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/5/19/1463646593298_50.jpg","url":"","title":"【直播】黄果树","id":"hgsljtgpt","vid":"http://livechina.ipanda.com/huangguoshu/02/index.shtml","order":"5"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/5/19/1463646137373_456.jpg","url":"","title":"【直播】黄龙","id":"hlwxt","vid":"http://www.ipanda.com/kehuduan/liebiao/huanglong/index.json","order":"6"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/1/19/1453182053209_224.jpg","url":"","title":"【直播】泰山","id":"taishan01","vid":"http://www.ipanda.com/kehuduan/liebiao/PAGE1451288906969388/index.json","order":"7"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/1/19/1453182136725_375.jpg","url":"","title":"【直播】黄山","id":"hssxf","vid":"http://www.ipanda.com/kehuduan/liebiao/huangshan/index.json","order":"8"},{"image":"http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/1/19/1453182395917_608.jpg","url":"","title":"【直播】峨眉山","id":"emsarm","vid":"http://www.ipanda.com/kehuduan/liebiao/emeishan/index.json","order":"9"}]
+    //         */
+    //
+    //        public String title;
+    //        //        public List<ListBeanX> list;
+    //
+    //        public List<VideoList> list;
+    //
+    //        @Override
+    //        public String toString() {
+    //            return "ChinaliveBean{" + "title='" + title + '\'' + ", list=" + list + '}';
+    //        }
+    //
+    //        //        public static class ListBeanX {
+    //        //            /**
+    //        //             * image : http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/9/19/1474274866009_775.jpg
+    //        //             * url :
+    //        //             * title : 【直播】张家界
+    //        //             * id : zjjmht
+    //        //             * vid : http://livechina.ipanda.com/zhangjiajie/01/index.shtml
+    //        //             * order : 1
+    //        //             */
+    //        //
+    //        //            public String image;
+    //        //            public String url;
+    //        //            public String title;
+    //        //            public String id;
+    //        //            public String vid;
+    //        //            public String order;
+    //        //
+    //        //            @Override
+    //        //            public String toString() {
+    //        //                return "ListBeanX{" + "image='" + image + '\'' + ", url='" + url + '\'' + ", title='" + title + '\'' + ", id='" + id + '\'' + ", vid='" + vid + '\'' + ", order='" + order + '\'' + '}';
+    //        //            }
+    //        //        }
+    //    }
 
-        public String title;
-        public List<ListBeanX> list;
-
-        @Override
-        public String toString() {
-            return "ChinaliveBean{" + "title='" + title + '\'' + ", list=" + list + '}';
-        }
-
-        public static class ListBeanX {
-            /**
-             * image : http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/9/19/1474274866009_775.jpg
-             * url :
-             * title : 【直播】张家界
-             * id : zjjmht
-             * vid : http://livechina.ipanda.com/zhangjiajie/01/index.shtml
-             * order : 1
-             */
-
-            public String image;
-            public String url;
-            public String title;
-            public String id;
-            public String vid;
-            public String order;
-
-            @Override
-            public String toString() {
-                return "ListBeanX{" + "image='" + image + '\'' + ", url='" + url + '\'' + ", title='" + title + '\'' + ", id='" + id + '\'' + ", vid='" + vid + '\'' + ", order='" + order + '\'' + '}';
-            }
-        }
+    public static class ChinaliveBean extends HomeVideoGrid {
     }
 
     public static class InteractiveBean {

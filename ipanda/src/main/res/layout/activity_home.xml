@@ -10,7 +10,7 @@
             type="boolean"/>
     </data>
 
-    <android.support.design.widget.CoordinatorLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.oubowu.ipanda.ui.HomeActivity">
@@ -19,30 +19,22 @@
             android:id="@+id/fl_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="56dp"
+            android:layout_marginBottom="0dp"
             android:layout_weight="1"
-            android:fitsSystemWindows="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            android:fitsSystemWindows="true">
 
         </FrameLayout>
-
-        <View
-            android:id="@+id/v_line"
-            android:layout_width="match_parent"
-            android:layout_height="0.1dp"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="56.1dp"
-            android:background="#333333"/>
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/bnv"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_gravity="bottom"
-            app:itemBackground="@color/white"
+            android:background="@drawable/bottom_navigation_rect"
             android:theme="@style/BottomNavigationViewTheme"
-            app:menu="@menu/navigation_items"/>
+            android:elevation="2dp"
+            app:menu="@menu/navigation_items"/><!--app:itemBackground="@color/white"-->
 
-    </android.support.design.widget.CoordinatorLayout>
+    </FrameLayout>
 
 </layout>
