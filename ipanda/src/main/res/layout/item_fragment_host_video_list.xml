@@ -22,14 +22,14 @@
             layout="@layout/include_fragment_host_tag"
             app:title='@{title}'/>
 
-        <com.oubowu.ipanda.ui.widget.FlexImageLayout
-            android:id="@+id/flexImageLayout"
+        <com.oubowu.ipanda.ui.widget.VerticalLayout
+            android:id="@+id/verticalLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            app:spacing="8dp">
+            app:vSpacing="8dp">
 
-        </com.oubowu.ipanda.ui.widget.FlexImageLayout>
+        </com.oubowu.ipanda.ui.widget.VerticalLayout>
 
     </LinearLayout>
 

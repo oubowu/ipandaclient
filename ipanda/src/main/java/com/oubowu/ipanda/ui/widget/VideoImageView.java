@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
@@ -13,10 +14,10 @@ import android.support.v4.content.ContextCompat;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import com.oubowu.ipanda.R;
+import com.oubowu.ipanda.util.CommonUtil;
 import com.oubowu.ipanda.util.MeasureUtil;
 
 /**
@@ -31,7 +32,7 @@ public class VideoImageView extends android.support.v7.widget.AppCompatImageView
     private Paint mPaint;
     private RectF mRectF;
     private int mTextPadding;
-    private Paint mCirclePaint;
+    private Paint mTagPaint;
 
     private int mCircleRadius;
 
@@ -40,6 +41,8 @@ public class VideoImageView extends android.support.v7.widget.AppCompatImageView
     private String mContent;
 
     private Paint mLinePaint;
+
+    private Path mTrianglePath;
 
     public VideoImageView(Context context) {
         this(context, null);
@@ -63,9 +66,9 @@ public class VideoImageView extends android.support.v7.widget.AppCompatImageView
         mTextPaint.setTextSize(MeasureUtil.dip2px(context, 14));
         mFontMetrics = mTextPaint.getFontMetrics();
 
-        mCirclePaint = new Paint();
-        mCirclePaint.setColor(Color.RED);
-        mCirclePaint.setStyle(Paint.Style.FILL);
+        mTagPaint = new Paint();
+        mTagPaint.setColor(Color.RED);
+        mTagPaint.setStyle(Paint.Style.FILL);
 
         mCircleRadius = MeasureUtil.dip2px(getContext(), 5);
 
@@ -77,7 +80,7 @@ public class VideoImageView extends android.support.v7.widget.AppCompatImageView
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, widthMeasureSpec);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     @Override
@@ -150,7 +153,7 @@ public class VideoImageView extends android.support.v7.widget.AppCompatImageView
         }
 
 
-        if (!TextUtils.isEmpty(mContent)) {
+        if (CommonUtil.isNotEmpty(mContent) && CommonUtil.isNotEmpty(mTypeDesc)) {
 
             mTextPaint.setColor(Color.WHITE);
             mTextPaint.setTextSize(MeasureUtil.dip2px(getContext(), 14));
@@ -169,8 +172,25 @@ public class VideoImageView extends android.support.v7.widget.AppCompatImageView
             canvas.drawRect(mRectF, mPaint);
             canvas.drawText(mTypeDesc, mTextPadding + mCircleRadius * 2 + mTextPadding,
                     expectDrawHeight - mTextPadding + (mFontMetrics.descent + mFontMetrics.ascent) / 2, mTextPaint);
-            canvas.drawCircle(mTextPadding + mCircleRadius, expectDrawHeight - ((mFontMetrics.bottom - mFontMetrics.top) + mTextPadding * 2) / 2, mCircleRadius,
-                    mCirclePaint);
+
+            int circleCenterX = mTextPadding + mCircleRadius;
+            float circleCenterY = expectDrawHeight - ((mFontMetrics.bottom - mFontMetrics.top) + mTextPadding * 2) / 2;
+
+            if (mTypeDesc.equals("Live")) {
+                mTagPaint.setColor(Color.RED);
+                canvas.drawCircle(circleCenterX, circleCenterY, mCircleRadius, mTagPaint);
+            } else {
+                mTagPaint.setColor(ContextCompat.getColor(getContext(), R.color.toolbarNormalTextColor));
+                if (mTrianglePath == null) {
+                    mTrianglePath = new Path();
+                }
+                mTrianglePath.reset();
+                mTrianglePath.moveTo(mTextPadding, circleCenterY + mCircleRadius);
+                mTrianglePath.lineTo(mTextPadding, circleCenterY - mCircleRadius);
+                mTrianglePath.lineTo(mTextPadding + 2 * mCircleRadius, circleCenterY);
+                mTrianglePath.lineTo(mTextPadding, circleCenterY + mCircleRadius);
+                canvas.drawPath(mTrianglePath, mTagPaint);
+            }
 
             canvas.save();
             mTextPaint.setColor(ContextCompat.getColor(getContext(), R.color.toolbarSelectTextColor));

@@ -1,6 +1,6 @@
 package com.oubowu.ipanda.bean.home;
 
-import com.oubowu.ipanda.bean.base.HomeVideoGrid;
+import com.oubowu.ipanda.bean.base.HomeVideo;
 
 import java.util.List;
 
@@ -132,7 +132,7 @@ public class HomeIndex {
     ////        }
     //    }
 
-    public static class PandaliveBean extends HomeVideoGrid {
+    public static class PandaliveBean extends HomeVideo {
     }
 
     public static class WallliveBean {
@@ -190,7 +190,7 @@ public class HomeIndex {
     //        //        }
     //    }
 
-    public static class ChinaliveBean extends HomeVideoGrid {
+    public static class ChinaliveBean extends HomeVideo {
     }
 
     public static class InteractiveBean {
@@ -203,14 +203,15 @@ public class HomeIndex {
         }
     }
 
-    public static class CctvBean {
+    public static class CctvBean extends HomeVideo {
         /**
          * title : 精彩一刻
          * listlive : []
          * listurl : http://www.ipanda.com/kehuduan/shipinliebieye/jingcaiyike/index.json
          */
 
-        public String title;
+        // public String title;
+
         public String listurl;
         public List<?> listlive;
 
@@ -249,7 +250,7 @@ public class HomeIndex {
         }
     }
 
-    public static class ListBeanXX {
+    public static class ListBeanXX extends HomeVideo {
         /**
          * listUrl : http://www.ipanda.com/kehuduan/shipinliebieye/video/index.json
          * title : 滚滚视频
@@ -258,7 +259,7 @@ public class HomeIndex {
          */
 
         public String listUrl;
-        public String title;
+        // public String title;
         public String type;
         public String order;
 

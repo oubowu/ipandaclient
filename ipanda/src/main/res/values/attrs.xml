@@ -25,4 +25,13 @@
         <attr name="spacing" format="dimension"/>
     </declare-styleable>
 
+    <declare-styleable name="SimpleVideoImageView">
+        <attr name="ratio" format="fraction"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="VerticalLayout">
+        <attr name="vSpacing" format="dimension"/>
+    </declare-styleable>
+
 </resources>

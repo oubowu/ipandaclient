@@ -10,14 +10,16 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.oubowu.ipanda.R;
-import com.oubowu.ipanda.bean.base.HomeVideoGrid;
+import com.oubowu.ipanda.bean.base.HomeVideo;
 import com.oubowu.ipanda.bean.base.VideoList;
 import com.oubowu.ipanda.bean.home.HomeIndex;
 import com.oubowu.ipanda.databinding.ItemFragmentHostPandaeyeBinding;
 import com.oubowu.ipanda.databinding.ItemFragmentHostVideoGridBinding;
+import com.oubowu.ipanda.databinding.ItemFragmentHostVideoListBinding;
+import com.oubowu.ipanda.ui.widget.SimpleVideoImageView;
 import com.oubowu.ipanda.ui.widget.VideoImageView;
+import com.oubowu.ipanda.util.CommonUtil;
 import com.oushangfeng.marqueelayout.MarqueeLayoutAdapter;
-import com.oushangfeng.pinnedsectionitemdecoration.utils.FullSpanUtil;
 
 /**
  * Created by Oubowu on 2018/1/15 15:56.
@@ -54,8 +56,10 @@ public class HostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 DataBoundViewHolder<ItemFragmentHostVideoGridBinding> viewHolder1 = new DataBoundViewHolder<>(binding1);
                 return viewHolder1;
             case TYPE_VIDEO_LIST:
-
-                break;
+                ItemFragmentHostVideoListBinding binding2 = DataBindingUtil
+                        .inflate(LayoutInflater.from(parent.getContext()), R.layout.item_fragment_host_video_list, parent, false, mDataBindingComponent);
+                DataBoundViewHolder<ItemFragmentHostVideoListBinding> viewHolder2 = new DataBoundViewHolder<>(binding2);
+                return viewHolder2;
             default:
                 break;
         }
@@ -94,28 +98,35 @@ public class HostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                 ItemFragmentHostVideoGridBinding hostVideoGridBinding = ((DataBoundViewHolder<ItemFragmentHostVideoGridBinding>) holder).binding;
 
-                HomeVideoGrid homeVideoGrid = null;
+                HomeVideo homeVideo = null;
+
 
                 if (position == 1) {
-                    homeVideoGrid = mHomeIndex.pandalive;
+                    homeVideo = mHomeIndex.pandalive;
                 } else if (position == 2) {
-                    homeVideoGrid = mHomeIndex.chinalive;
+                    homeVideo = mHomeIndex.chinalive;
+                } else if (position == 3) {
+                    homeVideo = mHomeIndex.cctv;
                 }
 
-                if (homeVideoGrid != null) {
+                if (homeVideo != null) {
 
-                    hostVideoGridBinding.setTitle(homeVideoGrid.title);
+                    hostVideoGridBinding.setTitle(homeVideo.title);
 
-                    hostVideoGridBinding.flexImageLayout.setAdapter(new FlexImageAdapter<VideoList>(homeVideoGrid.list) {
+                    hostVideoGridBinding.flexImageLayout.setAdapter(new FlexImageAdapter<VideoList>(homeVideo.list) {
                         @Override
                         protected int getItemLayoutId() {
                             return R.layout.item_host_video_grid;
                         }
 
                         @Override
-                        protected void initView(View view, int position, VideoList item) {
+                        protected void initView(View view, int p, VideoList item) {
                             VideoImageView videoImageView = view.findViewById(R.id.video_image_view);
-                            videoImageView.setInfo("Live", item.title);
+                            if (holder.getAdapterPosition() == 3) {
+                                videoImageView.setInfo(item.videoLength, item.title);
+                            } else {
+                                videoImageView.setInfo("Live", item.title);
+                            }
                             Glide.with(view.getContext()).load(item.image).into(videoImageView);
                         }
                     });
@@ -126,6 +137,27 @@ public class HostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                 break;
             case TYPE_VIDEO_LIST:
+                homeVideo = mHomeIndex.list.get(0);
+
+                ItemFragmentHostVideoListBinding hostVideoListBinding = ((DataBoundViewHolder<ItemFragmentHostVideoListBinding>) holder).binding;
+
+                hostVideoListBinding.setTitle(homeVideo.title);
+
+                hostVideoListBinding.verticalLayout.setAdapter(new VerticalAdapter<VideoList>(homeVideo.list) {
+                    @Override
+                    protected int getItemLayoutId() {
+                        return R.layout.item_host_video_list;
+                    }
+
+                    @Override
+                    protected void initView(View view, int position, VideoList item) {
+                        SimpleVideoImageView simpleVideoImageView = view.findViewById(R.id.simpleVideoImageView);
+                        simpleVideoImageView.setVideoLength(item.videoLength);
+                        Glide.with(view.getContext()).load(item.image).into(simpleVideoImageView);
+                    }
+                });
+
+                hostVideoListBinding.executePendingBindings();
 
                 break;
             default:
@@ -140,9 +172,11 @@ public class HostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return 0;
         }
         int count = 0;
-        count += (mHomeIndex.pandaeye == null ? 0 : 1);
-        count += (mHomeIndex.pandalive == null ? 0 : 1);
-        count += (mHomeIndex.chinalive == null ? 0 : 1);
+        count += (mHomeIndex.pandaeye != null ? 1 : 0);
+        count += (mHomeIndex.pandalive != null ? 1 : 0);
+        count += (mHomeIndex.chinalive != null ? 1 : 0);
+        count += (mHomeIndex.cctv != null && CommonUtil.isNotEmpty(mHomeIndex.cctv.list) ? 1 : 0);
+        count += (CommonUtil.isNotEmpty(mHomeIndex.list) && CommonUtil.isNotEmpty(mHomeIndex.list.get(0).list) ? 1 : 0);
         return count;
     }
 
@@ -153,30 +187,18 @@ public class HostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case 0:
                 type = TYPE_PANDA_NEWS;
                 break;
-            case 4:
-                type = TYPE_VIDEO_LIST;
-                break;
             case 1:
             case 2:
             case 3:
                 type = TYPE_VIDEO_GRID;
                 break;
+            case 4:
+                type = TYPE_VIDEO_LIST;
+                break;
             default:
                 break;
         }
         return type;
-    }
-
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-        FullSpanUtil.onAttachedToRecyclerView(recyclerView, this, 0);
-    }
-
-    @Override
-    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
-        super.onViewAttachedToWindow(holder);
-        FullSpanUtil.onViewAttachedToWindow(holder, this, 0);
     }
 
     public void replace(HomeIndex data) {

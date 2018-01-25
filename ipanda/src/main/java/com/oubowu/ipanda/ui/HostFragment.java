@@ -23,6 +23,7 @@ import com.oubowu.ipanda.di.Injectable;
 import com.oubowu.ipanda.ui.adapter.FragmentDataBindingComponent;
 import com.oubowu.ipanda.ui.adapter.HostAdapter;
 import com.oubowu.ipanda.util.BarBehavior;
+import com.oubowu.ipanda.util.CommonUtil;
 import com.oubowu.ipanda.viewmodel.HostViewModel;
 import com.oubowu.stickyitemdecoration.StickyHeadContainer;
 import com.oubowu.stickyitemdecoration.StickyItemDecoration;
@@ -108,11 +109,17 @@ public class HostFragment extends Fragment implements Injectable {
                 case 2:
                     mBinding.setStickyTitle(homeIndex.chinalive.title);
                     break;
+                case 3:
+                    mBinding.setStickyTitle(homeIndex.cctv.title);
+                    break;
+                case 4:
+                    mBinding.setStickyTitle(homeIndex.list.get(0).title);
+                    break;
                 default:
                     break;
             }
         });
-        recyclerView.addItemDecoration(new StickyItemDecoration(container, HostAdapter.TYPE_PANDA_NEWS, HostAdapter.TYPE_VIDEO_GRID, HostAdapter.TYPE_VIDEO_LIST));
+        recyclerView.addItemDecoration(new StickyItemDecoration(container, HostAdapter.TYPE_PANDA_NEWS, HostAdapter.TYPE_VIDEO_GRID));
 
         mHostAdapter = new HostAdapter(new FragmentDataBindingComponent(this));
         recyclerView.setAdapter(mHostAdapter);
@@ -127,6 +134,44 @@ public class HostFragment extends Fragment implements Injectable {
                         if (homeIndexResource.data != null) {
                             mBinding.carouselViewPager.setList(homeIndexResource.data.bigImg);
                             mHostAdapter.replace(homeIndexResource.data);
+
+                            if (CommonUtil.isNotEmpty(homeIndexResource.data.cctv.listurl)) {
+                                hostViewModel.getWonderfulMomentIndex(homeIndexResource.data.cctv.listurl).observe(HostFragment.this, listResource -> {
+                                    if (listResource != null) {
+                                        switch (listResource.status) {
+                                            case ERROR:
+                                                break;
+                                            case LOADING:
+                                                break;
+                                            case SUCCESS:
+                                                homeIndexResource.data.cctv.list = listResource.data;
+                                                mHostAdapter.notifyItemInserted(3);
+                                                break;
+                                        }
+                                    }
+                                });
+                            }
+
+                            if (CommonUtil.isNotEmpty(homeIndexResource.data.list)) {
+                                HomeIndex.ListBeanXX listBean = homeIndexResource.data.list.get(0);
+                                if (CommonUtil.isNotEmpty(listBean.listUrl)) {
+                                    hostViewModel.getGungunVideoIndex(listBean.listUrl).observe(HostFragment.this, listResource -> {
+                                        if (listResource != null) {
+                                            switch (listResource.status) {
+                                                case ERROR:
+                                                    break;
+                                                case LOADING:
+                                                    break;
+                                                case SUCCESS:
+                                                    listBean.list = listResource.data;
+                                                    mHostAdapter.notifyItemInserted(4);
+                                                    break;
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+
                         }
                         break;
                     case ERROR:

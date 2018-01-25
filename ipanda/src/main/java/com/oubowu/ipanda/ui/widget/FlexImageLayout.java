@@ -60,11 +60,8 @@ public class FlexImageLayout extends ViewGroup {
 
         for (int i = 0; i < adapter.getCount(); i++) {
             final View child = adapter.getView(i, null, this);
-//            Log.e("FlexImageLayout","63行-addChildView(): "+i);
             addView(child);
         }
-
-//        requestLayout();
 
     }
 

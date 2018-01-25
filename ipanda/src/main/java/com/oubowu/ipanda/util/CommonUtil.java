@@ -25,12 +25,24 @@ public class CommonUtil {
         return collection == null || collection.isEmpty();
     }
 
+    public static boolean isNotEmpty(@Nullable Collection collection) {
+        return !isEmpty(collection);
+    }
+
     public static boolean isEmpty(@Nullable CharSequence c) {
         return TextUtils.isEmpty(c);
     }
 
+    public static boolean isNotEmpty(@Nullable CharSequence c) {
+        return !isEmpty(c);
+    }
+
     public static boolean isEmpty(@Nullable Map map) {
         return map == null || map.isEmpty();
+    }
+
+    public static boolean isNotEmpty(@Nullable Map map) {
+        return !isEmpty(map);
     }
 
 }
