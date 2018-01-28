@@ -85,7 +85,7 @@ public class DescImageView extends android.support.v7.widget.AppCompatImageView 
                 float outerWidth = (int) (getWidth() * 0.7f);
                 float ellipsizedWidth = outerWidth;
                 int bufEnd = mDesc.length();
-                if (mDesc.length() >= 22) {
+                if (mDesc.length() > 22) {
                     // 字符串长度大于22时，截取0~22位，测量出宽度
                     outerWidth = mTextPaint.measureText(mDesc.substring(0, 23));
                     // 截取0~20位，测量出宽度
