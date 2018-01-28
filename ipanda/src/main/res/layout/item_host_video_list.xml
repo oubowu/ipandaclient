@@ -13,4 +13,32 @@
         app:ratio="45%"
         tools:src="@drawable/xxx"/>
 
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:paddingTop="4dp"
+        android:textColor="@color/toolbarSelectTextColor"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/simpleVideoImageView"
+        tools:text="谁家熊妈不坑娃谁家熊妈不坑娃谁家熊妈不坑娃谁家熊妈不坑娃谁家熊妈不坑娃谁家熊妈不坑娃谁家熊妈不坑娃谁家熊妈不坑娃谁家熊妈不坑娃谁家熊妈不坑娃"/>
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:gravity="start"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/simpleVideoImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/simpleVideoImageView"
+        tools:text="2018-01-22"/>
+
 </android.support.constraint.ConstraintLayout>

@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bottom_navigation_rect"
         android:elevation="2dp"
+        android:minHeight="100dp"
         android:orientation="vertical">
 
         <include

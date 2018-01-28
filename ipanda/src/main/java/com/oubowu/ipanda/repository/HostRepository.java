@@ -87,7 +87,7 @@ public class HostRepository {
             @NonNull
             @Override
             protected LiveData<ApiResponse<Map<String, List<VideoList>>>> createCall() {
-                return mIpandaService.getWonderfulMomentIndex(url);
+                return mIpandaService.getVideoListIndex(url);
             }
 
             @Override

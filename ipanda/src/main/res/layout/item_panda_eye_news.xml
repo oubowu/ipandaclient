@@ -15,15 +15,15 @@
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:paddingTop="4dp"
-        android:textColor="@color/colorAccent"
-        android:textSize="16sp"
+        android:textSize="16dp"
         tools:text="喜讯"/>
 
     <TextView
         android:id="@+id/tv_title"
-        tools:text="黑龙江大熊猫雪地撒欢儿"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:textSize="14dp"
+        tools:text="黑龙江大熊猫雪地撒欢儿"/>
 
 </LinearLayout>

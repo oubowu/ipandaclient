@@ -13,7 +13,6 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextPaint;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import com.oubowu.ipanda.R;
 import com.oubowu.ipanda.util.CommonUtil;
@@ -63,7 +62,7 @@ public class SimpleVideoImageView extends android.support.v7.widget.AppCompatIma
             ta.recycle();
         }
 
-        Log.e("SimpleVideoImageView", "66行-init(): " + mRatio);
+        // Log.e("SimpleVideoImageView", "66行-init(): " + mRatio);
 
         mScreenWidth = MeasureUtil.getScreenSize(context).x;
         mExpectWidth = (int) (mScreenWidth * mRatio);

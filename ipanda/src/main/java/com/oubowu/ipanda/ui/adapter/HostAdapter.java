@@ -2,6 +2,7 @@ package com.oubowu.ipanda.ui.adapter;
 
 import android.databinding.DataBindingComponent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,6 +85,7 @@ public class HostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     protected void initView(View view, int position, HomeIndex.PandaeyeBean.ItemsBean item) {
                         TextView tvBrief = view.findViewById(R.id.tv_brief);
                         TextView tvTitle = view.findViewById(R.id.tv_title);
+                        tvBrief.setTextColor(Color.parseColor(item.bgcolor));
                         tvBrief.setText(item.brief);
                         tvTitle.setText(item.title);
                     }
@@ -123,9 +125,9 @@ public class HostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         protected void initView(View view, int p, VideoList item) {
                             VideoImageView videoImageView = view.findViewById(R.id.video_image_view);
                             if (holder.getAdapterPosition() == 3) {
-                                videoImageView.setInfo(item.videoLength, item.title);
+                                videoImageView.setInfo(item.videoLength, item.title, item.daytime);
                             } else {
-                                videoImageView.setInfo("Live", item.title);
+                                videoImageView.setInfo("Live", item.title, item.daytime);
                             }
                             Glide.with(view.getContext()).load(item.image).into(videoImageView);
                         }
@@ -154,6 +156,11 @@ public class HostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         SimpleVideoImageView simpleVideoImageView = view.findViewById(R.id.simpleVideoImageView);
                         simpleVideoImageView.setVideoLength(item.videoLength);
                         Glide.with(view.getContext()).load(item.image).into(simpleVideoImageView);
+
+                        TextView title = view.findViewById(R.id.tv_title);
+                        TextView date = view.findViewById(R.id.tv_date);
+                        title.setText(item.title);
+                        date.setText(item.daytime);
                     }
                 });
 

@@ -7,6 +7,10 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Interpolator;
+import android.widget.Scroller;
+
+import java.lang.reflect.Field;
 
 /**
  * Created by Oubowu on 2018/1/19 09:28.
@@ -19,6 +23,7 @@ public class FixViewPager extends ViewPager {
 
     public FixViewPager(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        new ViewPagerScroller(context).initViewPagerScroll(this);
     }
 
     @Override
@@ -42,6 +47,52 @@ public class FixViewPager extends ViewPager {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
 
+    }
+
+    public class ViewPagerScroller extends Scroller {
+        // 滑动速度
+        private int mScrollDuration = 500;
+
+        /**
+         * 设置速度速度
+         *
+         * @param duration
+         */
+        public void setScrollDuration(int duration) {
+            this.mScrollDuration = duration;
+        }
+
+        public ViewPagerScroller(Context context) {
+            super(context);
+        }
+
+        public ViewPagerScroller(Context context, Interpolator interpolator) {
+            super(context, interpolator);
+        }
+
+        public ViewPagerScroller(Context context, Interpolator interpolator, boolean flywheel) {
+            super(context, interpolator, flywheel);
+        }
+
+        @Override
+        public void startScroll(int startX, int startY, int dx, int dy, int duration) {
+            super.startScroll(startX, startY, dx, dy, mScrollDuration);
+        }
+
+        @Override
+        public void startScroll(int startX, int startY, int dx, int dy) {
+            super.startScroll(startX, startY, dx, dy, mScrollDuration);
+        }
+
+        public void initViewPagerScroll(ViewPager viewPager) {
+            try {
+                Field mScroller = ViewPager.class.getDeclaredField("mScroller");
+                mScroller.setAccessible(true);
+                mScroller.set(viewPager, this);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

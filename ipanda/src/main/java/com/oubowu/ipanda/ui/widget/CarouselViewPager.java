@@ -104,13 +104,6 @@ public class CarouselViewPager extends RelativeLayout {
             return false;
         });
 
-//        mViewPager.addOnLayoutChangeListener(new OnLayoutChangeListener() {
-//            @Override
-//            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-//                Log.e("xxx","111行-onLayoutChange(): "+bottom);
-//            }
-//        });
-
         mPageChangeListener = new ViewPager.OnPageChangeListener() {
             // 滑动状态改变的方法 state :draaging 拖拽 idle 静止 settling 惯性过程
             @Override

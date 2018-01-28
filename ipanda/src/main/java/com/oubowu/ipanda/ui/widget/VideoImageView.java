@@ -39,6 +39,7 @@ public class VideoImageView extends android.support.v7.widget.AppCompatImageView
     private StaticLayout mStaticLayout;
 
     private String mContent;
+    private String mDaytime;
 
     private Paint mLinePaint;
 
@@ -157,6 +158,8 @@ public class VideoImageView extends android.support.v7.widget.AppCompatImageView
 
             mTextPaint.setColor(Color.WHITE);
             mTextPaint.setTextSize(MeasureUtil.dip2px(getContext(), 14));
+            mFontMetrics = mTextPaint.getFontMetrics();
+
             float length = mTextPaint.measureText(mTypeDesc);
             // 绘制渐变阴影
             if (mLinearGradient == null) {
@@ -176,7 +179,9 @@ public class VideoImageView extends android.support.v7.widget.AppCompatImageView
             int circleCenterX = mTextPadding + mCircleRadius;
             float circleCenterY = expectDrawHeight - ((mFontMetrics.bottom - mFontMetrics.top) + mTextPadding * 2) / 2;
 
-            if (mTypeDesc.equals("Live")) {
+            boolean isLiveType = CommonUtil.isEmpty(mDaytime);
+
+            if (isLiveType) {
                 mTagPaint.setColor(Color.RED);
                 canvas.drawCircle(circleCenterX, circleCenterY, mCircleRadius, mTagPaint);
             } else {
@@ -195,12 +200,25 @@ public class VideoImageView extends android.support.v7.widget.AppCompatImageView
             canvas.save();
             mTextPaint.setColor(ContextCompat.getColor(getContext(), R.color.toolbarSelectTextColor));
             mTextPaint.setTextSize(MeasureUtil.dip2px(getContext(), 16));
+            mFontMetrics = mTextPaint.getFontMetrics();
             if (mStaticLayout == null) {
                 mStaticLayout = new StaticLayout(mContent, mTextPaint, getWidth() - mTextPadding * 2, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
             }
-            canvas.translate(mTextPadding, expectDrawHeight + (getHeight() - expectDrawHeight - mStaticLayout.getHeight()) / 2);
+            if (isLiveType) {
+                canvas.translate(mTextPadding, expectDrawHeight + (getHeight() - expectDrawHeight - mStaticLayout.getHeight()) / 2);
+            } else {
+                canvas.translate(mTextPadding, expectDrawHeight + mTextPadding/*+ (getHeight() - expectDrawHeight - mStaticLayout.getHeight()) / 2*/);
+            }
+
             mStaticLayout.draw(canvas);
             canvas.restore();
+
+            if (!isLiveType) {
+                mTextPaint.setColor(ContextCompat.getColor(getContext(), R.color.toolbarNormalTextColor));
+                mTextPaint.setTextSize(MeasureUtil.dip2px(getContext(), 12));
+                mFontMetrics = mTextPaint.getFontMetrics();
+                canvas.drawText(mDaytime, mTextPadding, getHeight() - mTextPadding + (mFontMetrics.descent + mFontMetrics.ascent) / 2, mTextPaint);
+            }
 
             float[] pts = {0, 0, getWidth(), 0,//
                     0, 0, 0, getHeight(),//
@@ -213,9 +231,10 @@ public class VideoImageView extends android.support.v7.widget.AppCompatImageView
 
     }
 
-    public void setInfo(String typeDesc, String content) {
+    public void setInfo(String typeDesc, String content, String daytime) {
         mTypeDesc = typeDesc;
         mContent = content;
+        mDaytime = daytime;
         postInvalidate();
     }
 

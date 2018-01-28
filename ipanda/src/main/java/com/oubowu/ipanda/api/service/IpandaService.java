@@ -41,26 +41,31 @@ public interface IpandaService {
     @GET
     LiveData<ApiResponse<Map<String,HomeIndex>>> getHomeIndex(@Url String url);
 
-    /**
-     * 首页-精彩一刻(来自2的cctv的listurl字段)
-     * http://www.ipanda.com/kehuduan/shipinliebieye/jingcaiyike/index.json
-     *
-     * @param url 请求网址
-     * @return 精彩一刻视频列表
-     */
-    @Headers("realHost:www.ipanda.com")
-    @GET
-    LiveData<ApiResponse<Map<String,List<VideoList>>>> getWonderfulMomentIndex(@Url String url);
+//    /**
+//     * 首页-精彩一刻(来自2的cctv的listurl字段)
+//     * http://www.ipanda.com/kehuduan/shipinliebieye/jingcaiyike/index.json
+//     *
+//     * @param url 请求网址
+//     * @return 精彩一刻视频列表
+//     */
+//    @Headers("realHost:www.ipanda.com")
+//    @GET
+//    LiveData<ApiResponse<Map<String,List<VideoList>>>> getWonderfulMomentIndex(@Url String url);
+//
+//    /**
+//     * 首页-滚滚视频(来自2的list的listUrl字段)
+//     * http://www.ipanda.com/kehuduan/shipinliebieye/video/index.json
+//     *
+//     * @param url 请求网址
+//     * @return 精彩一刻视频列表
+//     */
+//    @Headers("realHost:www.ipanda.com")
+//    @GET
+//    LiveData<ApiResponse<Map<String,List<VideoList>>>> getGungunVideoIndex(@Url String url);
 
-    /**
-     * 首页-滚滚视频(来自2的list的listUrl字段)
-     * http://www.ipanda.com/kehuduan/shipinliebieye/video/index.json
-     *
-     * @param url 请求网址
-     * @return 精彩一刻视频列表
-     */
+    // 首页-精彩一刻(来自2的cctv的listurl字段) & 首页-滚滚视频(来自2的list的listUrl字段)
     @Headers("realHost:www.ipanda.com")
     @GET
-    LiveData<ApiResponse<Map<String,List<VideoList>>>> getGungunVideoIndex(@Url String url);
+    LiveData<ApiResponse<Map<String,List<VideoList>>>> getVideoListIndex(@Url String url);
 
 }
