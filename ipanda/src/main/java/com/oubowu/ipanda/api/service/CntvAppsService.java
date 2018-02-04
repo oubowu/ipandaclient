@@ -14,6 +14,10 @@ import retrofit2.http.Query;
  */
 public interface CntvAppsService {
 
+    @Headers("realHost:vdn.apps.cntv.cn")
+    @GET("api/getVideoInfoForCBox.do")
+    LiveData<ApiResponse<RecordVideo>> getRecordVideoDetail(@Query("pid") String pid);
+
     /**
      * 首页-大图-点击进去(pid来自2的bigImg的pid)
      * http://vdn.apps.cntv.cn/api/getVideoInfoForCBox.do?pid=f5f4a7638b2446ff9753006d658bcaae

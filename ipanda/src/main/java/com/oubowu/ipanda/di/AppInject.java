@@ -13,7 +13,6 @@ import com.oubowu.ipanda.di.component.DaggerAppComponent;
 
 import dagger.android.AndroidInjection;
 import dagger.android.support.AndroidSupportInjection;
-import dagger.android.support.HasSupportFragmentInjector;
 
 /**
  * Created by Oubowu on 2017/12/28 23:31.
@@ -30,9 +29,9 @@ public class AppInject {
             @Override
             public void onActivityCreated(Activity activity, Bundle bundle) {
                 // activity注入
-                if (activity instanceof HasSupportFragmentInjector) {
-                    AndroidInjection.inject(activity);
-                }
+                //                if (activity instanceof HasSupportFragmentInjector) {
+                AndroidInjection.inject(activity);
+                //                }
                 if (activity instanceof FragmentActivity) {
                     ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(new FragmentLifecycleCallbacks() {
                         @Override

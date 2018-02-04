@@ -1,6 +1,7 @@
 package com.oubowu.ipanda.ui.widget;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
@@ -18,6 +19,7 @@ import com.oubowu.ipanda.R;
 import com.oubowu.ipanda.bean.home.HomeIndex;
 import com.oubowu.ipanda.databinding.CarousePagerBinding;
 import com.oubowu.ipanda.databinding.ItemCarousePagerBinding;
+import com.oubowu.ipanda.ui.VideoActivity;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -83,7 +85,6 @@ public class CarouselViewPager extends RelativeLayout {
         mBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.carouse_pager, this, true);
 
         mViewPager = mBinding.viewPager;
-
         mViewPager.setOffscreenPageLimit(4);
         mPagerAdapter = new CarouselPagerAdapter(context);
         mViewPager.setAdapter(mPagerAdapter);
@@ -155,7 +156,7 @@ public class CarouselViewPager extends RelativeLayout {
 
     }
 
-    private class CarouselPagerAdapter extends PagerAdapter {
+    private class CarouselPagerAdapter extends PagerAdapter implements OnClickListener {
 
         private LayoutInflater mInflater;
 
@@ -174,7 +175,14 @@ public class CarouselViewPager extends RelativeLayout {
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
             ItemCarousePagerBinding binding = DataBindingUtil.inflate(mInflater, R.layout.item_carouse_pager, container, true);
-            binding.setBannerInfo(mList.get(position));
+
+            HomeIndex.BigImgBean bean = mList.get(position);
+
+            binding.setBannerInfo(bean);
+
+            binding.getRoot().setTag(-1, bean);
+            binding.getRoot().setOnClickListener(this);
+
             return binding;
         }
 
@@ -207,6 +215,12 @@ public class CarouselViewPager extends RelativeLayout {
                 mList.add(0, lastBigImgBean);
 
             }
+        }
+
+        @Override
+        public void onClick(View v) {
+            HomeIndex.BigImgBean bean = (HomeIndex.BigImgBean) v.getTag(-1);
+            VideoActivity.start((Activity) v.getContext(), v, bean.pid);
         }
     }
 

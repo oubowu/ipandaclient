@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.MenuBuilder;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
@@ -156,5 +157,11 @@ public class HomeActivity extends AppCompatActivity implements HasSupportFragmen
     @Override
     public void onButtonPressed() {
 
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Log.e("HomeActivity","164行-onTouchEvent(): "+" ");
+        return super.onTouchEvent(event);
     }
 }

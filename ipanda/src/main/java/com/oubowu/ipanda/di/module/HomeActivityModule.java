@@ -2,6 +2,7 @@ package com.oubowu.ipanda.di.module;
 
 
 import com.oubowu.ipanda.ui.HomeActivity;
+import com.oubowu.ipanda.ui.VideoActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -14,5 +15,8 @@ public abstract class HomeActivityModule {
 
     @ContributesAndroidInjector(modules = {FragmentModule.class}/*注入到HomeActivity的module*/)
     abstract HomeActivity contributesHomeActivity();
+
+    @ContributesAndroidInjector()
+    abstract VideoActivity contributesVideoActivity();
 
 }

@@ -4,11 +4,15 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
+
+import com.oubowu.ipanda.R;
 
 import java.lang.reflect.Field;
 
@@ -16,6 +20,8 @@ import java.lang.reflect.Field;
  * Created by Oubowu on 2018/1/19 09:28.
  */
 public class FixViewPager extends ViewPager {
+
+    private RecyclerView view;
 
     public FixViewPager(@NonNull Context context) {
         this(context, null);
@@ -45,6 +51,10 @@ public class FixViewPager extends ViewPager {
             setMeasuredDimension(resolveSize(MeasureSpec.getSize(widthMeasureSpec), widthMeasureSpec), resolveSize(parentDesireHeight, heightMeasureSpec));
         } else {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        }
+
+        if (view==null){
+            view = ((ViewGroup) getParent().getParent()).findViewById(R.id.recyclerView);
         }
 
     }
@@ -95,4 +105,22 @@ public class FixViewPager extends ViewPager {
         }
     }
 
+
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+
+        view.onInterceptTouchEvent(ev);
+
+        return true;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+
+
+        view.onTouchEvent(ev);
+
+        return true;
+    }
 }

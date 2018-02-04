@@ -17,6 +17,7 @@
     <color name="toolbarBgColor">#ffffff</color>
     <color name="toolbarSelectTextColor">#212121</color>
     <color name="toolbarNormalTextColor">#999999</color>
+    <color name="black">#000000</color>
 
 
 </resources>

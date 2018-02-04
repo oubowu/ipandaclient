@@ -97,4 +97,9 @@ dependencies {
     implementation project(':StickyItemDecoration')
     implementation project(':MarqueeLayout')
     implementation project(':StickyHeader')
+
+    implementation 'com.shuyu:gsyVideoPlayer-java:3.0.0'
+    implementation 'com.shuyu:gsyVideoPlayer-ex_so:3.0.0'
+
+
 }

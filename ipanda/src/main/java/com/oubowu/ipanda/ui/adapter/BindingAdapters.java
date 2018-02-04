@@ -41,6 +41,7 @@ public class BindingAdapters {
 
     @BindingAdapter("loadDescImage")
     public static void loadImg(DescImageView imageView, HomeIndex.BigImgBean bigImgBean) {
+        imageView.setDesc(bigImgBean.title);
         Glide.with(imageView).load(bigImgBean.image).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -57,9 +58,6 @@ public class BindingAdapters {
                 float scale = (float) w / (float) resource.getIntrinsicWidth();
                 params.height = Math.round(resource.getIntrinsicHeight() * scale);
                 imageView.setLayoutParams(params);
-
-                imageView.setDesc(bigImgBean.title);
-
                 return false;
             }
         }).into(imageView);

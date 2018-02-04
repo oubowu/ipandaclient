@@ -31,9 +31,9 @@ public class HostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private HomeIndex mHomeIndex;
 
-    public static final int TYPE_PANDA_NEWS = 1;
-    public static final int TYPE_VIDEO_GRID = 2;
-    public static final int TYPE_VIDEO_LIST = 3;
+    public static final int TYPE_PANDA_NEWS = 2;
+    public static final int TYPE_VIDEO_GRID = 3;
+    public static final int TYPE_VIDEO_LIST = 4;
 
     public HostAdapter(DataBindingComponent dataBindingComponent) {
         mDataBindingComponent = dataBindingComponent;
