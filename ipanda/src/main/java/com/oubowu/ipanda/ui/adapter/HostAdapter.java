@@ -1,5 +1,6 @@
 package com.oubowu.ipanda.ui.adapter;
 
+import android.app.Activity;
 import android.databinding.DataBindingComponent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
@@ -17,6 +18,7 @@ import com.oubowu.ipanda.bean.home.HomeIndex;
 import com.oubowu.ipanda.databinding.ItemFragmentHostPandaeyeBinding;
 import com.oubowu.ipanda.databinding.ItemFragmentHostVideoGridBinding;
 import com.oubowu.ipanda.databinding.ItemFragmentHostVideoListBinding;
+import com.oubowu.ipanda.ui.VideoActivity;
 import com.oubowu.ipanda.ui.widget.SimpleVideoImageView;
 import com.oubowu.ipanda.ui.widget.VideoImageView;
 import com.oubowu.ipanda.util.CommonUtil;
@@ -75,7 +77,7 @@ public class HostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case TYPE_PANDA_NEWS:
                 ItemFragmentHostPandaeyeBinding hostPandaeyeBinding = ((DataBoundViewHolder<ItemFragmentHostPandaeyeBinding>) holder).binding;
 
-                hostPandaeyeBinding.marqueeLayout.setAdapter(new MarqueeLayoutAdapter<HomeIndex.PandaeyeBean.ItemsBean>(mHomeIndex.pandaeye.items) {
+                MarqueeLayoutAdapter<HomeIndex.PandaeyeBean.ItemsBean> adapter = new MarqueeLayoutAdapter<HomeIndex.PandaeyeBean.ItemsBean>(mHomeIndex.pandaeye.items) {
                     @Override
                     protected int getItemLayoutId() {
                         return R.layout.item_panda_eye_news;
@@ -89,7 +91,13 @@ public class HostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         tvBrief.setText(item.brief);
                         tvTitle.setText(item.title);
                     }
+                };
+
+                adapter.setItemClickListener((view, position1) -> {
+                    VideoActivity.start((Activity) view.getContext(), view, mHomeIndex.pandaeye.items.get(position1).pid);
                 });
+
+                hostPandaeyeBinding.marqueeLayout.setAdapter(adapter);
                 hostPandaeyeBinding.marqueeLayout.start();
 
                 hostPandaeyeBinding.setPandaeye(mHomeIndex.pandaeye);
@@ -130,6 +138,15 @@ public class HostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                 videoImageView.setInfo("Live", item.title, item.daytime);
                             }
                             Glide.with(view.getContext()).load(item.image).into(videoImageView);
+
+                            view.setOnClickListener(v -> {
+                                if (position == 1 || position == 2) {
+                                    VideoActivity.start((Activity) v.getContext(), v, item.id, item.title);
+                                } else {
+                                    VideoActivity.start((Activity) v.getContext(), v, item.pid);
+                                }
+                            });
+
                         }
                     });
 
@@ -161,6 +178,9 @@ public class HostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         TextView date = view.findViewById(R.id.tv_date);
                         title.setText(item.title);
                         date.setText(item.daytime);
+
+                        view.setOnClickListener(v -> VideoActivity.start((Activity) v.getContext(), v, item.pid));
+
                     }
                 });
 

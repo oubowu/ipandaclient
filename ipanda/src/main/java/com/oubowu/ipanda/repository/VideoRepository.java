@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 
 import com.oubowu.ipanda.api.response.ApiResponse;
 import com.oubowu.ipanda.api.service.CntvAppsService;
+import com.oubowu.ipanda.api.service.CntvLiveService;
+import com.oubowu.ipanda.bean.base.LiveVideo;
 import com.oubowu.ipanda.bean.base.RecordVideo;
 import com.oubowu.ipanda.util.NetworkBoundResource;
 import com.oubowu.ipanda.util.Resource;
@@ -22,9 +24,12 @@ public class VideoRepository {
 
     private CntvAppsService mCntvAppsService;
 
+    private CntvLiveService mCntvLiveService;
+
     @Inject
-    public VideoRepository(CntvAppsService cntvAppsService) {
+    public VideoRepository(CntvAppsService cntvAppsService, CntvLiveService cntvLiveService) {
         mCntvAppsService = cntvAppsService;
+        mCntvLiveService = cntvLiveService;
     }
 
     public LiveData<Resource<RecordVideo>> getRecordVideo(String pid) {
@@ -64,4 +69,40 @@ public class VideoRepository {
         }.asLiveData();
     }
 
+    public LiveData<Resource<LiveVideo>> getLiveVideo(String id) {
+        return new NetworkBoundResource<LiveVideo, LiveVideo>() {
+
+            MediatorLiveData<LiveVideo> mLiveVideoData;
+
+            @Override
+            protected void onCallFailed() {
+
+            }
+
+            @Override
+            protected void saveCallResponseToDb(@NonNull LiveVideo response) {
+                mLiveVideoData.postValue(response);
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<LiveVideo>> createCall() {
+                return mCntvLiveService.getLiveVideoDetail("pa://cctv_p2p_hd" + id, "androidapp");
+            }
+
+            @Override
+            protected boolean shouldCall(@Nullable LiveVideo data) {
+                return true;
+            }
+
+            @Override
+            protected LiveData<LiveVideo> loadFromDb() {
+                if (mLiveVideoData == null) {
+                    mLiveVideoData = new MediatorLiveData<>();
+                    mLiveVideoData.postValue(null);
+                }
+                return mLiveVideoData;
+            }
+        }.asLiveData();
+    }
 }
