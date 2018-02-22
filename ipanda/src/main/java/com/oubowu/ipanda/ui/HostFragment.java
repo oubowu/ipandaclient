@@ -175,10 +175,10 @@ public class HostFragment extends Fragment implements Injectable {
                         }
                         break;
                     case ERROR:
-                        Toast.makeText(getActivity(), "请求失败" + homeIndexResource.message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "请求失败" + homeIndexResource.message, Toast.LENGTH_SHORT).show();
                         break;
                     case LOADING:
-                        Toast.makeText(getActivity(), "加载中......", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "加载中......", Toast.LENGTH_SHORT).show();
                         break;
                 }
             }

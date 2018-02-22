@@ -85,16 +85,19 @@ public class DescImageView extends android.support.v7.widget.AppCompatImageView 
                 float outerWidth = (int) (getWidth() * 0.7f);
                 float ellipsizedWidth = outerWidth;
                 int bufEnd = mDesc.length();
-                if (mDesc.length() > 22) {
-                    // 字符串长度大于22时，截取0~22位，测量出宽度
-                    outerWidth = mTextPaint.measureText(mDesc.substring(0, 23));
-                    // 截取0~20位，测量出宽度
-                    ellipsizedWidth = mTextPaint.measureText(mDesc.substring(0, 21));
-                    bufEnd = 22;
+
+                float w = mTextPaint.measureText(mDesc);
+                if (w > outerWidth) {
+                    while (outerWidth <= mTextPaint.measureText(mDesc.substring(0, --bufEnd))) {
+                        // 直到小于等于最大宽度
+                    }
+                    outerWidth = mTextPaint.measureText(mDesc.substring(0, bufEnd));
+                    ellipsizedWidth = mTextPaint.measureText(mDesc.substring(0, bufEnd-1));
                 }
+
                 // 显示0~22位，由于设定ellipsizedWidth，因此后两位用省略号显示
-                mStaticLayout = new StaticLayout(mDesc, 0, bufEnd, mTextPaint, (int) outerWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f,
-                        0.0f, true, TextUtils.TruncateAt.END, (int) ellipsizedWidth);
+                mStaticLayout = new StaticLayout(mDesc, 0, bufEnd, mTextPaint, (int) outerWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, true,
+                        TextUtils.TruncateAt.END, (int) ellipsizedWidth);
             }
             canvas.translate(mTextPadding, getHeight() - mTextPadding - (mFontMetrics.bottom - mFontMetrics.top));
 

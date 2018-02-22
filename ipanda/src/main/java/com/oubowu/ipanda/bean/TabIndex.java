@@ -1,4 +1,4 @@
-package com.oubowu.ipanda.util;
+package com.oubowu.ipanda.bean;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;

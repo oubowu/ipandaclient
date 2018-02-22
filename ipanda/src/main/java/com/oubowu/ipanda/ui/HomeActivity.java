@@ -12,16 +12,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.MenuBuilder;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
 import com.oubowu.ipanda.R;
+import com.oubowu.ipanda.bean.TabIndex;
 import com.oubowu.ipanda.databinding.ActivityHomeBinding;
 import com.oubowu.ipanda.util.BottomNavigationViewHelper;
 import com.oubowu.ipanda.util.NavigationController;
 import com.oubowu.ipanda.util.StatusBarUtil;
-import com.oubowu.ipanda.util.TabIndex;
 import com.oubowu.ipanda.viewmodel.HomeViewModel;
 
 import java.util.List;
@@ -70,6 +69,11 @@ public class HomeActivity extends AppCompatActivity implements HasSupportFragmen
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     public void onBackPressed() {
         moveTaskToBack(true);
     }
@@ -86,7 +90,7 @@ public class HomeActivity extends AppCompatActivity implements HasSupportFragmen
                     mNavigationController.navigateToHost("熊猫频道", item.getTitleCondensed().toString());
                     break;
                 case 1:
-
+                    mNavigationController.navigateToPandaLive(item.getTitle().toString(), item.getTitleCondensed().toString());
                     break;
                 case 2:
 
@@ -128,7 +132,7 @@ public class HomeActivity extends AppCompatActivity implements HasSupportFragmen
                         Logger.d(resource);
                         break;
                     case ERROR:
-                        Toast.makeText(HomeActivity.this, "请求失败"+resource.message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HomeActivity.this, "请求失败" + resource.message, Toast.LENGTH_SHORT).show();
                         break;
                     case LOADING:
                         Toast.makeText(HomeActivity.this, "加载中......", Toast.LENGTH_SHORT).show();
@@ -159,9 +163,4 @@ public class HomeActivity extends AppCompatActivity implements HasSupportFragmen
 
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        Log.e("HomeActivity","164行-onTouchEvent(): "+" ");
-        return super.onTouchEvent(event);
-    }
 }

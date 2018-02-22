@@ -2,6 +2,7 @@ package com.oubowu.ipanda.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -34,7 +35,7 @@ public class HostRepository {
 
     public LiveData<Resource<HomeIndex>> getHomeIndex(String url) {
         return new NetworkBoundResource<HomeIndex, Map<String, HomeIndex>>() {
-            MediatorLiveData<HomeIndex> mHomeLiveData;
+            MutableLiveData<HomeIndex> mHomeLiveData;
 
             @Override
             protected void onCallFailed() {
@@ -61,7 +62,7 @@ public class HostRepository {
             @Override
             protected LiveData<HomeIndex> loadFromDb() {
                 if (mHomeLiveData == null) {
-                    mHomeLiveData = new MediatorLiveData<>();
+                    mHomeLiveData = new MutableLiveData<>();
                     mHomeLiveData.postValue(null);
                 }
                 return mHomeLiveData;
@@ -69,7 +70,7 @@ public class HostRepository {
         }.asLiveData();
     }
 
-    private LiveData<Resource<List<VideoList>>> getVidoList(String url) {
+    private LiveData<Resource<List<VideoList>>> getVideoList(String url) {
         return new NetworkBoundResource<List<VideoList>, Map<String, List<VideoList>>>() {
             MediatorLiveData<List<VideoList>> mVideoListLiveData;
 
@@ -107,11 +108,11 @@ public class HostRepository {
     }
 
     public LiveData<Resource<List<VideoList>>> getWonderfulMomentIndex(String url) {
-        return getVidoList(url);
+        return getVideoList(url);
     }
 
     public LiveData<Resource<List<VideoList>>> getGungunVideoIndex(String url) {
-        return getVidoList(url);
+        return getVideoList(url);
     }
 
 }

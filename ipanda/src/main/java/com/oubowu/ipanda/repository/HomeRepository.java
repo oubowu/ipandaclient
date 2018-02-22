@@ -1,19 +1,19 @@
 package com.oubowu.ipanda.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.oubowu.ipanda.api.response.ApiResponse;
 import com.oubowu.ipanda.api.service.IpandaService;
+import com.oubowu.ipanda.bean.TabIndex;
 import com.oubowu.ipanda.db.IpandaDb;
 import com.oubowu.ipanda.db.dao.TabIndexDao;
 import com.oubowu.ipanda.util.MapUtil;
 import com.oubowu.ipanda.util.NetworkBoundResource;
 import com.oubowu.ipanda.util.Resource;
-import com.oubowu.ipanda.util.TabIndex;
 
 import java.util.List;
 import java.util.Map;
@@ -79,7 +79,7 @@ public class HomeRepository {
 
         return new NetworkBoundResource<List<TabIndex>, Map<String, List<TabIndex>>>() {
 
-            MediatorLiveData<List<TabIndex>> mTabLiveData;
+            MutableLiveData<List<TabIndex>> mTabLiveData;
 
             @Override
             protected void onCallFailed() {
@@ -106,7 +106,7 @@ public class HomeRepository {
             @Override
             protected LiveData<List<TabIndex>> loadFromDb() {
                 if (mTabLiveData == null) {
-                    mTabLiveData = new MediatorLiveData<>();
+                    mTabLiveData = new MutableLiveData<>();
                     mTabLiveData.postValue(null);
                 }
                 return mTabLiveData;

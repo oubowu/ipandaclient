@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Transition;
 import android.util.Log;
@@ -23,7 +24,10 @@ import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 
 import javax.inject.Inject;
 
-public class VideoActivity extends AppCompatActivity {
+import dagger.android.AndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
+
+public class VideoActivity extends AppCompatActivity implements HasSupportFragmentInjector {
 
     public static final String PID = "pid";
 
@@ -151,7 +155,7 @@ public class VideoActivity extends AppCompatActivity {
 
 
                                 // Log.e("VideoActivity", "53行-onCreate(): " + recordVideo.hls_url);
-                                mBinding.videoView.setUp(recordVideo.video.chapters.get(0).url, false, recordVideo.title);
+                                mBinding.videoView.setUp(recordVideo.video.chapters.get(0).url, true, recordVideo.title);
 
                                 //增加title
                                 mBinding.videoView.getTitleTextView().setVisibility(View.VISIBLE);
@@ -261,6 +265,11 @@ public class VideoActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return null;
     }
 
     public class OnTransitionListener implements Transition.TransitionListener {

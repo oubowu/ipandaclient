@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.oubowu.ipanda.BasicApp;
 import com.oubowu.ipanda.di.module.AppModule;
-import com.oubowu.ipanda.di.module.HomeActivityModule;
+import com.oubowu.ipanda.di.module.ActivityModule;
 
 import javax.inject.Singleton;
 
@@ -19,7 +19,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
 // AppModule提供Service和ViewModelProvider.Factory；
 // HomeActivityModule提供具体的注入Activity为HomeActivity
 @Singleton
-@Component(modules = {AndroidSupportInjectionModule.class, AppModule.class, HomeActivityModule.class})
+@Component(modules = {AndroidSupportInjectionModule.class, AppModule.class, ActivityModule.class})
 public interface AppComponent {
 
     // 创建builder，传入application注入，后续注入地方@Inject Applcation即可获取Application实例
