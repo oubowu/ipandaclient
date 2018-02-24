@@ -319,8 +319,10 @@ public class PandaLiveSubFragment extends Fragment implements Injectable {
 
         } else if (isVisible && isFirstInit) {
             Log.e("PandaLiveSubFragment", mName + " 可见并且初始化过，不做网络请求");
+            mBinding.videoView.onVideoResume();
         } else if (!isVisible) {
             Log.e("PandaLiveSubFragment", mName + "不可见不做网络请求 初始化了吗？" + isFirstInit);
+            mBinding.videoView.onVideoPause();
         }
     }
 
@@ -373,5 +375,15 @@ public class PandaLiveSubFragment extends Fragment implements Injectable {
         mBinding.videoView.onVideoResume();
     }
 
-
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        if (mBinding == null) {
+            return;
+        }
+        if (hidden) {
+            mBinding.videoView.onVideoPause();
+        } else {
+            mBinding.videoView.onVideoResume();
+        }
+    }
 }

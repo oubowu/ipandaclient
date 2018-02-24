@@ -43,6 +43,7 @@ public class PandaLiveFragment extends Fragment implements Injectable {
 
     @Inject
     ViewModelProvider.Factory mFactory;
+    private PandaLiveFragmentAdapter mPandaLiveFragmentAdapter;
 
     public PandaLiveFragment() {
         // Required empty public constructor
@@ -103,7 +104,8 @@ public class PandaLiveFragment extends Fragment implements Injectable {
                                 fragments.add(PandaLiveSubFragment.newInstance(tab.title, tab.url, mBinding.toolbar.getHeight() + mBinding.tabLayout.getHeight()));
                             }
                             Log.e("PandaLiveFragment", "89行-onActivityCreated(): " + " ");
-                            mBinding.viewPager.setAdapter(new PandaLiveFragmentAdapter(getChildFragmentManager(), fragments, titles));
+                            mPandaLiveFragmentAdapter = new PandaLiveFragmentAdapter(getChildFragmentManager(), fragments, titles);
+                            mBinding.viewPager.setAdapter(mPandaLiveFragmentAdapter);
                             mBinding.tabLayout.setupWithViewPager(mBinding.viewPager);
                         }
                         break;
@@ -140,4 +142,13 @@ public class PandaLiveFragment extends Fragment implements Injectable {
         mContext = null;
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        if (mPandaLiveFragmentAdapter != null) {
+            List<Fragment> fragments = mPandaLiveFragmentAdapter.getFragments();
+            for (Fragment f:fragments) {
+                f.onHiddenChanged(hidden);
+            }
+        }
+    }
 }

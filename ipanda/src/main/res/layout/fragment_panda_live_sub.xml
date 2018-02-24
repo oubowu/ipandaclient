@@ -91,29 +91,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/summary"
                 tools:text="翻身、吃饭、睡觉、喝奶、打闹、攀爬……这里是成都大熊猫繁育研究基地，24小时高清直播大熊猫生活实况的地方。成年园、幼年园、幼儿园、母子园、一号别墅，11路直播信号28个摄像头，让你零距离了解国宝们的日常起居。"/>
 
-            <!--<android.support.design.widget.TabLayout
-                android:id="@+id/tab_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:background="@drawable/bottom_navigation_rect"
-                app:layout_constraintTop_toBottomOf="@+id/live_desc"
-                app:tabIndicatorColor="?attr/colorAccent"
-                app:tabMode="fixed"
-                app:tabSelectedTextColor="?attr/colorAccent">
-
-                <android.support.design.widget.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="多视角直播"/>
-
-                &lt;!&ndash;<android.support.design.widget.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="边看边聊"/>&ndash;&gt;
-
-            </android.support.design.widget.TabLayout>-->
-
             <com.oubowu.ipanda.ui.widget.FlexImageLayout
                 android:id="@+id/flexImageLayout"
                 android:layout_width="match_parent"
@@ -125,18 +102,6 @@
                 app:spacing="8dp">
 
             </com.oubowu.ipanda.ui.widget.FlexImageLayout>
-
-            <!--<android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:nestedScrollingEnabled="false"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/tab_layout">
-
-            </android.support.v7.widget.RecyclerView>-->
 
         </android.support.constraint.ConstraintLayout>
 
