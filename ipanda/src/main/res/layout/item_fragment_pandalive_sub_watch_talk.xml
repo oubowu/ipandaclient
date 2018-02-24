@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="content"
+            type="com.oubowu.ipanda.bean.pandalive.WatchTalk.DataBean.ContentBean"/>
+
+        <variable
+            name="floorCount"
+            type="Long"/>
+
+        <import
+            type="com.oubowu.ipanda.util.DateUtil"/>
+
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/toolbarBgColor"
+        android:padding="4dp">
+
+        <TextView
+            android:id="@+id/author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{content.author}"
+            android:textColor="@color/toolbarNormalTextColor"
+            android:textSize="14dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/floor"
+            tools:text="央视网网友"/>
+
+        <TextView
+            android:id="@+id/floor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/toolbarNormalTextColor"
+            android:paddingEnd="2dp"
+            android:paddingStart="2dp"
+            android:text="@{Long.toString(floorCount)+@string/floor}"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="377971楼"/>
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:paddingEnd="2dp"
+            android:paddingStart="8dp"
+            android:paddingTop="2dp"
+            android:text="@{content.message}"
+            android:textColor="@color/toolbarSelectTextColor"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toStartOf="@+id/date"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/floor"
+            tools:text="鸡爪树上睡的是谁？以前都是阿福在睡。鸡爪树上睡的是谁？以前都是阿福在睡"/>
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{DateUtil.format(content.dateline)}"
+            android:textColor="@color/toolbarNormalTextColor"
+            app:layout_constraintBottom_toBottomOf="@id/content"
+            app:layout_constraintRight_toLeftOf="parent"
+            tools:text="02-24-2013"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

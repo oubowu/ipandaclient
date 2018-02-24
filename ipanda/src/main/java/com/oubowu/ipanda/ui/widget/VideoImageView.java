@@ -14,6 +14,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 
 import com.oubowu.ipanda.R;
@@ -202,7 +203,15 @@ public class VideoImageView extends android.support.v7.widget.AppCompatImageView
             mTextPaint.setTextSize(MeasureUtil.dip2px(getContext(), 16));
             mFontMetrics = mTextPaint.getFontMetrics();
             if (mStaticLayout == null) {
-                mStaticLayout = new StaticLayout(mContent, mTextPaint, getWidth() - mTextPadding * 2, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+                int contentLength = mContent.length();
+                if (contentLength <= 11) {
+                    mStaticLayout = new StaticLayout(mContent, mTextPaint, getWidth() - mTextPadding * 2, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+                } else {
+                    float ellipsizedWidth = mTextPaint.measureText(mContent.substring(0, 4));
+                    mStaticLayout = new StaticLayout(mContent, 0, 11, mTextPaint, getWidth() - mTextPadding * 2, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false,
+                            TextUtils.TruncateAt.END, (int) ellipsizedWidth);
+                }
+
             }
             if (isLiveType) {
                 canvas.translate(mTextPadding, expectDrawHeight + (getHeight() - expectDrawHeight - mStaticLayout.getHeight()) / 2);

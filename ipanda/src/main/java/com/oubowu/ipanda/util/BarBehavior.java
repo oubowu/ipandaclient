@@ -19,7 +19,7 @@ public class BarBehavior extends CoordinatorLayout.Behavior<View> {
     public static final int DIRECTION_REVERSE = 2;
 
     private final int mDirection;
-
+    private final int mDependenceBarId;
     private float mFirstTopY = Integer.MIN_VALUE;
 
     private OnNestedScrollListener mOnNestedScrollListener;
@@ -28,7 +28,26 @@ public class BarBehavior extends CoordinatorLayout.Behavior<View> {
         super(context, attrs);
         final TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.BarBehavior);
         mDirection = ta.getInt(R.styleable.BarBehavior_direction, DIRECTION_SAME);
+        mDependenceBarId = ta.getResourceId(R.styleable.BarBehavior_dependenceBarId, -1);
         ta.recycle();
+    }
+
+    @Override
+    public boolean onDependentViewChanged(CoordinatorLayout parent, View child, View dependency) {
+        if (mDependenceBarId == -1) {
+            return super.onDependentViewChanged(parent, child, dependency);
+        } else {
+            if (mFirstTopY == Integer.MIN_VALUE && dependency.getId() == mDependenceBarId) {
+                child.setY(dependency.getY() + dependency.getHeight());
+                mFirstTopY = child.getY();
+            }
+            return true;
+        }
+    }
+
+    @Override
+    public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
+        return mDependenceBarId == dependency.getId();
     }
 
     @Override

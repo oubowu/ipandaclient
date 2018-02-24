@@ -91,14 +91,14 @@ public interface IpandaService {
     @GET
     LiveData<ApiResponse<Map<String, List<MultipleLive>>>> getMultipleLive(@Url String url);
 
-    // 熊猫直播-直播tab-边看边聊（itemid来自live的bookmark的multiple的watchTalk）
-    @Headers("realHost:newcomment.cntv.cn/comment/list")
-    @GET
+    // 熊猫直播-直播tab-边看边聊（itemid来自live的bookmark的multiple的watchTalk的url）
+    @Headers("realHost:newcomment.cntv.cn")
+    @GET("/comment/list")
     LiveData<ApiResponse<WatchTalk>> getLiveWatchTalk(@Query("prepage") int prepage, @Query("nature") int nature, @Query("app") String app, @Query("page") int page, @Query("itemid") String itemid);
 
     // 熊猫直播-除直播之外的其余tab（vsid来自tablist的id）
-    @Headers("realHost:api.cntv.cn/video/videolistById")
-    @GET
+    @Headers("realHost:api.cntv.cn")
+    @GET("/video/videolistById")
     LiveData<ApiResponse<RecordTab>> getRecordTab(@Query("vsid") String vsid, @Query("n") int n, @Query("serviceId") String serviceId, @Query("o") String o, @Query("of") String of, @Query("p") int p);
 
     /**************************************************************************************************************/

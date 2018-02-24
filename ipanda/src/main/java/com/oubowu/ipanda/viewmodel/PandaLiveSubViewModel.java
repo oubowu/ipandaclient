@@ -9,6 +9,8 @@ import com.oubowu.ipanda.bean.pandalive.WatchTalk;
 import com.oubowu.ipanda.repository.PandaLiveSubRepository;
 import com.oubowu.ipanda.util.Resource;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 /**
@@ -27,7 +29,7 @@ public class PandaLiveSubViewModel extends ViewModel {
         return mPandaLiveSubRepository.getLiveTab(url);
     }
 
-    public LiveData<Resource<MultipleLive>> getMultipleLive(String url) {
+    public LiveData<Resource<List<MultipleLive>>> getMultipleLive(String url) {
         return mPandaLiveSubRepository.getMultipleLive(url);
     }
 

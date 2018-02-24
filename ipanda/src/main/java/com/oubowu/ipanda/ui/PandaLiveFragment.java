@@ -8,6 +8,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,9 +17,11 @@ import android.view.ViewGroup;
 
 import com.oubowu.ipanda.R;
 import com.oubowu.ipanda.bean.pandalive.TabList;
+import com.oubowu.ipanda.callback.OnFragmentInteractionListener;
 import com.oubowu.ipanda.databinding.FragmentPandaLiveBinding;
 import com.oubowu.ipanda.di.Injectable;
 import com.oubowu.ipanda.ui.adapter.PandaLiveFragmentAdapter;
+import com.oubowu.ipanda.util.BarBehavior;
 import com.oubowu.ipanda.viewmodel.PandaLiveViewModel;
 
 import java.util.ArrayList;
@@ -35,6 +38,8 @@ public class PandaLiveFragment extends Fragment implements Injectable {
     private String mUrl;
     private Context mContext;
     private FragmentPandaLiveBinding mBinding;
+
+    private OnFragmentInteractionListener mListener;
 
     @Inject
     ViewModelProvider.Factory mFactory;
@@ -65,6 +70,17 @@ public class PandaLiveFragment extends Fragment implements Injectable {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_panda_live, container, false);
         mBinding.setTitle(mName);
+
+        CoordinatorLayout.LayoutParams clp = (CoordinatorLayout.LayoutParams) mBinding.toolbar.getLayoutParams();
+        CoordinatorLayout.Behavior behavior = clp.getBehavior();
+        if (behavior != null && behavior instanceof BarBehavior) {
+            ((BarBehavior) behavior).setOnNestedScrollListener((dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type) -> {
+                if (mListener != null) {
+                    mListener.onNestedScrollListener(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type);
+                }
+            });
+        }
+
         return mBinding.getRoot();
     }
 
@@ -84,9 +100,9 @@ public class PandaLiveFragment extends Fragment implements Injectable {
                             List<String> titles = new ArrayList<>(data.size());
                             for (TabList tab : data) {
                                 titles.add(tab.title);
-                                fragments.add(PandaLiveSubFragment.newInstance(tab.title, tab.url));
+                                fragments.add(PandaLiveSubFragment.newInstance(tab.title, tab.url, mBinding.toolbar.getHeight() + mBinding.tabLayout.getHeight()));
                             }
-                            Log.e("PandaLiveFragment","89行-onActivityCreated(): "+" ");
+                            Log.e("PandaLiveFragment", "89行-onActivityCreated(): " + " ");
                             mBinding.viewPager.setAdapter(new PandaLiveFragmentAdapter(getChildFragmentManager(), fragments, titles));
                             mBinding.tabLayout.setupWithViewPager(mBinding.viewPager);
                         }
@@ -109,11 +125,17 @@ public class PandaLiveFragment extends Fragment implements Injectable {
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
+        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        mListener = null;
         // 取消所有异步任务
         mContext = null;
     }

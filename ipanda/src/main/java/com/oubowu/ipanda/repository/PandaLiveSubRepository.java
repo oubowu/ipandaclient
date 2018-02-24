@@ -10,7 +10,6 @@ import com.oubowu.ipanda.api.service.IpandaService;
 import com.oubowu.ipanda.bean.pandalive.LiveTab;
 import com.oubowu.ipanda.bean.pandalive.MultipleLive;
 import com.oubowu.ipanda.bean.pandalive.WatchTalk;
-import com.oubowu.ipanda.util.CommonUtil;
 import com.oubowu.ipanda.util.MapUtil;
 import com.oubowu.ipanda.util.NetworkBoundResource;
 import com.oubowu.ipanda.util.Resource;
@@ -71,9 +70,9 @@ public class PandaLiveSubRepository {
         }.asLiveData();
     }
 
-    public LiveData<Resource<MultipleLive>> getMultipleLive(String url) {
-        return new NetworkBoundResource<MultipleLive, Map<String, List<MultipleLive>>>() {
-            MutableLiveData<MultipleLive> mMultipleLiveLiveData;
+    public LiveData<Resource<List<MultipleLive>>> getMultipleLive(String url) {
+        return new NetworkBoundResource<List<MultipleLive>, Map<String, List<MultipleLive>>>() {
+            MutableLiveData<List<MultipleLive>> mMultipleLiveLiveData;
 
             @Override
             protected void onCallFailed() {
@@ -83,9 +82,7 @@ public class PandaLiveSubRepository {
             @Override
             protected void saveCallResponseToDb(@NonNull Map<String, List<MultipleLive>> response) {
                 List<MultipleLive> multipleLives = MapUtil.getFirstElement(response);
-                if (CommonUtil.isNotEmpty(multipleLives)) {
-                    mMultipleLiveLiveData.postValue(multipleLives.get(0));
-                }
+                mMultipleLiveLiveData.postValue(multipleLives);
             }
 
             @NonNull
@@ -95,12 +92,12 @@ public class PandaLiveSubRepository {
             }
 
             @Override
-            protected boolean shouldCall(@Nullable MultipleLive data) {
+            protected boolean shouldCall(@Nullable List<MultipleLive> data) {
                 return true;
             }
 
             @Override
-            protected LiveData<MultipleLive> loadFromDb() {
+            protected LiveData<List<MultipleLive>> loadFromDb() {
                 if (mMultipleLiveLiveData == null) {
                     mMultipleLiveLiveData = new MutableLiveData<>();
                     mMultipleLiveLiveData.postValue(null);

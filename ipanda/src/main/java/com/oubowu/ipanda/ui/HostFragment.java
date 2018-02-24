@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.oubowu.ipanda.R;
 import com.oubowu.ipanda.bean.home.HomeIndex;
+import com.oubowu.ipanda.callback.OnFragmentInteractionListener;
 import com.oubowu.ipanda.databinding.FragmentHostBinding;
 import com.oubowu.ipanda.di.Injectable;
 import com.oubowu.ipanda.ui.adapter.FragmentDataBindingComponent;
@@ -219,11 +220,5 @@ public class HostFragment extends Fragment implements Injectable {
         mListener = null;
         // 取消所有异步任务
         mContext = null;
-    }
-
-    public interface OnFragmentInteractionListener {
-        void onNestedScrollListener(int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type);
-
-        void onButtonPressed();
     }
 }

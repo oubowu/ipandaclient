@@ -34,11 +34,11 @@ public abstract class DataBoundListAdapter<T, V extends ViewDataBinding> extends
 
     @Override
     public void onBindViewHolder(DataBoundViewHolder<V> holder, int position) {
-        bind(holder.binding, mItems.get(position), getItemViewType(position));
+        bind(holder.binding, position,mItems.get(position), getItemViewType(position));
         holder.binding.executePendingBindings();
     }
 
-    protected abstract void bind(V binding, T t, int itemViewType);
+    protected abstract void bind(V binding, int position, T t, int itemViewType);
 
     @Override
     public int getItemCount() {

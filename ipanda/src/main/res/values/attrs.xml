@@ -19,6 +19,7 @@
             <enum name="same" value="1"/>
             <enum name="reverse" value="2"/>
         </attr>
+        <attr name="dependenceBarId" format="reference"/>
     </declare-styleable>
 
     <declare-styleable name="FlexImageLayout">

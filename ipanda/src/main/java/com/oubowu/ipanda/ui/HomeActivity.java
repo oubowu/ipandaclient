@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.orhanobut.logger.Logger;
 import com.oubowu.ipanda.R;
 import com.oubowu.ipanda.bean.TabIndex;
+import com.oubowu.ipanda.callback.OnFragmentInteractionListener;
 import com.oubowu.ipanda.databinding.ActivityHomeBinding;
 import com.oubowu.ipanda.util.BottomNavigationViewHelper;
 import com.oubowu.ipanda.util.NavigationController;
@@ -33,7 +34,7 @@ import dagger.android.support.HasSupportFragmentInjector;
 
 // 架构：UI负责从ViewModule取数据进行UI更新；ViewModule负责从Repository中取数据；Repository负责具体的数据业务请求，一般有网络和本地数据业务逻辑
 // UI<---ViewModule<----Repository
-public class HomeActivity extends AppCompatActivity implements HasSupportFragmentInjector, HostFragment.OnFragmentInteractionListener {
+public class HomeActivity extends AppCompatActivity implements HasSupportFragmentInjector, OnFragmentInteractionListener {
 
     ActivityHomeBinding mHomeBinding;
 
