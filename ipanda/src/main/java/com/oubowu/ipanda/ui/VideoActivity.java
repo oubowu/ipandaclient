@@ -83,6 +83,12 @@ public class VideoActivity extends AppCompatActivity implements HasSupportFragme
         VideoViewModel videoViewModel = ViewModelProviders.of(this, mFactory).get(VideoViewModel.class);
 
         if (isLiveVideo) {
+
+            mBinding.videoView.findViewById(com.shuyu.gsyvideoplayer.R.id.progress).setVisibility(View.INVISIBLE);
+            mBinding.videoView.findViewById(com.shuyu.gsyvideoplayer.R.id.total).setVisibility(View.INVISIBLE);
+            mBinding.videoView.findViewById(com.shuyu.gsyvideoplayer.R.id.bottom_progressbar).setAlpha(0);
+            mBinding.videoView.setLive(true);
+
             videoViewModel.getLiveVideo(liveId).observe(this, liveVideoResource -> {
                 if (liveVideoResource != null) {
                     switch (liveVideoResource.status) {

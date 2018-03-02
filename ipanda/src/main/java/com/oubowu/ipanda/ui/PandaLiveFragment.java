@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.oubowu.ipanda.databinding.FragmentPandaLiveBinding;
 import com.oubowu.ipanda.di.Injectable;
 import com.oubowu.ipanda.ui.adapter.PandaLiveFragmentAdapter;
 import com.oubowu.ipanda.util.BarBehavior;
+import com.oubowu.ipanda.util.CommonUtil;
 import com.oubowu.ipanda.viewmodel.PandaLiveViewModel;
 
 import java.util.ArrayList;
@@ -82,6 +84,27 @@ public class PandaLiveFragment extends Fragment implements Injectable {
             });
         }
 
+        mBinding.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                switch (state) {
+                    case ViewPager.SCROLL_STATE_DRAGGING:
+                        mBinding.coordinatorLayout.onNestedScroll(mBinding.viewPager, 0, -10000, 0, 0);
+                        break;
+                }
+            }
+        });
+
         return mBinding.getRoot();
     }
 
@@ -99,9 +122,14 @@ public class PandaLiveFragment extends Fragment implements Injectable {
                         if (data != null) {
                             List<Fragment> fragments = new ArrayList<>(data.size());
                             List<String> titles = new ArrayList<>(data.size());
+                            int paddingTop = mBinding.toolbar.getHeight() + mBinding.tabLayout.getHeight();
                             for (TabList tab : data) {
                                 titles.add(tab.title);
-                                fragments.add(PandaLiveSubFragment.newInstance(tab.title, tab.url, mBinding.toolbar.getHeight() + mBinding.tabLayout.getHeight()));
+                                if (!CommonUtil.isEmpty(tab.url)) {
+                                    fragments.add(PandaLiveSubFragment.newInstance(tab.title, tab.url, paddingTop));
+                                } else {
+                                    fragments.add(PandaLiveOtherFragment.newInstance(tab.title, tab.id, paddingTop));
+                                }
                             }
                             Log.e("PandaLiveFragment", "89行-onActivityCreated(): " + " ");
                             mPandaLiveFragmentAdapter = new PandaLiveFragmentAdapter(getChildFragmentManager(), fragments, titles);
@@ -146,7 +174,7 @@ public class PandaLiveFragment extends Fragment implements Injectable {
     public void onHiddenChanged(boolean hidden) {
         if (mPandaLiveFragmentAdapter != null) {
             List<Fragment> fragments = mPandaLiveFragmentAdapter.getFragments();
-            for (Fragment f:fragments) {
+            for (Fragment f : fragments) {
                 f.onHiddenChanged(hidden);
             }
         }

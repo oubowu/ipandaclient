@@ -23,15 +23,17 @@ import com.oubowu.ipanda.util.MeasureUtil;
  */
 public class SimpleVideoImageView extends android.support.v7.widget.AppCompatImageView {
 
-    private float mRatio;
+    private float mWRatio;
+    private float mHRatio;
+
     private int mScreenWidth;
     private int mExpectWidth;
     private int mExpectHeight;
     private int mTextPadding;
     private TextPaint mTextPaint;
     private Paint.FontMetrics mFontMetrics;
-    private Paint mTagPaint;
 
+    private Paint mTagPaint;
     private String mVideoLength;
     private LinearGradient mLinearGradient;
     private Paint mPaint;
@@ -58,14 +60,16 @@ public class SimpleVideoImageView extends android.support.v7.widget.AppCompatIma
 
         if (attrs != null) {
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SimpleVideoImageView);
-            mRatio = ta.getFraction(R.styleable.SimpleVideoImageView_ratio, 1, 1, 0.4f);
+            mWRatio = ta.getFraction(R.styleable.SimpleVideoImageView_wRatio, 1, 1, 0.4f);
+            mHRatio = ta.getFraction(R.styleable.SimpleVideoImageView_hRatio, 1, 1, -1);
             ta.recycle();
         }
 
         // Log.e("SimpleVideoImageView", "66行-init(): " + mRatio);
 
         mScreenWidth = MeasureUtil.getScreenSize(context).x;
-        mExpectWidth = (int) (mScreenWidth * mRatio);
+
+        mExpectWidth = (int) (mScreenWidth * mWRatio);
 
         mTextPadding = MeasureUtil.dip2px(getContext(), 4);
 
@@ -89,8 +93,12 @@ public class SimpleVideoImageView extends android.support.v7.widget.AppCompatIma
             int dWidth = drawable.getIntrinsicWidth();
             int dHeight = drawable.getIntrinsicHeight();
 
-            float scale = mExpectWidth * 1.0f / dWidth;
-            mExpectHeight = (int) (scale * dHeight);
+            if (mHRatio != -1) {
+                mExpectHeight = (int) (mScreenWidth * mHRatio);
+            } else {
+                float scale = mExpectWidth * 1.0f / dWidth;
+                mExpectHeight = (int) (scale * dHeight);
+            }
 
             setMeasuredDimension(MeasureSpec.makeMeasureSpec(mExpectWidth, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(mExpectHeight, MeasureSpec.EXACTLY));
         } else {

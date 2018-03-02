@@ -21,12 +21,12 @@
         android:fitsSystemWindows="true"
         tools:context="com.oubowu.ipanda.ui.VideoActivity">
 
-        <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
+        <com.oubowu.ipanda.ui.widget.StandardVideoPlayer
             android:id="@+id/video_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        </com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer>
+        </com.oubowu.ipanda.ui.widget.StandardVideoPlayer>
 
     </FrameLayout>
 

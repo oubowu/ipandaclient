@@ -11,6 +11,7 @@ import com.oubowu.ipanda.bean.pandalive.RecordTab;
 import com.oubowu.ipanda.bean.pandalive.TabList;
 import com.oubowu.ipanda.bean.pandalive.WatchTalk;
 import com.oubowu.ipanda.bean.TabIndex;
+import com.oubowu.ipanda.bean.pandavideo.PandaVideoIndex;
 
 import java.util.List;
 import java.util.Map;
@@ -96,12 +97,18 @@ public interface IpandaService {
     @GET("/comment/list")
     LiveData<ApiResponse<WatchTalk>> getLiveWatchTalk(@Query("prepage") int prepage, @Query("nature") int nature, @Query("app") String app, @Query("page") int page, @Query("itemid") String itemid);
 
-    // 熊猫直播-除直播之外的其余tab（vsid来自tablist的id）
+    // 熊猫直播-除直播之外的其余tab（vsid来自tablist的id
     @Headers("realHost:api.cntv.cn")
     @GET("/video/videolistById")
     LiveData<ApiResponse<RecordTab>> getRecordTab(@Query("vsid") String vsid, @Query("n") int n, @Query("serviceId") String serviceId, @Query("o") String o, @Query("of") String of, @Query("p") int p);
 
     /**************************************************************************************************************/
 
+    // 滚滚视频
+    @Headers("realHost:www.ipanda.com")
+    @GET
+    LiveData<ApiResponse<PandaVideoIndex>> getPandaVideoIndex(@Url String url);
+
+    /**************************************************************************************************************/
 
 }

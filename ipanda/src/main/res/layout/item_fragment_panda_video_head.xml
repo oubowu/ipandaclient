@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="event"
+            type="com.oubowu.ipanda.callback.EventListener"/>
+
+        <variable
+            name="videoBean"
+            type="com.oubowu.ipanda.bean.pandavideo.PandaVideoIndex.ListBean"/>
+
+    </data>
+
+    <com.oubowu.ipanda.ui.widget.DescImageView
+        android:id="@+id/descImageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:onClick="@{(view)->event.clickItem(view,videoBean.id)}"
+        app:loadDescImage1="@{videoBean}"
+        tools:src="@drawable/xxx"/>
+
+</layout>

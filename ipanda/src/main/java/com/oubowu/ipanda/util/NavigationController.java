@@ -11,6 +11,7 @@ import com.oubowu.ipanda.R;
 import com.oubowu.ipanda.ui.HomeActivity;
 import com.oubowu.ipanda.ui.HostFragment;
 import com.oubowu.ipanda.ui.PandaLiveFragment;
+import com.oubowu.ipanda.ui.PandaVideoFragment;
 
 import javax.inject.Inject;
 
@@ -40,6 +41,11 @@ public class NavigationController extends FragmentManager.FragmentLifecycleCallb
     public void navigateToPandaLive(String name, String url) {
         Log.e("NavigationController", "跳转熊猫直播碎片");
         changeFragment(PandaLiveFragment.class, () -> PandaLiveFragment.newInstance(name, url));
+    }
+
+    public void navigateToPandaVideo(String name, String url) {
+        Log.e("NavigationController", "跳转滚滚视频碎片");
+        changeFragment(PandaVideoFragment.class, () -> PandaVideoFragment.newInstance(name, url));
     }
 
     private void changeFragment(Class clz, Closure closure) {

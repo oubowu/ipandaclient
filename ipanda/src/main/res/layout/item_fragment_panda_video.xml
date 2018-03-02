@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="event"
+            type="com.oubowu.ipanda.callback.EventListener"/>
+
+        <variable
+            name="videoBean"
+            type="com.oubowu.ipanda.bean.pandavideo.PandaVideoIndex.ListBean"/>
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottom_navigation_rect"
+        android:onClick="@{(view)->event.clickItem(view,videoBean.id)}"
+        android:padding="0dp">
+
+        <com.oubowu.ipanda.ui.widget.SimpleVideoImageView
+            android:id="@+id/simpleVideoImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:scaleType="centerCrop"
+            app:loadImageUrl="@{videoBean.image}"
+            app:wRatio="35%"
+            tools:src="@drawable/xxx"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:paddingTop="4dp"
+            android:text="@{videoBean.title}"
+            android:textColor="@color/toolbarSelectTextColor"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/simpleVideoImageView"
+            tools:text="《熊猫TOP榜》"/>
+
+        <TextView
+            android:id="@+id/tv_brief"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="start"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:text="@{videoBean.brief}"
+            android:textSize="12dp"
+            app:layout_constraintStart_toEndOf="@+id/simpleVideoImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
+            tools:text="第二季第三十四期：吃播很流行"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

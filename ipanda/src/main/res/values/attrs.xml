@@ -27,7 +27,8 @@
     </declare-styleable>
 
     <declare-styleable name="SimpleVideoImageView">
-        <attr name="ratio" format="fraction"/>
+        <attr name="wRatio" format="fraction"/>
+        <attr name="hRatio" format="fraction"/>
     </declare-styleable>
 
 

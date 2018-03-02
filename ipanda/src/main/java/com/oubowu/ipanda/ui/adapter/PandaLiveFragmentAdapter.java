@@ -29,8 +29,6 @@ public class PandaLiveFragmentAdapter extends FragmentPagerAdapter {
         mTitles = titles;
     }
 
-
-
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {

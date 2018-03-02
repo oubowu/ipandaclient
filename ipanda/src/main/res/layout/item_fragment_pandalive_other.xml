@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="videoBean"
+            type="com.oubowu.ipanda.bean.pandalive.RecordTab.VideoBean"/>
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:background="@drawable/bottom_navigation_rect">
+
+        <com.oubowu.ipanda.ui.widget.SimpleVideoImageView
+            android:id="@+id/simpleVideoImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:scaleType="centerCrop"
+            app:hRatio="20%"
+            app:loadImageUrl="@{videoBean.img}"
+            app:wRatio="35%"
+            tools:src="@drawable/xxx"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:paddingTop="4dp"
+            android:text="@{videoBean.t}"
+            android:textColor="@color/toolbarSelectTextColor"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/simpleVideoImageView"
+            tools:text="谁家熊妈不坑娃谁家熊妈不坑"/>
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:gravity="start"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:text="@{videoBean.ptime}"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/simpleVideoImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/simpleVideoImageView"
+            tools:text="2018-01-22"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

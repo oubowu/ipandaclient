@@ -94,7 +94,7 @@ public class HomeActivity extends AppCompatActivity implements HasSupportFragmen
                     mNavigationController.navigateToPandaLive(item.getTitle().toString(), item.getTitleCondensed().toString());
                     break;
                 case 2:
-
+                    mNavigationController.navigateToPandaVideo(item.getTitle().toString(), item.getTitleCondensed().toString());
                     break;
                 case 3:
 

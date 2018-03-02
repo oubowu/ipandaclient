@@ -2,7 +2,9 @@ package com.oubowu.ipanda.di.module;
 
 import com.oubowu.ipanda.ui.HostFragment;
 import com.oubowu.ipanda.ui.PandaLiveFragment;
+import com.oubowu.ipanda.ui.PandaLiveOtherFragment;
 import com.oubowu.ipanda.ui.PandaLiveSubFragment;
+import com.oubowu.ipanda.ui.PandaVideoFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -21,5 +23,11 @@ public abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract PandaLiveSubFragment contributePandaLiveSubFragment();
+
+    @ContributesAndroidInjector
+    abstract PandaLiveOtherFragment contributePandaLiveOtherFragment();
+
+    @ContributesAndroidInjector
+    abstract PandaVideoFragment contributePandaVideoFragment();
 
 }

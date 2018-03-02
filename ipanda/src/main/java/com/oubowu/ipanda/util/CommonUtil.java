@@ -1,5 +1,9 @@
 package com.oubowu.ipanda.util;
 
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.support.annotation.AttrRes;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
@@ -12,6 +16,7 @@ import java.util.Map;
 public class CommonUtil {
 
     public static boolean equals(@Nullable Object o1, @Nullable Object o2) {
+
         if (o1 == null) {
             return o2 == null;
         }
@@ -43,6 +48,16 @@ public class CommonUtil {
 
     public static boolean isNotEmpty(@Nullable Map map) {
         return !isEmpty(map);
+    }
+
+    @ColorInt
+    public static int getThemeAttrColor(Context context, @AttrRes int colorAttr) {
+        TypedArray array = context.obtainStyledAttributes(null, new int[]{colorAttr});
+        try {
+            return array.getColor(0, 0);
+        } finally {
+            array.recycle();
+        }
     }
 
 }

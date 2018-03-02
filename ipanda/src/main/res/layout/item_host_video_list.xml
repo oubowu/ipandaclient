@@ -10,14 +10,14 @@
         android:id="@+id/simpleVideoImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:ratio="45%"
+        app:wRatio="45%"
         tools:src="@drawable/xxx"/>
 
 
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:paddingEnd="8dp"
         android:paddingStart="8dp"
         android:paddingTop="4dp"
@@ -25,7 +25,7 @@
         android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/simpleVideoImageView"
-        tools:text="谁家熊妈不坑娃谁家熊妈不坑娃谁家熊妈不坑娃谁家熊妈不坑娃谁家熊妈不坑娃谁家熊妈不坑娃谁家熊妈不坑娃谁家熊妈不坑娃谁家熊妈不坑娃谁家熊妈不坑娃"/>
+        tools:text="谁家熊妈不坑娃谁家熊妈不坑"/>
 
     <TextView
         android:id="@+id/tv_date"

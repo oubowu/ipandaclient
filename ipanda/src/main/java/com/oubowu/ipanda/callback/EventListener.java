@@ -7,4 +7,9 @@ import android.view.View;
  */
 public interface EventListener {
     void clickArrow(View v);
+
+    void clickBigImg(View v, String id);
+
+    void clickItem(View v, String id);
+
 }

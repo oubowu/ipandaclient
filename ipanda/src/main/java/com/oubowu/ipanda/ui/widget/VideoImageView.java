@@ -112,6 +112,8 @@ public class VideoImageView extends android.support.v7.widget.AppCompatImageView
         // 图片期望绘制到画布的高度
         int expectDrawHeight = (int) (33 * scale);
 
+        int measureExpectDrawHeight = expectDrawHeight;
+
         Matrix drawMatrix = getImageMatrix();
 
         if (drawMatrix == null && paddingTop == 0 && paddingLeft == 0) {
@@ -129,7 +131,7 @@ public class VideoImageView extends android.support.v7.widget.AppCompatImageView
                 // 图片期望绘制到画布的宽度是定死的
                 float scale1 = expectDrawWidth * 1.0f / drawableWidth;
                 // 算出实际的绘制到画布的高度
-                int measureExpectDrawHeight = (int) (scale1 * drawableHeight);
+                measureExpectDrawHeight = (int) (scale1 * drawableHeight);
 
                 if (measureExpectDrawHeight > expectDrawHeight) {
                     // 算出的高度大于期望的高度，上移画布
@@ -203,15 +205,24 @@ public class VideoImageView extends android.support.v7.widget.AppCompatImageView
             mTextPaint.setTextSize(MeasureUtil.dip2px(getContext(), 16));
             mFontMetrics = mTextPaint.getFontMetrics();
             if (mStaticLayout == null) {
-                int contentLength = mContent.length();
-                if (contentLength <= 11) {
-                    mStaticLayout = new StaticLayout(mContent, mTextPaint, getWidth() - mTextPadding * 2, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
-                } else {
+
+                mStaticLayout = new StaticLayout(mContent, mTextPaint, getWidth() - mTextPadding * 2, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+
+                int extraHeight = getHeight() - expectDrawHeight;
+
+                // Log.e("VideoImageView", mContent + ";" + mStaticLayout.getHeight() + ";" + extraHeight);
+
+                if (mStaticLayout.getHeight() > extraHeight) {
+                    int bufEnd = mContent.length();
+                    while (mStaticLayout.getHeight() > extraHeight) {
+                        float ellipsizedWidth = mTextPaint.measureText(mContent.substring(0, --bufEnd));
+                        mStaticLayout = new StaticLayout(mContent, 0, bufEnd, mTextPaint, getWidth() - mTextPadding * 2, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false,
+                                TextUtils.TruncateAt.END, (int) ellipsizedWidth);
+                    }
                     float ellipsizedWidth = mTextPaint.measureText(mContent.substring(0, 4));
-                    mStaticLayout = new StaticLayout(mContent, 0, 11, mTextPaint, getWidth() - mTextPadding * 2, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false,
+                    mStaticLayout = new StaticLayout(mContent, 0, bufEnd, mTextPaint, getWidth() - mTextPadding * 2, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false,
                             TextUtils.TruncateAt.END, (int) ellipsizedWidth);
                 }
-
             }
             if (isLiveType) {
                 canvas.translate(mTextPadding, expectDrawHeight + (getHeight() - expectDrawHeight - mStaticLayout.getHeight()) / 2);

@@ -12,10 +12,10 @@
 
     </RelativeLayout>
 
-    <master.flame.danmaku.ui.widget.DanmakuView
+    <!--<master.flame.danmaku.ui.widget.DanmakuView
         android:id="@+id/danmaku_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" />-->
 
     <RelativeLayout
         android:id="@+id/thumb"
@@ -85,9 +85,18 @@
                 android:scaleType="center"
                 android:src="@drawable/custom_enlarge" />
 
+            <TextView
+                android:id="@+id/switch_danmuku"
+                android:text="关弹幕"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
         </LinearLayout>
 
-        <LinearLayout
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_gravity="center"
@@ -112,7 +121,7 @@
                 android:text="弹幕关"
                 android:textColor="#ffffff" />
 
-        </LinearLayout>
+        </LinearLayout>-->
     </LinearLayout>
 
     <ProgressBar
