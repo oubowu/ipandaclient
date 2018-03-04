@@ -6,6 +6,7 @@ import com.oubowu.ipanda.api.response.ApiResponse;
 import com.oubowu.ipanda.bean.base.VideoList;
 import com.oubowu.ipanda.bean.home.HomeIndex;
 import com.oubowu.ipanda.bean.pandabroadcast.PandaBroadcastIndex;
+import com.oubowu.ipanda.bean.pandabroadcast.PandaBroadcastList;
 import com.oubowu.ipanda.bean.pandalive.LiveTab;
 import com.oubowu.ipanda.bean.pandalive.MultipleLive;
 import com.oubowu.ipanda.bean.pandalive.RecordTab;
@@ -112,12 +113,15 @@ public interface IpandaService {
 
     /**************************************************************************************************************/
 
-    // 熊猫播报
+    // 熊猫播报-索引
     @Headers("realHost:www.ipanda.com")
     @GET
-    LiveData<ApiResponse<PandaBroadcastIndex>> getPandaBroadcastIndex(@Url String url);
+    LiveData<ApiResponse<Map<String,PandaBroadcastIndex>>> getPandaBroadcastIndex(@Url String url);
 
-
+    // 熊猫播报-列表
+    @Headers("realHost:api.cntv.cn")
+    @GET
+    LiveData<ApiResponse<PandaBroadcastList>> getPandaBroadcastList(@Url String url);
 
     /**************************************************************************************************************/
 

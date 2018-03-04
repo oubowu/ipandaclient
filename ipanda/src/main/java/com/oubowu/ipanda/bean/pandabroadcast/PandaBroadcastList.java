@@ -42,7 +42,7 @@ public class PandaBroadcastList {
         public String picurl2;
         public String picurl3;
         public String url;
-        public long focus_date;
+        public String focus_date;
         public String isaixiyou;
     }
 }

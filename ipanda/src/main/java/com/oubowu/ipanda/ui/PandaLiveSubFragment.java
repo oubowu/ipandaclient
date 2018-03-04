@@ -147,7 +147,7 @@ public class PandaLiveSubFragment extends LazyFragment implements Injectable {
                                 ValueAnimator valueAnimator = ValueAnimator.ofFloat(mBinding.liveDescArrow.getRotation(), mBinding.liveDescArrow.getRotation() + 180)
                                         .setDuration(250);
 
-                                mBinding.setEvent(new EventListenerAdapter(){
+                                mBinding.setEvent(new EventListenerAdapter() {
                                     @Override
                                     public void clickArrow(View v) {
                                         super.clickArrow(v);
@@ -230,7 +230,9 @@ public class PandaLiveSubFragment extends LazyFragment implements Injectable {
 
                                                         view.setOnClickListener(v -> {
 
-                                                            mBinding.liveDescTitle.setText(String.format("%s%s", getString(R.string.live_now), item.title));
+                                                            Log.e("PandaLiveSubFragment", "233行-initView(): " + (String) view.getTag(-1));
+
+                                                            mBinding.liveDescTitle.setText(String.format("%s%s", getString(R.string.live_now), (String) view.getTag(-1)));
 
                                                             mVideoViewModel.getLiveVideo((String) view.getTag(-2))
                                                                     .observe(PandaLiveSubFragment.this, liveVideoResource -> {
@@ -330,7 +332,6 @@ public class PandaLiveSubFragment extends LazyFragment implements Injectable {
     }
 
 
-
     private void addDanmu(WatchTalk mWatchTalk, int[] mStartIndex) {
         mDisposable = Observable //
                 .interval(0, 7, TimeUnit.SECONDS) //
@@ -379,12 +380,18 @@ public class PandaLiveSubFragment extends LazyFragment implements Injectable {
     @Override
     public void onResume() {
         super.onResume();
+        if (!mIsFragmentVisible || (getParentFragment() != null && !getParentFragment().isVisible())) {
+            return;
+        }
         mBinding.videoView.onVideoResume();
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         if (mBinding == null || mBinding.videoView == null) {
+            return;
+        }
+        if (!mIsFragmentVisible) {
             return;
         }
         if (hidden) {

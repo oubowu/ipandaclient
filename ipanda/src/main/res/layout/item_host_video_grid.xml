@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="100dp"
     android:layout_height="wrap_content"
+    android:background="@drawable/ripple_with_no_mask"
     tools:src="@drawable/xxx">
 
 </com.oubowu.ipanda.ui.widget.VideoImageView>

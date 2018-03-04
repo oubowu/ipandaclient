@@ -34,7 +34,7 @@ public class PandaLiveRepository {
     public LiveData<Resource<List<TabList>>> getTabList(String url) {
         return new NetworkBoundResource<List<TabList>, Map<String, List<TabList>>>() {
 
-            MutableLiveData<List<TabList>> mListMediatorLiveData;
+            MutableLiveData<List<TabList>> mListLiveData;
 
             @Override
             protected void onCallFailed() {
@@ -44,7 +44,7 @@ public class PandaLiveRepository {
             @Override
             protected void saveCallResponseToDb(@NonNull Map<String, List<TabList>> response) {
                 List<TabList> tabList = MapUtil.getFirstElement(response);
-                mListMediatorLiveData.postValue(tabList);
+                mListLiveData.postValue(tabList);
             }
 
             @NonNull
@@ -60,11 +60,11 @@ public class PandaLiveRepository {
 
             @Override
             protected LiveData<List<TabList>> loadFromDb() {
-                if (mListMediatorLiveData == null) {
-                    mListMediatorLiveData = new MutableLiveData<>();
-                    mListMediatorLiveData.postValue(null);
+                if (mListLiveData == null) {
+                    mListLiveData = new MutableLiveData<>();
+                    mListLiveData.postValue(null);
                 }
-                return mListMediatorLiveData;
+                return mListLiveData;
             }
         }.asLiveData();
     }

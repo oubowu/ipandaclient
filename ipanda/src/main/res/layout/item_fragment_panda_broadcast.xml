@@ -12,7 +12,9 @@
 
         <variable
             name="videoBean"
-            type="com.oubowu.ipanda.bean.pandavideo.PandaVideoIndex.ListBean"/>
+            type="com.oubowu.ipanda.bean.pandabroadcast.PandaBroadcastList.ListBean"/>
+
+        <import type="com.oubowu.ipanda.util.DateUtil"/>
 
     </data>
 
@@ -20,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bottom_navigation_rect"
-        android:onClick="@{(view)->event.clickItem(view,videoBean.id)}"
+        android:onClick="@{(view)->event.clickItem(view,videoBean.url)}"
         android:padding="4dp">
 
         <com.oubowu.ipanda.ui.widget.SimpleVideoImageView
@@ -29,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:scaleType="centerCrop"
-            app:loadImageUrl="@{videoBean.image}"
+            app:loadImageUrl="@{videoBean.picurl}"
             app:wRatio="35%"
             tools:src="@drawable/xxx"/>
 
@@ -45,7 +47,7 @@
             android:textSize="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/simpleVideoImageView"
-            tools:text="《熊猫TOP榜》"/>
+            tools:text="《熊猫TOP榜》《熊猫TOP榜》《熊猫TOP榜》《熊猫TOP榜》《熊猫TOP榜》《熊猫TOP榜》《熊猫TOP榜》"/>
 
         <TextView
             android:id="@+id/tv_brief"
@@ -55,11 +57,11 @@
             android:gravity="start"
             android:paddingEnd="8dp"
             android:paddingStart="8dp"
-            android:text="@{videoBean.brief}"
+            android:text="@{DateUtil.format(videoBean.focus_date)}"
             android:textSize="12dp"
-            app:layout_constraintStart_toEndOf="@+id/simpleVideoImageView"
+            app:layout_constraintBottom_toBottomOf="@+id/simpleVideoImageView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title"
+            app:layout_constraintStart_toEndOf="@+id/simpleVideoImageView"
             tools:text="第二季第三十四期：吃播很流行"/>
 
     </android.support.constraint.ConstraintLayout>

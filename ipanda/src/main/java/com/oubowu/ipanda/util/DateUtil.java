@@ -9,10 +9,10 @@ import java.util.Locale;
  */
 public class DateUtil {
 
-    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
 
     public static String format(String dateLine) {
-        return sdf.format(new Date(Long.parseLong(dateLine)*1000));
+        return sdf.format(new Date(Long.parseLong(dateLine)));
     }
 
 }

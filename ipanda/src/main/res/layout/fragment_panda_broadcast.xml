@@ -1,0 +1,41 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="title"
+            type="String"/>
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.oubowu.ipanda.ui.PandaVideoFragment">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/toolbar_rect"
+            android:elevation="2dp"
+            android:theme="@style/ToolbarStyle"
+            app:direction="same"
+            app:layout_behavior="com.oubowu.ipanda.util.BarBehavior"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:toolbarTitle="@{title}">
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</layout>
+

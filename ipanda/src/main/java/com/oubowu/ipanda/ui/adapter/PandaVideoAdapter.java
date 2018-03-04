@@ -3,6 +3,7 @@ package com.oubowu.ipanda.ui.adapter;
 import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,7 @@ public class PandaVideoAdapter extends DataBoundListAdapter<PandaVideoIndex.List
             videoHeadBinding.setEvent(new EventListenerAdapter(){
                 @Override
                 public void clickBigImg(View v, String id) {
+                    Log.e("PandaVideoAdapter","53行-clickBigImg(): "+" ");
                     VideoActivity.start((Activity) v.getContext(), v, id);
                 }
             });
@@ -58,7 +60,8 @@ public class PandaVideoAdapter extends DataBoundListAdapter<PandaVideoIndex.List
             pandaVideoBinding.setEvent(new EventListenerAdapter(){
                 @Override
                 public void clickItem(View v, String id) {
-
+                    // TODO: 2018/3/4 跳转另外一个列表
+                    Log.e("PandaVideoAdapter","63行-clickItem(): "+" ");
                 }
             });
         }

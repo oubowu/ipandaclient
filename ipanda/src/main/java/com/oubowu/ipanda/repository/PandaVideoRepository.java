@@ -30,7 +30,7 @@ public class PandaVideoRepository {
     public LiveData<Resource<PandaVideoIndex>> getPandaVideoIndex(String url) {
         return new NetworkBoundResource<PandaVideoIndex, PandaVideoIndex>() {
 
-            MutableLiveData<PandaVideoIndex> mListMediatorLiveData;
+            MutableLiveData<PandaVideoIndex> mListLiveData;
 
             @Override
             protected void onCallFailed() {
@@ -39,7 +39,7 @@ public class PandaVideoRepository {
 
             @Override
             protected void saveCallResponseToDb(@NonNull PandaVideoIndex response) {
-                mListMediatorLiveData.postValue(response);
+                mListLiveData.postValue(response);
             }
 
             @NonNull
@@ -55,11 +55,11 @@ public class PandaVideoRepository {
 
             @Override
             protected LiveData<PandaVideoIndex> loadFromDb() {
-                if (mListMediatorLiveData == null) {
-                    mListMediatorLiveData = new MutableLiveData<>();
-                    mListMediatorLiveData.postValue(null);
+                if (mListLiveData == null) {
+                    mListLiveData = new MutableLiveData<>();
+                    mListLiveData.postValue(null);
                 }
-                return mListMediatorLiveData;
+                return mListLiveData;
             }
         }.asLiveData();
     }

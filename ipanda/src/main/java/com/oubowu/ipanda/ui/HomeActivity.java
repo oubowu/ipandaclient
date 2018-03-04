@@ -86,18 +86,20 @@ public class HomeActivity extends AppCompatActivity implements HasSupportFragmen
 
         mNavigationView.setOnNavigationItemSelectedListener(item -> {
             Log.e("HomeActivity", "85行-onNavigationItemSelected(): " + item.getOrder());
+            String name = item.getTitle().toString();
+            String url = item.getTitleCondensed().toString();
             switch (item.getOrder()) {
                 case 0:
-                    mNavigationController.navigateToHost("熊猫频道", item.getTitleCondensed().toString());
+                    mNavigationController.navigateToHost("熊猫频道", url);
                     break;
                 case 1:
-                    mNavigationController.navigateToPandaLive(item.getTitle().toString(), item.getTitleCondensed().toString());
+                    mNavigationController.navigateToPandaLive(name, url);
                     break;
                 case 2:
-                    mNavigationController.navigateToPandaVideo(item.getTitle().toString(), item.getTitleCondensed().toString());
+                    mNavigationController.navigateToPandaVideo(name, url);
                     break;
                 case 3:
-
+                    mNavigationController.navigateToPandaBroadcast(name, url);
                     break;
                 case 4:
 

@@ -1928,9 +1928,6 @@ http://www.ipanda.com/kehuduan/shipinliebieye/video/index.json
 
 2.熊猫播报-列表（url来自熊猫播报-索引listurl）
 
-// 20180302143602
-// http://www.ipanda.com//kehuduan//news//index.json
-
 // 20180302143928
 // http://api.cntv.cn/apicommon/index?path=iphoneInterface/general/getArticleAndVideoListInfo.json&primary_id=PAGE1422435191506336&serviceId=panda
 

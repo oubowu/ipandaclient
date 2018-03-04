@@ -12,6 +12,7 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.oubowu.ipanda.bean.pandabroadcast.PandaBroadcastList;
 import com.oubowu.ipanda.bean.pandavideo.PandaVideoIndex;
 import com.oubowu.ipanda.ui.widget.DescImageView;
 import com.oubowu.ipanda.util.GlideConfig;
@@ -37,9 +38,33 @@ public class FragmentBindingAdapters {
     }
 
     @BindingAdapter("loadDescImage1")
-    public static void loadImg(DescImageView imageView, PandaVideoIndex.ListBean bigImgBean) {
-        imageView.setDesc(bigImgBean.title);
-        Glide.with(imageView).load(bigImgBean.image).apply(GlideConfig.getInstance()).listener(new RequestListener<Drawable>() {
+    public static void loadImg(DescImageView imageView, PandaVideoIndex.ListBean bean) {
+        imageView.setDesc(bean.title);
+        Glide.with(imageView).load(bean.image).apply(GlideConfig.getInstance()).listener(new RequestListener<Drawable>() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                if (imageView.getScaleType() != ImageView.ScaleType.CENTER_CROP) {
+                    imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                }
+                ViewGroup.LayoutParams params = imageView.getLayoutParams();
+                int w = params.width = MeasureUtil.getScreenSize(imageView.getContext()).x;
+                float scale = (float) w / (float) resource.getIntrinsicWidth();
+                params.height = Math.round(resource.getIntrinsicHeight() * scale);
+                imageView.setLayoutParams(params);
+                return false;
+            }
+        }).into(imageView);
+    }
+
+    @BindingAdapter("loadDescImage2")
+    public static void loadImg2(DescImageView imageView, PandaBroadcastList.ListBean bean) {
+        imageView.setDesc(bean.title);
+        Glide.with(imageView).load(bean.picurl).apply(GlideConfig.getInstance()).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 return false;

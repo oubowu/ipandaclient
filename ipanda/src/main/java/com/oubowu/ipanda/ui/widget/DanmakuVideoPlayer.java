@@ -100,7 +100,13 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
 
     @Override
     public void onVideoPause() {
-        super.onVideoPause();
+//        super.onVideoPause();
+        if (GSYVideoManager.instance().getMediaPlayer() != null) {
+            if (mMyUrl != null) {
+                setStateAndUi(CURRENT_STATE_PAUSE);
+                GSYVideoManager.instance().getMediaPlayer().stop();
+            }
+        }
         onDanmukuPause();
     }
 
