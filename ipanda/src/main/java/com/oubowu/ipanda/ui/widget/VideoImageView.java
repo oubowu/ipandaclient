@@ -182,7 +182,7 @@ public class VideoImageView extends android.support.v7.widget.AppCompatImageView
             int circleCenterX = mTextPadding + mCircleRadius;
             float circleCenterY = expectDrawHeight - ((mFontMetrics.bottom - mFontMetrics.top) + mTextPadding * 2) / 2;
 
-            boolean isLiveType = CommonUtil.isEmpty(mDaytime);
+            boolean isLiveType = "Live".equals(mTypeDesc);
 
             if (isLiveType) {
                 mTagPaint.setColor(Color.RED);
