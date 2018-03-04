@@ -1,0 +1,2114 @@
+1.底部标签:
+http://www.ipanda.com/kehuduan/dibubiaoqian/index.json
+
+// 20171221095406
+// http://www.ipanda.com/kehuduan/dibubiaoqian/index.json
+
+{
+  "tab": [
+    {
+      "title": "首页",
+      "noimage": "",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2015/12/15/1450172469187_603.jpg",
+      "url": "http://www.ipanda.com/kehuduan/shouye/index.json"
+    },
+    {
+      "title": "熊猫直播",
+      "noimage": "",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2015/12/15/1450172461439_157.jpg",
+      "url": "http://www.ipanda.com/kehuduan/PAGE14501772263221982/index.json"
+    },
+    {
+      "title": "滚滚视频",
+      "noimage": "",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/5/17/1463471560213_934.jpg",
+      "url": "http://www.ipanda.com/kehuduan/video/index.json"
+    },
+    {
+      "title": "熊猫播报",
+      "noimage": "",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2015/12/15/1450172398411_389.jpg",
+      "url": "http://www.ipanda.com/kehuduan/news/index.json"
+    },
+    {
+      "title": "直播中国",
+      "noimage": "",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2015/12/15/1450172447033_386.jpg",
+      "url": "http://www.ipanda.com/kehuduan/PAGE14501775094142282/index.json"
+    }
+  ]
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+host: 
+http://www.ipanda.com/kehuduan 
+
+// 录制视频
+http://vdn.apps.cntv.cn/api/getVideoInfoForCBox.do?pid= 数据返回格式一致
+
+// 直播视频
+http://vdn.live.cntv.cn/api2/live.do?channel=pa://cctv_p2p_hd 数据返回格式一致
+
+3和4数据返回格式一致
+
+
+2.首页-索引：(来自1的tab标签)
+http://www.ipanda.com/kehuduan/shouye/index.json
+
+// 20171221095557
+// http://www.ipanda.com/kehuduan/shouye/index.json
+
+{
+  "data": {
+    "bigImg": [
+      {
+        "image": "http://p1.img.cctvpic.com/photoworkspace/2017/12/20/2017122014333126185.jpg",
+        "title": "玩具马不听话，摇摇晃晃摔下它！",
+        "url": "http://live.ipanda.com/2017/12/20/VIDEKXHTI1kB4PyZxybe1TA4171220.shtml",
+        "id": "TITE1513762882740779",
+        "type": "2",
+        "stype": "",
+        "pid": "f5f4a7638b2446ff9753006d658bcaae",
+        "vid": "",
+        "order": "1"
+      },
+      {
+        "image": "http://p1.img.cctvpic.com/photoworkspace/2017/12/20/2017122014420515195.jpg",
+        "title": "小仙女~你的脖子去哪里啦？",
+        "url": "http://live.ipanda.com/2017/12/20/VIDEVnTzhVcZ2ha7AbwrUpBM171220.shtml",
+        "id": "TITE1513762885627781",
+        "type": "2",
+        "stype": "",
+        "pid": "078be14899e94fc0b0f195da8be65ac5",
+        "vid": "",
+        "order": "2"
+      },
+      {
+        "image": "http://p1.img.cctvpic.com/photoworkspace/2017/12/20/2017122014430579334.jpg",
+        "title": "小仙女今天很“大爷”！",
+        "url": "http://live.ipanda.com/2017/12/20/VIDEnGVJ4cgU3TpGEQmQsNCs171220.shtml",
+        "id": "TITE1513762884292582",
+        "type": "2",
+        "stype": "",
+        "pid": "108d0d6a81214564b11a60fdd554e21d",
+        "vid": "",
+        "order": "3"
+      },
+      {
+        "image": "http://p1.img.cctvpic.com/photoworkspace/2017/12/20/2017122014355113228.jpg",
+        "title": "“宝宝”突然发起呆来~",
+        "url": "http://live.ipanda.com/2017/12/20/VIDELD5ZY5iFbpbbLCoC2Ge1171220.shtml",
+        "id": "TITE1513762883457580",
+        "type": "2",
+        "stype": "",
+        "pid": "412bd738790e4a0a8e76759b2e614d8c",
+        "vid": "",
+        "order": "4"
+      }
+    ],
+    "area": {
+      "listscroll": [
+        
+      ],
+      "listh": [
+        
+      ],
+      "lists": [
+        
+      ],
+      "topiclist": [
+        
+      ]
+    },
+    "pandaeye": {
+      "title": "熊猫播报",
+      "pandaeyelogo": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/1/27/1453878224122_861.png",
+      "items": [
+        {
+          "title": "黑龙江大熊猫雪地撒欢儿",
+          "bgcolor": "#ff0a5a",
+          "brief": "玩耍",
+          "url": "http://live.ipanda.com/2017/12/06/VIDETpy3QE3drsZPX11pu0LN171206.shtml",
+          "id": "TITE1513216699913984",
+          "pid": "29abf1c6e9624cb19568808256662b3b",
+          "vid": "",
+          "order": "1"
+        },
+        {
+          "title": "陕西汉中佛坪县发现野生大熊猫踪迹",
+          "bgcolor": "#ff0a5a",
+          "brief": "踪迹",
+          "url": "http://panview.ipanda.com/2017/12/03/VIDEYMtOcRVjQisZOKCPgKNf171203.shtml",
+          "id": "TITE1513216699843968",
+          "pid": "c5cf77427d534a6aa1810cd1331c6aa4",
+          "vid": "",
+          "order": "2"
+        }
+      ]
+    },
+    "pandalive": {
+      "title": "直播秀场",
+      "list": [
+        {
+          "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/7/1496819411078_710.jpg",
+          "url": "",
+          "title": "成都直播：熊猫幼年园",
+          "id": "xiongmao03",
+          "vid": "http://www.ipanda.com/kehuduan/PAGE14501769230331752/PAGE1450178789681331211/index.json",
+          "order": "1"
+        },
+        {
+          "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/7/1496819535396_274.jpg",
+          "url": "",
+          "title": "成都直播：熊猫母子园",
+          "id": "xiongmao07",
+          "vid": "http://www.ipanda.com/kehuduan/PAGE14501769230331752/PAGE1450178789681331211/index.json",
+          "order": "2"
+        },
+        {
+          "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/1/14/1452765227283_786.jpg",
+          "url": "",
+          "title": "成都直播：熊猫一号别墅",
+          "id": "xiongmao09",
+          "vid": "http://www.ipanda.com/kehuduan/PAGE14501769230331752/PAGE1450178789681331211/index.json",
+          "order": "3"
+        },
+        {
+          "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/7/1496821082388_857.jpg",
+          "url": "",
+          "title": "成都直播：熊猫幼儿园",
+          "id": "xiongmao05",
+          "vid": "http://www.ipanda.com/kehuduan/PAGE14501769230331752/PAGE1450178789681331211/index.json",
+          "order": "4"
+        },
+        {
+          "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/7/1496819694216_948.jpg",
+          "url": "",
+          "title": "雅安基地幼儿园",
+          "id": "xiongmao18",
+          "vid": "http://www.ipanda.com/kehuduan/PAGE14501769230331752/PAGE145017878968133121/index.json",
+          "order": "5"
+        },
+        {
+          "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/12/20/1513745114543_395.jpg",
+          "url": "",
+          "title": "卧龙直播：熊猫“宝宝”",
+          "id": "xiongmao15",
+          "vid": "http://www.ipanda.com/kehuduan/PAGE14501769230331752/PAGE1450178789681331211/index.json",
+          "order": "6"
+        }
+      ]
+    },
+    "walllive": {
+      "title": "",
+      "list": [
+        
+      ]
+    },
+    "chinalive": {
+      "title": "直播中国",
+      "list": [
+        {
+          "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/9/19/1474274866009_775.jpg",
+          "url": "",
+          "title": "【直播】张家界",
+          "id": "zjjmht",
+          "vid": "http://livechina.ipanda.com/zhangjiajie/01/index.shtml",
+          "order": "1"
+        },
+        {
+          "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/9/19/1474274669741_123.jpg",
+          "url": "",
+          "title": "【直播】凤凰古城",
+          "id": "fhgcdgm",
+          "vid": "http://livechina.ipanda.com/fenghuang/01/index.shtml",
+          "order": "2"
+        },
+        {
+          "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/5/19/1463646740047_989.jpg",
+          "url": "",
+          "title": "【直播】中央电视塔",
+          "id": "ztd",
+          "vid": "http://livechina.ipanda.com/zhongta/02/index.shtml",
+          "order": "3"
+        },
+        {
+          "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/5/19/1463646628905_109.jpg",
+          "url": "",
+          "title": "【直播】悬空寺",
+          "id": "hsxksqj",
+          "vid": "http://livechina.ipanda.com/hengshan/01/index.shtml",
+          "order": "4"
+        },
+        {
+          "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/5/19/1463646593298_50.jpg",
+          "url": "",
+          "title": "【直播】黄果树",
+          "id": "hgsljtgpt",
+          "vid": "http://livechina.ipanda.com/huangguoshu/02/index.shtml",
+          "order": "5"
+        },
+        {
+          "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/5/19/1463646137373_456.jpg",
+          "url": "",
+          "title": "【直播】黄龙",
+          "id": "hlwxt",
+          "vid": "http://www.ipanda.com/kehuduan/liebiao/huanglong/index.json",
+          "order": "6"
+        },
+        {
+          "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/1/19/1453182053209_224.jpg",
+          "url": "",
+          "title": "【直播】泰山",
+          "id": "taishan01",
+          "vid": "http://www.ipanda.com/kehuduan/liebiao/PAGE1451288906969388/index.json",
+          "order": "7"
+        },
+        {
+          "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/1/19/1453182136725_375.jpg",
+          "url": "",
+          "title": "【直播】黄山",
+          "id": "hssxf",
+          "vid": "http://www.ipanda.com/kehuduan/liebiao/huangshan/index.json",
+          "order": "8"
+        },
+        {
+          "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/1/19/1453182395917_608.jpg",
+          "url": "",
+          "title": "【直播】峨眉山",
+          "id": "emsarm",
+          "vid": "http://www.ipanda.com/kehuduan/liebiao/emeishan/index.json",
+          "order": "9"
+        }
+      ]
+    },
+    "interactive": {
+      "interactiveone": [
+        
+      ],
+      "interactivetwo": [
+        
+      ]
+    },
+    "cctv": {
+      "title": "精彩一刻",
+      "listlive": [
+        
+      ],
+      "listurl": "http://www.ipanda.com/kehuduan/shipinliebieye/jingcaiyike/index.json"
+    },
+    "list": [
+      {
+        "listUrl": "http://www.ipanda.com/kehuduan/shipinliebieye/video/index.json",
+        "title": "滚滚视频",
+        "type": "2",
+        "order": "1"
+      }
+    ]
+  }
+}
+
+2.1.首页-大图-点击进去(pid来自2的bigImg的pid)
+http://vdn.apps.cntv.cn/api/getVideoInfoForCBox.do?pid=f5f4a7638b2446ff9753006d658bcaae
+
+// 20171221102127
+// http://115.182.9.189/api/getVideoInfoForCBox.do?pid=f5f4a7638b2446ff9753006d658bcaae
+
+{
+  "play_channel": "直播中国",
+  "f_pgmtime": "2017-12-20 14:13:12",
+  "tag": "精彩一刻大熊猫熊猫基地国宝动物",
+  "cdn_info": {
+    "cdn_vip": "cntv.vod.cdn.myqcloud.com",
+    "cdn_code": "VOD-MP4-CDN-QQ",
+    "cdn_name": "3rd腾讯云"
+  },
+  "editer_name": "zhoulin",
+  "version": "0.2",
+  "is_fn_hot": "true",
+  "title": "《精彩一刻》 20171220 小木马，驾驾驾",
+  "is_protected": "0",
+  "hls_url": "http://cntv.hls.cdn.myqcloud.com/asp/hls/main/0303000a/3/default/f5f4a7638b2446ff9753006d658bcaae/main.m3u8?maxbr=4096",
+  "hls_cdn_info": {
+    "cdn_vip": "cntv.hls.cdn.myqcloud.com",
+    "cdn_code": "VOD-HLS-CDN-QQ",
+    "cdn_name": "3rd腾讯云"
+  },
+  "client_sid": "c3579a18a45e4022bc5c8c0a1f1995f0",
+  "is_ipad_support": "true",
+  "video": {
+    "totalLength": "47.00",
+    "chapters": [
+      {
+        "image": "http://p5.img.cctvpic.com/fmspic/2017/12/20/f5f4a7638b2446ff9753006d658bcaae-33.jpg",
+        "url": "http://cntv.vod.cdn.myqcloud.com/flash/mp4video62/TMS/2017/12/20/f5f4a7638b2446ff9753006d658bcaae_h264418000nero_aac32.mp4",
+        "duration": "47"
+      }
+    ],
+    "validChapterNum": 5,
+    "chapters4": [
+      {
+        "image": "http://p5.img.cctvpic.com/fmspic/2017/12/20/f5f4a7638b2446ff9753006d658bcaae-33.jpg",
+        "url": "http://cntv.vod.cdn.myqcloud.com/flash/mp4video62/TMS/2017/12/20/f5f4a7638b2446ff9753006d658bcaae_h2642000000nero_aac16.mp4",
+        "duration": "47"
+      }
+    ],
+    "lowChapters": [
+      {
+        "image": "http://p5.img.cctvpic.com/fmspic/2017/12/20/f5f4a7638b2446ff9753006d658bcaae-33.jpg",
+        "url": "http://cntv.vod.cdn.myqcloud.com/flash/mp4video62/TMS/2017/12/20/f5f4a7638b2446ff9753006d658bcaae_h264200000nero_aac16.mp4",
+        "duration": "47"
+      }
+    ],
+    "chapters3": [
+      {
+        "image": "http://p5.img.cctvpic.com/fmspic/2017/12/20/f5f4a7638b2446ff9753006d658bcaae-33.jpg",
+        "url": "http://cntv.vod.cdn.myqcloud.com/flash/mp4video62/TMS/2017/12/20/f5f4a7638b2446ff9753006d658bcaae_h2641200000nero_aac16.mp4",
+        "duration": "47"
+      }
+    ],
+    "chapters2": [
+      {
+        "image": "http://p5.img.cctvpic.com/fmspic/2017/12/20/f5f4a7638b2446ff9753006d658bcaae-33.jpg",
+        "url": "http://cntv.vod.cdn.myqcloud.com/flash/mp4video62/TMS/2017/12/20/f5f4a7638b2446ff9753006d658bcaae_h264818000nero_aac32.mp4",
+        "duration": "47"
+      }
+    ],
+    "url": ""
+  },
+  "is_invalid_copyright": "0",
+  "produce_id": "wxsb01",
+  "default_stream": "HD",
+  "ack": "yes",
+  "is_fn_multi_stream": false,
+  "embed": "",
+  "asp_error_code": 0,
+  "column": "熊猫频道精彩一刻高清",
+  "lc": {
+    "isp_code": "3",
+    "city_code": "",
+    "provice_code": "GD",
+    "country_code": "CN",
+    "ip": "221.176.33.249"
+  },
+  "public": "1",
+  "is_p2p_use": false,
+  "produce": ""
+}
+
+2.2.首页-熊猫播报-点击进去(pid来自2的pandaeye的items的pid)
+http://vdn.apps.cntv.cn/api/getVideoInfoForCBox.do?pid=29abf1c6e9624cb19568808256662b3b
+
+// 20171221102959
+// http://115.182.9.189/api/getVideoInfoForCBox.do?pid=29abf1c6e9624cb19568808256662b3b
+
+{
+  "play_channel": "直播中国",
+  "f_pgmtime": "2017-12-06 10:43:08",
+  "tag": "黑龙江大熊猫雪地撒欢儿",
+  "cdn_info": {
+    "cdn_vip": "cntv.vod.cdn.myqcloud.com",
+    "cdn_code": "VOD-MP4-CDN-QQ",
+    "cdn_name": "3rd腾讯云"
+  },
+  "editer_name": "huoxinlei",
+  "version": "0.2",
+  "is_fn_hot": "true",
+  "title": "黑龙江大熊猫雪地撒欢儿",
+  "is_protected": "0",
+  "hls_url": "http://cntv.hls.cdn.myqcloud.com/asp/hls/main/0303000a/3/default/29abf1c6e9624cb19568808256662b3b/main.m3u8?maxbr=4096",
+  "hls_cdn_info": {
+    "cdn_vip": "cntv.hls.cdn.myqcloud.com",
+    "cdn_code": "VOD-HLS-CDN-QQ",
+    "cdn_name": "3rd腾讯云"
+  },
+  "client_sid": "f3c97d46f5a345eca2d806b7432e0208",
+  "is_ipad_support": "true",
+  "video": {
+    "totalLength": "66.00",
+    "chapters": [
+      {
+        "image": "http://p3.img.cctvpic.com/fmspic/2017/12/06/29abf1c6e9624cb19568808256662b3b-43.jpg",
+        "url": "http://cntv.vod.cdn.myqcloud.com/flash/mp4video62/TMS/2017/12/06/29abf1c6e9624cb19568808256662b3b_h264418000nero_aac32.mp4",
+        "duration": "66"
+      }
+    ],
+    "validChapterNum": 5,
+    "chapters4": [
+      {
+        "image": "http://p3.img.cctvpic.com/fmspic/2017/12/06/29abf1c6e9624cb19568808256662b3b-43.jpg",
+        "url": "http://cntv.vod.cdn.myqcloud.com/flash/mp4video62/TMS/2017/12/06/29abf1c6e9624cb19568808256662b3b_h2642000000nero_aac16.mp4",
+        "duration": "66"
+      }
+    ],
+    "lowChapters": [
+      {
+        "image": "http://p3.img.cctvpic.com/fmspic/2017/12/06/29abf1c6e9624cb19568808256662b3b-43.jpg",
+        "url": "http://cntv.vod.cdn.myqcloud.com/flash/mp4video62/TMS/2017/12/06/29abf1c6e9624cb19568808256662b3b_h264200000nero_aac16.mp4",
+        "duration": "66"
+      }
+    ],
+    "chapters3": [
+      {
+        "image": "http://p3.img.cctvpic.com/fmspic/2017/12/06/29abf1c6e9624cb19568808256662b3b-43.jpg",
+        "url": "http://cntv.vod.cdn.myqcloud.com/flash/mp4video62/TMS/2017/12/06/29abf1c6e9624cb19568808256662b3b_h2641200000nero_aac16.mp4",
+        "duration": "66"
+      }
+    ],
+    "chapters2": [
+      {
+        "image": "http://p3.img.cctvpic.com/fmspic/2017/12/06/29abf1c6e9624cb19568808256662b3b-43.jpg",
+        "url": "http://cntv.vod.cdn.myqcloud.com/flash/mp4video62/TMS/2017/12/06/29abf1c6e9624cb19568808256662b3b_h264818000nero_aac32.mp4",
+        "duration": "66"
+      }
+    ],
+    "url": ""
+  },
+  "is_invalid_copyright": "0",
+  "produce_id": "wxsb01",
+  "default_stream": "HD",
+  "ack": "yes",
+  "is_fn_multi_stream": false,
+  "embed": "",
+  "asp_error_code": 0,
+  "column": "熊猫频道熊猫播报高清",
+  "lc": {
+    "isp_code": "3",
+    "city_code": "",
+    "provice_code": "GD",
+    "country_code": "CN",
+    "ip": "221.176.33.249"
+  },
+  "public": "1",
+  "is_p2p_use": false,
+  "produce": ""
+}
+
+2.3.首页-直播秀场-点击进去(channel来自2的pandalive的list的id)(channel=pa://cctv_p2p_hd{id})
+http://vdn.live.cntv.cn/api2/live.do?channel=pa://cctv_p2p_hdxiongmao03&client=androidapp
+
+// 20171221103918
+// http://vdn.live.cntv.cn/api2/live.do?channel=pa://cctv_p2p_hdxiongmao03&client=androidapp
+
+{
+  "ack": "yes",
+  "lc": {
+    "isp_code": "3",
+    "city_code": "",
+    "provice_code": "GD",
+    "country_code": "CN",
+    "ip": "221.176.33.249"
+  },
+  "client_sid": "238678f2-e5f8-11e7-aa4e-00505689d25d",
+  "flv_cdn_info": {
+    "cdn_code": "LIVE-FLV-CDN-DN",
+    "cdn_name": "3rdFLV帝联"
+  },
+  "flv_url": {
+    "flv1": "",
+    "flv2": "http://3811.liveplay.myqcloud.com/live/flv/3811_channel349.flv?AUTH=pkg3EwObu2lujzAjcXVIxkyHIw1g59wi1MHJVK7jOrv0acCGAYDgWtXqHswH7XAsSv6s3FtHOObRuIosrMH48w==",
+    "flv3": "qita?AUTH=pkg3EwObu2lujzAjcXVIxkyHIw1g59wi1MHJVK7jOrv0acCGAYDgWtXqHswH7XAsSv6s3FtHOObRuIosrMH48w==",
+    "flv4": "",
+    "flv5": "http://cctv.live.cntv.dnion.com/cache/14_/channel.pub?AUTH=pkg3EwObu2lujzAjcXVIxkyHIw1g59wi1MHJVK7jOrv0acCGAYDgWtXqHswH7XAsSv6s3FtHOObRuIosrMH48w==",
+    "flv6": ""
+  },
+  "hls_cdn_info": {
+    "cdn_code": "LIVE-HLS-CDN-ALI",
+    "cdn_name": "3rdHLS阿里云"
+  },
+  "hls_url": {
+    "hls1": "http://3811.liveplay.myqcloud.com/live/m3u8/3811_channel349.m3u8?AUTH=pkg3EwObu2lujzAjcXVIxkyHIw1g59wi1MHJVK7jOrv0acCGAYDgWtXqHswH7XAsSv6s3FtHOObRuIosrMH48w==",
+    "hls2": "http://3811.liveplay.myqcloud.com/live/m3u8/3811_channel349.m3u8?AUTH=pkg3EwObu2lujzAjcXVIxkyHIw1g59wi1MHJVK7jOrv0acCGAYDgWtXqHswH7XAsSv6s3FtHOObRuIosrMH48w==",
+    "hls3": "qita?AUTH=pkg3EwObu2lujzAjcXVIxkyHIw1g59wi1MHJVK7jOrv0acCGAYDgWtXqHswH7XAsSv6s3FtHOObRuIosrMH48w==",
+    "hls4": "http://3811.liveplay.myqcloud.com/live/m3u8/3811_channel349.m3u8?AUTH=pkg3EwObu2lujzAjcXVIxkyHIw1g59wi1MHJVK7jOrv0acCGAYDgWtXqHswH7XAsSv6s3FtHOObRuIosrMH48w==",
+    "hls5": "",
+    "hls6": ""
+  },
+  "hds_cdn_info": {
+    "cdn_code": "LIVE-HDS-CDN-DN",
+    "cdn_name": "3rdHDS帝联"
+  },
+  "hds_url": {
+    "hds1": "",
+    "hds2": "",
+    "hds3": "qita?AUTH=ip%3D221.176.33.249%7Est%3D1513823656%7Eexp%3D1513910056%7Eacl%3D%2F*%7Ehmac%3D87e658fbf04980bcb6c078fcf31fde55e6a69baedfe553d7e795673dda8c7315",
+    "hds4": "",
+    "hds5": "",
+    "hds6": ""
+  },
+  "public": "1"
+}
+
+2.4.首页-精彩一刻-点击进去(来自3的list的pid)
+http://vdn.apps.cntv.cn/api/getVideoInfoForCBox.do?pid=74c30918c1f34b59b3500affae080136
+
+// 20171221104503
+// http://115.182.35.91/api/getVideoInfoForCBox.do?pid=74c30918c1f34b59b3500affae080136
+
+{
+  "play_channel": "直播中国",
+  "f_pgmtime": "2017-12-19 10:17:08",
+  "tag": "精彩一刻大熊猫熊猫基地国宝动物",
+  "cdn_info": {
+    "cdn_vip": "cntv.vod.cdn.myqcloud.com",
+    "cdn_code": "VOD-MP4-CDN-QQ",
+    "cdn_name": "3rd腾讯云"
+  },
+  "editer_name": "huoxinlei",
+  "version": "0.2",
+  "title": "《精彩一刻》 20171219 奶爸，这个也很好吃",
+  "is_fn_hot": "true",
+  "is_protected": "0",
+  "hls_url": "http://cntv.hls.cdn.myqcloud.com/asp/hls/main/0303000a/3/default/74c30918c1f34b59b3500affae080136/main.m3u8?maxbr=4096",
+  "hls_cdn_info": {
+    "cdn_vip": "cntv.hls.cdn.myqcloud.com",
+    "cdn_code": "VOD-HLS-CDN-QQ",
+    "cdn_name": "3rd腾讯云"
+  },
+  "client_sid": "1a955af2c5c540648824d16421b39197",
+  "is_ipad_support": "true",
+  "video": {
+    "totalLength": "46.00",
+    "chapters": [
+      {
+        "duration": "46",
+        "image": "http://p1.img.cctvpic.com/fmspic/2017/12/19/74c30918c1f34b59b3500affae080136-33.jpg",
+        "url": "http://cntv.vod.cdn.myqcloud.com/flash/mp4video62/TMS/2017/12/19/74c30918c1f34b59b3500affae080136_h264418000nero_aac32.mp4"
+      }
+    ],
+    "validChapterNum": 5,
+    "chapters4": [
+      {
+        "duration": "46",
+        "image": "http://p1.img.cctvpic.com/fmspic/2017/12/19/74c30918c1f34b59b3500affae080136-33.jpg",
+        "url": "http://cntv.vod.cdn.myqcloud.com/flash/mp4video62/TMS/2017/12/19/74c30918c1f34b59b3500affae080136_h2642000000nero_aac16.mp4"
+      }
+    ],
+    "chapters3": [
+      {
+        "duration": "46",
+        "image": "http://p1.img.cctvpic.com/fmspic/2017/12/19/74c30918c1f34b59b3500affae080136-33.jpg",
+        "url": "http://cntv.vod.cdn.myqcloud.com/flash/mp4video62/TMS/2017/12/19/74c30918c1f34b59b3500affae080136_h2641200000nero_aac16.mp4"
+      }
+    ],
+    "lowChapters": [
+      {
+        "duration": "46",
+        "image": "http://p1.img.cctvpic.com/fmspic/2017/12/19/74c30918c1f34b59b3500affae080136-33.jpg",
+        "url": "http://cntv.vod.cdn.myqcloud.com/flash/mp4video62/TMS/2017/12/19/74c30918c1f34b59b3500affae080136_h264200000nero_aac16.mp4"
+      }
+    ],
+    "chapters2": [
+      {
+        "duration": "46",
+        "image": "http://p1.img.cctvpic.com/fmspic/2017/12/19/74c30918c1f34b59b3500affae080136-33.jpg",
+        "url": "http://cntv.vod.cdn.myqcloud.com/flash/mp4video62/TMS/2017/12/19/74c30918c1f34b59b3500affae080136_h264818000nero_aac32.mp4"
+      }
+    ],
+    "url": ""
+  },
+  "is_invalid_copyright": "0",
+  "produce_id": "wxsb01",
+  "default_stream": "HD",
+  "ack": "yes",
+  "is_fn_multi_stream": false,
+  "embed": "",
+  "asp_error_code": 0,
+  "column": "熊猫频道精彩一刻高清",
+  "lc": {
+    "isp_code": "3",
+    "city_code": "",
+    "provice_code": "GD",
+    "country_code": "CN",
+    "ip": "221.176.33.249"
+  },
+  "public": "1",
+  "is_p2p_use": false,
+  "produce": ""
+}
+
+2.5.首页-滚滚视频-点击进去(来自4的list的pid)
+http://vdn.apps.cntv.cn/api/getVideoInfoForCBox.do?pid=6116fbf58ac4484dbbef9d9925c864f1
+
+// 20171221104716
+// http://115.182.9.189/api/getVideoInfoForCBox.do?pid=6116fbf58ac4484dbbef9d9925c864f1
+
+{
+  "play_channel": "音像资料",
+  "f_pgmtime": "2017-12-18 17:33:00",
+  "tag": "熊猫TOP榜大熊猫熊猫基地国宝动物",
+  "cdn_info": {
+    "cdn_vip": "cntv.vod.cdn.myqcloud.com",
+    "cdn_code": "VOD-MP4-CDN-QQ",
+    "cdn_name": "3rd腾讯云"
+  },
+  "editer_name": "zhoulin",
+  "version": "0.2",
+  "title": "《熊猫TOP榜》 20171218 第二季第二十六期：2017届小团子向你卖萌",
+  "is_fn_hot": "true",
+  "is_protected": "0",
+  "hls_url": "http://cntv.hls.cdn.myqcloud.com/asp/hls/main/0303000a/3/default/6116fbf58ac4484dbbef9d9925c864f1/main.m3u8?maxbr=4096",
+  "hls_cdn_info": {
+    "cdn_vip": "cntv.hls.cdn.myqcloud.com",
+    "cdn_code": "VOD-HLS-CDN-QQ",
+    "cdn_name": "3rd腾讯云"
+  },
+  "client_sid": "fce8e5e3632349d189e1e87fcd4e5ffa",
+  "is_ipad_support": "true",
+  "video": {
+    "totalLength": "203.00",
+    "chapters": [
+      {
+        "duration": "203",
+        "image": "http://p4.img.cctvpic.com/fmspic/2017/12/18/6116fbf58ac4484dbbef9d9925c864f1-111.jpg",
+        "url": "http://cntv.vod.cdn.myqcloud.com/flash/mp4video62/TMS/2017/12/18/6116fbf58ac4484dbbef9d9925c864f1_h264418000nero_aac32.mp4"
+      }
+    ],
+    "validChapterNum": 5,
+    "chapters4": [
+      {
+        "duration": "118",
+        "image": "http://p4.img.cctvpic.com/fmspic/2017/12/18/6116fbf58ac4484dbbef9d9925c864f1-111.jpg",
+        "url": "http://cntv.vod.cdn.myqcloud.com/flash/mp4video62/TMS/2017/12/18/6116fbf58ac4484dbbef9d9925c864f1_h2642000000nero_aac16-1.mp4"
+      },
+      {
+        "duration": "85",
+        "image": "http://p4.img.cctvpic.com/fmspic/2017/12/18/6116fbf58ac4484dbbef9d9925c864f1-111.jpg",
+        "url": "http://cntv.vod.cdn.myqcloud.com/flash/mp4video62/TMS/2017/12/18/6116fbf58ac4484dbbef9d9925c864f1_h2642000000nero_aac16-2.mp4"
+      }
+    ],
+    "chapters3": [
+      {
+        "duration": "118",
+        "image": "http://p4.img.cctvpic.com/fmspic/2017/12/18/6116fbf58ac4484dbbef9d9925c864f1-111.jpg",
+        "url": "http://cntv.vod.cdn.myqcloud.com/flash/mp4video62/TMS/2017/12/18/6116fbf58ac4484dbbef9d9925c864f1_h2641200000nero_aac16-1.mp4"
+      },
+      {
+        "duration": "85",
+        "image": "http://p4.img.cctvpic.com/fmspic/2017/12/18/6116fbf58ac4484dbbef9d9925c864f1-111.jpg",
+        "url": "http://cntv.vod.cdn.myqcloud.com/flash/mp4video62/TMS/2017/12/18/6116fbf58ac4484dbbef9d9925c864f1_h2641200000nero_aac16-2.mp4"
+      }
+    ],
+    "lowChapters": [
+      {
+        "duration": "203",
+        "image": "http://p4.img.cctvpic.com/fmspic/2017/12/18/6116fbf58ac4484dbbef9d9925c864f1-111.jpg",
+        "url": "http://cntv.vod.cdn.myqcloud.com/flash/mp4video62/TMS/2017/12/18/6116fbf58ac4484dbbef9d9925c864f1_h264200000nero_aac16.mp4"
+      }
+    ],
+    "chapters2": [
+      {
+        "duration": "178",
+        "image": "http://p4.img.cctvpic.com/fmspic/2017/12/18/6116fbf58ac4484dbbef9d9925c864f1-111.jpg",
+        "url": "http://cntv.vod.cdn.myqcloud.com/flash/mp4video62/TMS/2017/12/18/6116fbf58ac4484dbbef9d9925c864f1_h264818000nero_aac32-1.mp4"
+      },
+      {
+        "duration": "25",
+        "image": "http://p4.img.cctvpic.com/fmspic/2017/12/18/6116fbf58ac4484dbbef9d9925c864f1-111.jpg",
+        "url": "http://cntv.vod.cdn.myqcloud.com/flash/mp4video62/TMS/2017/12/18/6116fbf58ac4484dbbef9d9925c864f1_h264818000nero_aac32-2.mp4"
+      }
+    ],
+    "url": ""
+  },
+  "is_invalid_copyright": "0",
+  "produce_id": "wxsb01",
+  "default_stream": "HD",
+  "ack": "yes",
+  "is_fn_multi_stream": false,
+  "embed": "",
+  "asp_error_code": 0,
+  "column": "熊猫频道熊猫TOP榜高清",
+  "lc": {
+    "isp_code": "3",
+    "city_code": "",
+    "provice_code": "GD",
+    "country_code": "CN",
+    "ip": "221.176.33.249"
+  },
+  "public": "1",
+  "is_p2p_use": false,
+  "produce": ""
+}
+
+2.6.首页-直播中国-点击进去(来自2的chinalive的list的id)
+http://vdn.live.cntv.cn/api2/live.do?channel=pa://cctv_p2p_hdzjjmht&client=androidapp
+
+// 20171221105528
+// http://vdn.live.cntv.cn/api2/live.do?channel=pa://cctv_p2p_hdzjjmht&client=androidapp
+
+{
+  "ack": "yes",
+  "lc": {
+    "isp_code": "3",
+    "city_code": "",
+    "provice_code": "GD",
+    "country_code": "CN",
+    "ip": "221.176.33.249"
+  },
+  "client_sid": "65e007f2-e5fa-11e7-a891-005056895037",
+  "flv_cdn_info": {
+    "cdn_code": "LIVE-FLV-CDN-DN",
+    "cdn_name": "3rdFLV帝联"
+  },
+  "flv_url": {
+    "flv1": "http://3811.liveplay.myqcloud.com/live/flv/3811_channel1709.flv?AUTH=80Iyn4F3YpS+Zc6WddZs7okmEHQxJ9vq9zxA3SLwpKaOTVI1EckLmCZtfo1E+t07PXlXKgBg3z1rnjQD+EbllQ==",
+    "flv2": "http://3811.liveplay.myqcloud.com/live/flv/3811_channel1709.flv?AUTH=80Iyn4F3YpS+Zc6WddZs7okmEHQxJ9vq9zxA3SLwpKaOTVI1EckLmCZtfo1E+t07PXlXKgBg3z1rnjQD+EbllQ==",
+    "flv3": "qita?AUTH=80Iyn4F3YpS+Zc6WddZs7okmEHQxJ9vq9zxA3SLwpKaOTVI1EckLmCZtfo1E+t07PXlXKgBg3z1rnjQD+EbllQ==",
+    "flv4": "http://3811.liveplay.myqcloud.com/live/flv/3811_channel1709.flv?AUTH=80Iyn4F3YpS+Zc6WddZs7okmEHQxJ9vq9zxA3SLwpKaOTVI1EckLmCZtfo1E+t07PXlXKgBg3z1rnjQD+EbllQ==",
+    "flv5": "http://cctv.live.cntv.dnion.com/cache/14_/channel.pub?AUTH=80Iyn4F3YpS+Zc6WddZs7okmEHQxJ9vq9zxA3SLwpKaOTVI1EckLmCZtfo1E+t07PXlXKgBg3z1rnjQD+EbllQ==",
+    "flv6": ""
+  },
+  "hls_cdn_info": {
+    "cdn_code": "LIVE-HLS-CDN-DN",
+    "cdn_name": "3rdHLS帝联"
+  },
+  "hls_url": {
+    "hls1": "http://3811.liveplay.myqcloud.com/live/m3u8/3811_channel1709.m3u8?AUTH=80Iyn4F3YpS+Zc6WddZs7okmEHQxJ9vq9zxA3SLwpKaOTVI1EckLmCZtfo1E+t07PXlXKgBg3z1rnjQD+EbllQ==",
+    "hls2": "http://3811.liveplay.myqcloud.com/live/m3u8/3811_channel1709.m3u8?AUTH=80Iyn4F3YpS+Zc6WddZs7okmEHQxJ9vq9zxA3SLwpKaOTVI1EckLmCZtfo1E+t07PXlXKgBg3z1rnjQD+EbllQ==",
+    "hls3": "qita?AUTH=80Iyn4F3YpS+Zc6WddZs7okmEHQxJ9vq9zxA3SLwpKaOTVI1EckLmCZtfo1E+t07PXlXKgBg3z1rnjQD+EbllQ==",
+    "hls4": "http://3811.liveplay.myqcloud.com/live/m3u8/3811_channel1709.m3u8?AUTH=80Iyn4F3YpS+Zc6WddZs7okmEHQxJ9vq9zxA3SLwpKaOTVI1EckLmCZtfo1E+t07PXlXKgBg3z1rnjQD+EbllQ==",
+    "hls5": "",
+    "hls6": ""
+  },
+  "hds_cdn_info": {
+    "cdn_code": "LIVE-HDS-CDN-DN",
+    "cdn_name": "3rdHDS帝联"
+  },
+  "hds_url": {
+    "hds1": "",
+    "hds2": "",
+    "hds3": "qita?AUTH=ip%3D221.176.33.249%7Est%3D1513824627%7Eexp%3D1513911027%7Eacl%3D%2F*%7Ehmac%3De568febbda4436fb69a5770b137a60beef0e83c5e4b4c4097b044bbcd30cbe89",
+    "hds4": "",
+    "hds5": "",
+    "hds6": ""
+  },
+  "public": "1"
+}
+
+3.首页-精彩一刻(来自2的cctv的listurl字段)
+http://www.ipanda.com/kehuduan/shipinliebieye/jingcaiyike/index.json
+
+// 20171221095741
+// http://www.ipanda.com/kehuduan/shipinliebieye/jingcaiyike/index.json
+
+{
+  "list": [
+    {
+      "url": "http://live.ipanda.com/2017/12/19/VIDEGvOuyZXMAstBEjuUt6VE171219.shtml",
+      "image": "http://p1.img.cctvpic.com/photoworkspace/2017/12/19/2017121913414387726.jpg",
+      "title": "奶爸，这个也很好吃",
+      "videoLength": "00:00:46",
+      "id": "TITE1513676703729190",
+      "daytime": "2017-12-19",
+      "type": "2",
+      "pid": "74c30918c1f34b59b3500affae080136",
+      "vid": "",
+      "order": "1"
+    },
+    {
+      "url": "http://live.ipanda.com/2017/12/19/VIDEnm7pwZzttkwIbpfzJ965171219.shtml",
+      "image": "http://p1.img.cctvpic.com/photoworkspace/2017/12/19/2017121913382566549.jpg",
+      "title": "奶妈，我恐高",
+      "videoLength": "00:00:31",
+      "id": "TITE1513676702965774",
+      "daytime": "2017-12-19",
+      "type": "2",
+      "pid": "e09cd187f1c94bd39288a960b073ee30",
+      "vid": "",
+      "order": "2"
+    },
+    {
+      "url": "http://live.ipanda.com/2017/12/18/VIDE8QZYxgQXyxnnJtS2t6bR171218.shtml",
+      "image": "http://p1.img.cctvpic.com/photoworkspace/2017/12/18/2017121817361568712.jpg",
+      "title": "一只美熊出墙来~",
+      "videoLength": "00:00:49",
+      "id": "TITE1513667734254813",
+      "daytime": "2017-12-19",
+      "type": "2",
+      "pid": "d4c3eb09d62d4d44ac360701dc8e7105",
+      "vid": "",
+      "order": "3"
+    },
+    {
+      "url": "http://live.ipanda.com/2017/12/18/VIDEHpz5MufhTxZjUNOo74gH171218.shtml",
+      "image": "http://p1.img.cctvpic.com/photoworkspace/2017/12/18/2017121815084727223.jpg",
+      "title": "“乔伊”：我感觉有点懵~",
+      "videoLength": "00:00:20",
+      "id": "TITE1513667732567811",
+      "daytime": "2017-12-19",
+      "type": "2",
+      "pid": "54af16316afa485d95c37a7be8a92541",
+      "vid": "",
+      "order": "4"
+    }
+  ]
+}
+
+
+4.首页-滚滚视频(来自2的list的listUrl字段)
+http://www.ipanda.com/kehuduan/shipinliebieye/video/index.json
+
+// 20171221095848
+// http://www.ipanda.com/kehuduan/shipinliebieye/video/index.json
+
+{
+  "list": [
+    {
+      "url": "http://live.ipanda.com/2017/12/18/VIDEksPs6EfW9ZQAvePHrAto171218.shtml",
+      "image": "http://p1.img.cctvpic.com/photoworkspace/2017/12/18/2017121817495655203.jpg",
+      "title": "《熊猫TOP榜》2017届小团子向你卖萌",
+      "videoLength": "00:03:23",
+      "id": "TITE1513592365734958",
+      "daytime": "2017-12-18",
+      "type": "2",
+      "pid": "6116fbf58ac4484dbbef9d9925c864f1",
+      "vid": "",
+      "order": "1"
+    },
+    {
+      "url": "http://live.ipanda.com/2017/12/17/VIDEY3ULMq8jcj77R2CD6X0m171217.shtml",
+      "image": "http://p1.img.cctvpic.com/photoworkspace/2017/12/17/2017121712584260701.jpg",
+      "title": "《在现场》网红小团子“胖大海”和妈妈的日常",
+      "videoLength": "00:46:31",
+      "id": "TITE1513592365253956",
+      "daytime": "2017-12-17",
+      "type": "2",
+      "pid": "bf7d383f389a4a479258df0614efef5c",
+      "vid": "",
+      "order": "2"
+    },
+    {
+      "url": "http://live.ipanda.com/2017/12/15/VIDEQjcgI8dOphoYw5oaX0KT171215.shtml",
+      "image": "http://p1.img.cctvpic.com/photoworkspace/2017/12/15/2017121515224054055.jpg",
+      "title": "《当熊不让》树上长出个糯米团子",
+      "videoLength": "00:01:57",
+      "id": "TITE1513592364578954",
+      "daytime": "2017-12-15",
+      "type": "2",
+      "pid": "3e3a88935c1e4c9ba26faa4714d50d05",
+      "vid": "",
+      "order": "3"
+    },
+    {
+      "url": "http://live.ipanda.com/2017/12/14/VIDExQFVAPcoFR52zgDBo1PT171214.shtml",
+      "image": "http://p1.img.cctvpic.com/photoworkspace/2017/12/14/2017121413431914701.jpg",
+      "title": "《熊猫档案》2016级太阳小战神",
+      "videoLength": "00:04:30",
+      "id": "TITE1513592364095952",
+      "daytime": "2017-12-14",
+      "type": "2",
+      "pid": "18b78a778bc046fa8fa7619dcc4d7992",
+      "vid": "",
+      "order": "4"
+    },
+    {
+      "url": "http://live.ipanda.com/2017/12/12/VIDEIEWL1NBM5267sQCAeUma171212.shtml",
+      "image": "http://p1.img.cctvpic.com/photoworkspace/2017/12/12/2017121215214941491.jpg",
+      "title": "《特别节目》全民健身一起走 誓死不做单身狗",
+      "videoLength": "00:03:33",
+      "id": "TITE1513592363094950",
+      "daytime": "2017-12-12",
+      "type": "2",
+      "pid": "bb6a0e20132748bd96eec4fd73969356",
+      "vid": "",
+      "order": "5"
+    }
+  ]
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1.熊猫直播顶部tab
+
+// 20180205103139
+// http://www.ipanda.com/kehuduan/PAGE14501772263221982/index.json
+
+{
+  "tablist": [
+    {
+      "title": "直播",
+      "url": "http://www.ipanda.com/kehuduan/PAGE14501769230331752/index.json",
+      "id": "TITE1513216453221691",
+      "order": "1"
+    },
+    {
+      "title": "精彩一刻",
+      "url": "",
+      "id": "VSET100167216881",
+      "order": "2"
+    },
+    {
+      "title": "当熊不让",
+      "url": "",
+      "id": "VSET100332640004",
+      "order": "3"
+    },
+    {
+      "title": "超萌滚滚秀",
+      "url": "",
+      "id": "VSET100272959126",
+      "order": "4"
+    },
+    {
+      "title": "熊猫档案",
+      "url": "",
+      "id": "VSET100340574858",
+      "order": "5"
+    },
+    {
+      "title": "熊猫TOP榜",
+      "url": "",
+      "id": "VSET100284428835",
+      "order": "6"
+    },
+    {
+      "title": "熊猫那些事儿",
+      "url": "",
+      "id": "VSET100237714751",
+      "order": "7"
+    },
+    {
+      "title": "特别节目",
+      "url": "",
+      "id": "VSET100167308855",
+      "order": "8"
+    },
+    {
+      "title": "原创新闻",
+      "url": "",
+      "id": "VSET100219009515",
+      "order": "9"
+    }
+  ]
+}
+
+
+2.直播tab(来自tablist的url)
+// 20180205103052
+// http://www.ipanda.com/kehuduan/PAGE14501769230331752/index.json
+
+{
+  "live": [
+    {
+      "title": "成都基地高清精切线路",
+      "brief": "翻身、吃饭、睡觉、喝奶、打闹、攀爬……这里是成都大熊猫繁育研究基地，24小时高清直播大熊猫生活实况的地方。成年园、幼年园、幼儿园、母子园、一号别墅，11路直播信号28个摄像头，让你零距离了解国宝们的日常起居。",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2016/1/5/1451989464985_497.jpg",
+      "id": "xiongmaopindao01",
+      "isshow": "true",
+      "url": "http://live.ipanda.com/stream/"
+    }
+  ],
+  "bookmark": {
+    "multiple": [
+      {
+        "title": "多视角直播",
+        "url": "http://www.ipanda.com/kehuduan/PAGE14501769230331752/PAGE14501787896813312/index.json",
+        "order": "1"
+      }
+    ],
+    "watchTalk": [
+      {
+        "title": "边看边聊",
+        "url": "zhiboye_chat",
+        "order": "1"
+      }
+    ]
+  }
+}
+
+3.多视角直播（来自live的bookmark的multiple的title）
+// 20180205103117
+// http://www.ipanda.com/kehuduan/PAGE14501769230331752/PAGE14501787896813312/index.json
+
+{
+  "list": [
+    {
+      "url": "",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/14/1497428381378_816.jpg",
+      "title": "成都基地高清精切线路",
+      "videoLength": "",
+      "id": "xiongmaopindao01",
+      "daytime": "",
+      "type": "1",
+      "pid": "",
+      "vid": "",
+      "order": "1"
+    },
+    {
+      "url": "",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/15/1497495389609_589.jpg",
+      "title": "大熊猫别墅镜头一",
+      "videoLength": "",
+      "id": "xiongmao09",
+      "daytime": "",
+      "type": "1",
+      "pid": "",
+      "vid": "",
+      "order": "2"
+    },
+    {
+      "url": "",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/15/1497495013668_433.jpg",
+      "title": "大熊猫别墅镜头二",
+      "videoLength": "",
+      "id": "xiongmao10",
+      "daytime": "",
+      "type": "1",
+      "pid": "",
+      "vid": "",
+      "order": "3"
+    },
+    {
+      "url": "",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/14/1497436330097_967.jpg",
+      "title": "熊猫母子园镜头一",
+      "videoLength": "",
+      "id": "xiongmao07",
+      "daytime": "",
+      "type": "1",
+      "pid": "",
+      "vid": "",
+      "order": "4"
+    },
+    {
+      "url": "",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/15/1497497081698_8.jpg",
+      "title": "熊猫母子园镜头二",
+      "videoLength": "",
+      "id": "xiongmao08",
+      "daytime": "",
+      "type": "1",
+      "pid": "",
+      "vid": "",
+      "order": "5"
+    },
+    {
+      "url": "",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/14/1497436528743_257.jpg",
+      "title": "熊猫幼儿园镜头一",
+      "videoLength": "",
+      "id": "xiongmao05",
+      "daytime": "",
+      "type": "1",
+      "pid": "",
+      "vid": "",
+      "order": "6"
+    },
+    {
+      "url": "",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/14/1497436516242_129.jpg",
+      "title": "熊猫幼儿园镜头二",
+      "videoLength": "",
+      "id": "xiongmao06",
+      "daytime": "",
+      "type": "1",
+      "pid": "",
+      "vid": "",
+      "order": "7"
+    },
+    {
+      "url": "",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/15/1497495589308_300.jpg",
+      "title": "幼年熊猫园镜头一",
+      "videoLength": "",
+      "id": "xiongmao03",
+      "daytime": "",
+      "type": "1",
+      "pid": "",
+      "vid": "",
+      "order": "8"
+    },
+    {
+      "url": "",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/15/1497497377844_289.jpg",
+      "title": "幼年熊猫园镜头二",
+      "videoLength": "",
+      "id": "xiongmao04",
+      "daytime": "",
+      "type": "1",
+      "pid": "",
+      "vid": "",
+      "order": "9"
+    },
+    {
+      "url": "",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/14/1497435963149_0.jpg",
+      "title": "成年熊猫园镜头一",
+      "videoLength": "",
+      "id": "xiongmao01",
+      "daytime": "",
+      "type": "1",
+      "pid": "",
+      "vid": "",
+      "order": "10"
+    },
+    {
+      "url": "",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/14/1497435495467_990.jpg",
+      "title": "成年熊猫园镜头二",
+      "videoLength": "",
+      "id": "xiongmao02",
+      "daytime": "",
+      "type": "1",
+      "pid": "",
+      "vid": "",
+      "order": "11"
+    },
+    {
+      "url": "",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2018/1/26/1516946420660_160.jpg",
+      "title": "卧龙直播熊猫\"禧禧\"",
+      "videoLength": "",
+      "id": "xiongmao15",
+      "daytime": "",
+      "type": "1",
+      "pid": "",
+      "vid": "",
+      "order": "12"
+    },
+    {
+      "url": "",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/12/20/1513744189033_191.jpg",
+      "title": "卧龙直播熊猫\"青青\"",
+      "videoLength": "",
+      "id": "xiongmao14",
+      "daytime": "",
+      "type": "1",
+      "pid": "",
+      "vid": "",
+      "order": "13"
+    },
+    {
+      "url": "",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/14/1497428571153_10.jpg",
+      "title": "卧龙直播熊猫\"公主\"",
+      "videoLength": "",
+      "id": "xiongmao16",
+      "daytime": "",
+      "type": "1",
+      "pid": "",
+      "vid": "",
+      "order": "14"
+    },
+    {
+      "url": "",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2018/1/16/1516072024707_59.jpg",
+      "title": "卧龙直播熊猫\"泰山\"",
+      "videoLength": "",
+      "id": "xiongmao13",
+      "daytime": "",
+      "type": "1",
+      "pid": "",
+      "vid": "",
+      "order": "15"
+    },
+    {
+      "url": "",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/12/29/1514545575228_567.jpg",
+      "title": "卧龙直播熊猫\"暖暖\"",
+      "videoLength": "",
+      "id": "xiongmao12",
+      "daytime": "",
+      "type": "1",
+      "pid": "",
+      "vid": "",
+      "order": "16"
+    },
+    {
+      "url": "",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2018/1/16/1516086233338_161.jpg",
+      "title": "卧龙直播熊猫\"妃妃\"及“妃妃仔”",
+      "videoLength": "",
+      "id": "xiongmao11",
+      "daytime": "",
+      "type": "1",
+      "pid": "",
+      "vid": "",
+      "order": "17"
+    },
+    {
+      "url": "",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2017/6/14/1497427076461_973.jpg",
+      "title": "雅安基地幼儿园",
+      "videoLength": "",
+      "id": "xiongmao18",
+      "daytime": "",
+      "type": "",
+      "pid": "",
+      "vid": "",
+      "order": "18"
+    }
+  ]
+}
+
+4.边看边聊（itemid来自live的bookmark的multiple的watchTalk）
+// 20180205103543
+// http://newcomment.cntv.cn/comment/list?prepage=20&nature=1&app=ipandaApp&page=1&itemid=zhiboye_chat
+
+{
+  "code": 0,
+  "msg": "success",
+  "time": 1517798142,
+  "data": {
+    "total": "371955",
+    "content": [
+      {
+        "pid": "45137724",
+        "tid": "45137724",
+        "pics": [
+          
+        ],
+        "piccount": 0,
+        "message": "最焦糖的是黄豆妹她妹么？",
+        "mark": "",
+        "author": "央视网网友",
+        "authorid": "2443979667",
+        "dateline": "1517797825",
+        "sub_count": "0",
+        "stype": 2,
+        "locale": "广东省深圳市",
+        "agree": 0,
+        "disagree": 0,
+        "relative_time": 0
+      },
+      {
+        "pid": "45137713",
+        "tid": "45137713",
+        "pics": [
+          
+        ],
+        "piccount": 0,
+        "message": "煤球吃完又睡了！……再这样下去，离中年发福的泰锅锅的啤酒肚不远了",
+        "mark": "",
+        "author": "央视网网友",
+        "authorid": "2640074126",
+        "dateline": "1517797659",
+        "sub_count": "0",
+        "stype": 2,
+        "locale": "上海市",
+        "agree": 0,
+        "disagree": 0,
+        "relative_time": 0
+      },
+      {
+        "pid": "45137709",
+        "tid": "45137709",
+        "pics": [
+          
+        ],
+        "piccount": 0,
+        "message": "雅幼的焦糖团子们，怼架欢",
+        "mark": "",
+        "author": "央视网网友",
+        "authorid": "2242166530",
+        "dateline": "1517797622",
+        "sub_count": "0",
+        "stype": 2,
+        "locale": "广东省深圳市",
+        "agree": 0,
+        "disagree": 0,
+        "relative_time": 0
+      },
+      {
+        "pid": "45137708",
+        "tid": "45137708",
+        "pics": [
+          
+        ],
+        "piccount": 0,
+        "message": "小不点超可怜 谁都怼她 路过怼一下 打不过别熊来对一下她 嘤嘤嘤",
+        "mark": "",
+        "author": "央视网网友",
+        "authorid": "2568637828",
+        "dateline": "1517797611",
+        "sub_count": "0",
+        "stype": 2,
+        "locale": "广西北海市",
+        "agree": 0,
+        "disagree": 0,
+        "relative_time": 0
+      },
+      {
+        "pid": "45137705",
+        "tid": "45137705",
+        "pics": [
+          
+        ],
+        "piccount": 0,
+        "message": "煤球长胖好多啊",
+        "mark": "",
+        "author": "央视网网友",
+        "authorid": "2298557294",
+        "dateline": "1517797561",
+        "sub_count": "0",
+        "stype": 2,
+        "locale": "中国",
+        "agree": 0,
+        "disagree": 0,
+        "relative_time": 0
+      },
+      {
+        "pid": "45137685",
+        "tid": "45137685",
+        "pics": [
+          
+        ],
+        "piccount": 0,
+        "message": "雅幼大只社会熊 惹不起",
+        "mark": "",
+        "author": "央视网网友",
+        "authorid": "2460209212",
+        "dateline": "1517797322",
+        "sub_count": "0",
+        "stype": 2,
+        "locale": "广西北海市",
+        "agree": 0,
+        "disagree": 0,
+        "relative_time": 0
+      },
+      {
+        "pid": "45137681",
+        "tid": "45137681",
+        "pics": [
+          
+        ],
+        "piccount": 0,
+        "message": "喜豆仔摸摸啊，一直被压",
+        "mark": "",
+        "author": "央视网网友",
+        "authorid": "2568637828",
+        "dateline": "1517797273",
+        "sub_count": "0",
+        "stype": 2,
+        "locale": "中国",
+        "agree": 0,
+        "disagree": 0,
+        "relative_time": 0
+      },
+      {
+        "pid": "45137679",
+        "tid": "45137679",
+        "pics": [
+          
+        ],
+        "piccount": 0,
+        "message": "战斗力太厉害了",
+        "mark": "",
+        "author": "央视网网友",
+        "authorid": "2640074126",
+        "dateline": "1517797262",
+        "sub_count": "0",
+        "stype": 2,
+        "locale": "中国",
+        "agree": 0,
+        "disagree": 0,
+        "relative_time": 0
+      },
+      {
+        "pid": "45137673",
+        "tid": "45137673",
+        "pics": [
+          
+        ],
+        "piccount": 0,
+        "message": "那个四处撩架的是哪只啊",
+        "mark": "",
+        "author": "央视网网友",
+        "authorid": "2117560365",
+        "dateline": "1517797228",
+        "sub_count": "0",
+        "stype": 2,
+        "locale": "中国",
+        "agree": 0,
+        "disagree": 0,
+        "relative_time": 0
+      },
+      {
+        "pid": "45137669",
+        "tid": "45137669",
+        "pics": [
+          
+        ],
+        "piccount": 0,
+        "message": "哈哈哈哈哈哈哈哈哈哈哈哈哈过(;｀O´)o滚下来了",
+        "mark": "",
+        "author": "央视网网友",
+        "authorid": "2339578625",
+        "dateline": "1517797190",
+        "sub_count": "0",
+        "stype": 2,
+        "locale": "中国",
+        "agree": 0,
+        "disagree": 0,
+        "relative_time": 0
+      },
+      {
+        "pid": "45137660",
+        "tid": "45137660",
+        "pics": [
+          
+        ],
+        "piccount": 0,
+        "message": "被摔那个是喜豆仔？？",
+        "mark": "",
+        "author": "央视网网友",
+        "authorid": "2460209212",
+        "dateline": "1517797085",
+        "sub_count": "0",
+        "stype": 2,
+        "locale": "中国",
+        "agree": 0,
+        "disagree": 0,
+        "relative_time": 0
+      },
+      {
+        "pid": "45137659",
+        "tid": "45137659",
+        "pics": [
+          
+        ],
+        "piccount": 0,
+        "message": "泰山果果好乖的在吃竹叶呢，艺姐不知道夸了没2333",
+        "mark": "",
+        "author": "央视网网友",
+        "authorid": "2545665563",
+        "dateline": "1517797082",
+        "sub_count": "0",
+        "stype": 2,
+        "locale": "广东省深圳市",
+        "agree": 0,
+        "disagree": 0,
+        "relative_time": 0
+      },
+      {
+        "pid": "45137649",
+        "tid": "45137649",
+        "pics": [
+          
+        ],
+        "piccount": 0,
+        "message": "是苏珊二仔吗？这战斗力",
+        "mark": "",
+        "author": "央视网网友",
+        "authorid": "2337996547",
+        "dateline": "1517796991",
+        "sub_count": "0",
+        "stype": 2,
+        "locale": "广西北海市",
+        "agree": 0,
+        "disagree": 0,
+        "relative_time": 0
+      },
+      {
+        "pid": "45137636",
+        "tid": "45137636",
+        "pics": [
+          
+        ],
+        "piccount": 0,
+        "message": "小不点好爱打架",
+        "mark": "",
+        "author": "央视网网友",
+        "authorid": "2408996465",
+        "dateline": "1517796829",
+        "sub_count": "0",
+        "stype": 2,
+        "locale": "广西北海市",
+        "agree": 0,
+        "disagree": 0,
+        "relative_time": 0
+      },
+      {
+        "pid": "45137634",
+        "tid": "45137634",
+        "pics": [
+          
+        ],
+        "piccount": 0,
+        "message": "雅幼今年走的焦糖风",
+        "mark": "",
+        "author": "央视网网友",
+        "authorid": "2434419400",
+        "dateline": "1517796789",
+        "sub_count": "0",
+        "stype": 2,
+        "locale": "广东省深圳市",
+        "agree": 0,
+        "disagree": 0,
+        "relative_time": 0
+      },
+      {
+        "pid": "45137618",
+        "tid": "45137618",
+        "pics": [
+          
+        ],
+        "piccount": 0,
+        "message": "雅幼今天是脏脏熊们",
+        "mark": "",
+        "author": "央视网网友",
+        "authorid": "2408996465",
+        "dateline": "1517796511",
+        "sub_count": "0",
+        "stype": 2,
+        "locale": "江苏省苏州市",
+        "agree": 0,
+        "disagree": 0,
+        "relative_time": 0
+      },
+      {
+        "pid": "45137612",
+        "tid": "45137612",
+        "pics": [
+          
+        ],
+        "piccount": 0,
+        "message": "奶爸说云朵仔是最白的",
+        "mark": "",
+        "author": "央视网网友",
+        "authorid": "2339578625",
+        "dateline": "1517796401",
+        "sub_count": "0",
+        "stype": 2,
+        "locale": "江苏省苏州市",
+        "agree": 0,
+        "disagree": 0,
+        "relative_time": 0
+      },
+      {
+        "pid": "45137608",
+        "tid": "45137608",
+        "pics": [
+          
+        ],
+        "piccount": 0,
+        "message": "小朋友们可以打雪仗了",
+        "mark": "",
+        "author": "央视网网友",
+        "authorid": "2506627899",
+        "dateline": "1517796289",
+        "sub_count": "0",
+        "stype": 2,
+        "locale": "浙江省宁波市",
+        "agree": 0,
+        "disagree": 0,
+        "relative_time": 0
+      },
+      {
+        "pid": "45137607",
+        "tid": "45137607",
+        "pics": [
+          
+        ],
+        "piccount": 0,
+        "message": "煤大头真是pangpang很多哇",
+        "mark": "",
+        "author": "央视网网友",
+        "authorid": "2354295896",
+        "dateline": "1517796254",
+        "sub_count": "0",
+        "stype": 2,
+        "locale": "中国",
+        "agree": 0,
+        "disagree": 0,
+        "relative_time": 0
+      },
+      {
+        "pid": "45137601",
+        "tid": "45137601",
+        "pics": [
+          
+        ],
+        "piccount": 0,
+        "message": "煤煤熊家画面好唯美",
+        "mark": "",
+        "author": "央视网网友",
+        "authorid": "2681805667",
+        "dateline": "1517796156",
+        "sub_count": "0",
+        "stype": 2,
+        "locale": "广东省深圳市",
+        "agree": 0,
+        "disagree": 0,
+        "relative_time": 0
+      }
+    ],
+    "reply": {
+      
+    },
+    "replyCount": {
+      
+    }
+  }
+}
+
+5.除直播之外的其余tab（vsid来自tablist的id）
+// 20180227094040
+// http://api.cntv.cn/video/videolistById?vsid=VSET100272959126&n=7&serviceId=panda&o=desc&of=time&p=1
+
+{
+  "videoset": {
+    "0": {
+      "vsid": "VSET100272959126",
+      "relvsid": "",
+      "name": "77滚滚秀",
+      "img": "http://p1.img.cctvpic.com/photoAlbum/vms/standard/img/2016/7/4/VSETBr7Ufabb0BvOFDWAzU1Z160704.jpg",
+      "enname": "",
+      "url": "http://tv.cntv.cn/videoset/VSET100272959126",
+      "cd": "",
+      "zy": "",
+      "bj": "",
+      "dy": "",
+      "js": "",
+      "nf": "",
+      "yz": "",
+      "fl": "",
+      "sbsj": "",
+      "sbpd": "",
+      "desc": "《77滚滚秀》是一档集合所有滚滚精彩瞬间的娱乐、搞笑类节目，在这里你可以看到滚滚们搞笑、尴尬、萌萌哒，以及前所未见的所有神“技能”，每周五准时更新，还有更多互动和奖品等着你，快来加入我们吧。",
+      "playdesc": "",
+      "zcr": "",
+      "fcl": ""
+    },
+    "count": "70"
+  },
+  "video": [
+    {
+      "vsid": "VSET100272959126",
+      "order": "67",
+      "vid": "00362cdfea104d7298feacfbe8b40549",
+      "t": "《77滚滚秀》 20170409 第六十七期：当时我就震惊了",
+      "url": "http://tv.cntv.cn/video/VSET100272959126/00362cdfea104d7298feacfbe8b40549",
+      "ptime": "2017-04-09 17:30:45",
+      "img": "http://p2.img.cctvpic.com/fmspic/2017/04/09/00362cdfea104d7298feacfbe8b40549-87.jpg",
+      "len": "00:02:34",
+      "em": "CM01"
+    },
+    {
+      "vsid": "VSET100272959126",
+      "order": "66",
+      "vid": "cea3a33cd54a45988d0512d65b9b2aae",
+      "t": "《77滚滚秀》 20170331 第六十六期：寻奶大作战",
+      "url": "http://tv.cntv.cn/video/VSET100272959126/cea3a33cd54a45988d0512d65b9b2aae",
+      "ptime": "2017-03-31 18:33:24",
+      "img": "http://p2.img.cctvpic.com/fmspic/2017/03/31/cea3a33cd54a45988d0512d65b9b2aae-91.jpg",
+      "len": "00:02:41",
+      "em": "CM01"
+    },
+    {
+      "vsid": "VSET100272959126",
+      "order": "65",
+      "vid": "2385afcf3a2b4546a8a205ff81f01d47",
+      "t": "《77滚滚秀》 20170325 第六十五期：爱挤油的团子",
+      "url": "http://tv.cntv.cn/video/VSET100272959126/2385afcf3a2b4546a8a205ff81f01d47",
+      "ptime": "2017-03-25 15:39:07",
+      "img": "http://p4.img.cctvpic.com/fmspic/2017/03/25/2385afcf3a2b4546a8a205ff81f01d47-87.jpg",
+      "len": "00:02:34",
+      "em": "CM01"
+    },
+    {
+      "vsid": "VSET100272959126",
+      "order": "64",
+      "vid": "3c6b9ac4badc4b06a0ec5746fcd15ec8",
+      "t": "《77滚滚秀》 20170318 第六十四期：至尊唱片MV",
+      "url": "http://tv.cntv.cn/video/VSET100272959126/3c6b9ac4badc4b06a0ec5746fcd15ec8",
+      "ptime": "2017-03-18 19:42:01",
+      "img": "http://p4.img.cctvpic.com/fmspic/2017/03/18/3c6b9ac4badc4b06a0ec5746fcd15ec8-129.jpg",
+      "len": "00:04:05",
+      "em": "CM01"
+    },
+    {
+      "vsid": "VSET100272959126",
+      "order": "63",
+      "vid": "7588082c0abe44e99d006bae0ac926c7",
+      "t": "《77滚滚秀》 20170313 第六十三期：聪明滚滚一大堆！",
+      "url": "http://tv.cntv.cn/video/VSET100272959126/7588082c0abe44e99d006bae0ac926c7",
+      "ptime": "2017-03-13 13:13:37",
+      "img": "http://p1.img.cctvpic.com/fmspic/2017/03/13/7588082c0abe44e99d006bae0ac926c7-99.jpg",
+      "len": "00:02:57",
+      "em": "CM01"
+    },
+    {
+      "vsid": "VSET100272959126",
+      "order": "62",
+      "vid": "072081c57c7a412caf97380bd591ad91",
+      "t": "《77滚滚秀》 20170224 第六十二期：这团子交给你来守护吧！",
+      "url": "http://tv.cntv.cn/video/VSET100272959126/072081c57c7a412caf97380bd591ad91",
+      "ptime": "2017-02-24 19:43:57",
+      "img": "http://p1.img.cctvpic.com/fmspic/2017/02/24/072081c57c7a412caf97380bd591ad91-92.jpg",
+      "len": "00:02:44",
+      "em": "CM01"
+    },
+    {
+      "vsid": "VSET100272959126",
+      "order": "61",
+      "vid": "3bd6524358714403bf52c3331fc68214",
+      "t": "《77滚滚秀》 20170217 第六十一期：和滚滚一起趴的周末!",
+      "url": "http://tv.cntv.cn/video/VSET100272959126/3bd6524358714403bf52c3331fc68214",
+      "ptime": "2017-02-17 17:50:13",
+      "img": "http://p2.img.cctvpic.com/fmspic/2017/02/17/3bd6524358714403bf52c3331fc68214-87.jpg",
+      "len": "00:02:34",
+      "em": "CM01"
+    }
+  ]
+}
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1.滚滚视频
+// 20180228165613
+// http://www.ipanda.com/kehuduan/video/index.json
+
+{
+  "bigImg": [
+    {
+      "url": "http://live.ipanda.com/2018/02/17/VIDEM3HEZgjwBNm3w29rXEIh180217.shtml",
+      "image": "http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2018/2/19/1519029989581_268.jpg",
+      "title": "《恭贺新春》2018熊猫拜年歌",
+      "id": "TITE1519023576024240",
+      "type": "2",
+      "stype": "",
+      "pid": "cdec90b06a3a4416986ce06598605510",
+      "vid": "",
+      "order": "1"
+    }
+  ],
+  "list": [
+    {
+      "url": "http://live.ipanda.com/2018/02/12/VIDEg5P38YXv4zeuL6oi59iw180212.shtml",
+      "image": "http://p1.img.cctvpic.com/photoworkspace/2018/02/12/2018021215083493318.jpg",
+      "title": "《熊猫TOP榜》",
+      "brief": "第二季第三十四期：吃播很流行",
+      "type": "2",
+      "videoLength": "03:31",
+      "id": "VSET100284428835",
+      "order": "1"
+    },
+    {
+      "url": "http://live.ipanda.com/2018/02/18/VIDEqfzoQUJIQpPWE1LUxmhY180218.shtml",
+      "image": "http://p1.img.cctvpic.com/photoworkspace/2018/02/18/2018021816410689459.jpg",
+      "title": "《超萌滚滚秀》",
+      "brief": "第三十九期：大吉大利，新年快乐！",
+      "type": "2",
+      "videoLength": "02:07",
+      "id": "VSET100272959126",
+      "order": "2"
+    },
+    {
+      "url": "http://live.ipanda.com/2018/02/09/VIDEb4kmvAGuTnruuhN85npy180209.shtml",
+      "image": "http://p1.img.cctvpic.com/photoworkspace/2018/02/09/2018020914494680986.jpg",
+      "title": "《当熊不让》",
+      "brief": "第四十八期：新春来临！团子奶爸齐上榜！",
+      "type": "2",
+      "videoLength": "01:43",
+      "id": "VSET100332640004",
+      "order": "3"
+    },
+    {
+      "url": "http://live.ipanda.com/2018/02/16/VIDEB1MziFdn30UmEJTnyFTq180216.shtml",
+      "image": "http://p1.img.cctvpic.com/photoworkspace/2018/02/16/2018021622092988085.jpg",
+      "title": "《特别节目》",
+      "brief": "让我在北方的雪地上撒点儿野",
+      "type": "2",
+      "videoLength": "01:25",
+      "id": "VSET100167308855",
+      "order": "4"
+    },
+    {
+      "url": "http://live.ipanda.com/2017/12/21/VIDE87ojRvcFOJ4Opj7ABG0B171221.shtml",
+      "image": "http://p1.img.cctvpic.com/photoworkspace/2017/12/22/2017122209422641664.jpg",
+      "title": "《熊猫档案》（暂停更新）",
+      "brief": "成长外挂第十二期：太阳战神“黄桃子”",
+      "type": "2",
+      "videoLength": "04:04",
+      "id": "VSET100340574858",
+      "order": "5"
+    },
+    {
+      "url": "http://live.ipanda.com/2017/07/26/VIDEdQydoXYiOYdbQ3iEpki3170726.shtml",
+      "image": "http://p1.img.cctvpic.com/photoworkspace/2017/07/27/2017072709041666353.jpg",
+      "title": "《熊猫那些事儿》（暂停更新）",
+      "brief": "第三季第20期：熊猫视频日记-爱要大声说出来",
+      "type": "2",
+      "videoLength": "07:38",
+      "id": "VSET100237714751",
+      "order": "6"
+    },
+    {
+      "url": "http://live.ipanda.com/2017/04/27/VIDEzMbRlFgfZk6rwkHaY7Ei170427.shtml",
+      "image": "http://p1.img.cctvpic.com/photoworkspace/2017/04/27/2017042714590229081.jpg",
+      "title": "《我的童年》（暂停更新）",
+      "brief": "第五十七期：让我震惊的妹妹",
+      "type": "2",
+      "videoLength": "01:10",
+      "id": "VSET100272959219",
+      "order": "7"
+    },
+    {
+      "url": "http://live.ipanda.com/2017/04/11/VIDE2T1necroHPnDsy17bICB170411.shtml",
+      "image": "http://p1.img.cctvpic.com/photoworkspace/2017/04/11/2017041111365773258.jpg",
+      "title": "《熊猫大萌星》（暂停更新）",
+      "brief": "第111期：萌宝要出国",
+      "type": "2",
+      "videoLength": "02:25",
+      "id": "VSET100272959148",
+      "order": "8"
+    },
+    {
+      "url": "http://live.ipanda.com/2017/04/09/VIDE7Mrh3g06BO7fcIJsTgEP170409.shtml",
+      "image": "http://p1.img.cctvpic.com/photoworkspace/2017/04/09/2017040918564881775.jpg",
+      "title": "《77滚滚秀》（暂停更新）",
+      "brief": "第六十七期：当时我就震惊了",
+      "type": "2",
+      "videoLength": "02:34",
+      "id": "VSET100272959126",
+      "order": "9"
+    },
+    {
+      "url": "http://live.ipanda.com/2017/04/05/VIDEtTzgwKMacVNBxuPeBoLD170405.shtml",
+      "image": "http://p1.img.cctvpic.com/photoworkspace/2017/04/05/2017040517191811400.jpg",
+      "title": "《萌团幼儿园》（暂停更新）",
+      "brief": "第四十一集：四小天王齐聚首",
+      "type": "2",
+      "videoLength": "02:10",
+      "id": "VSET100284428834",
+      "order": "10"
+    },
+    {
+      "url": "http://live.ipanda.com/2017/03/03/VIDEJy7igp9untS2VOO1fWgJ170303.shtml",
+      "image": "http://p1.img.cctvpic.com/photoworkspace/2017/03/03/2017030314001024546.jpg",
+      "title": "《瞧你内熊样》（暂停更新）",
+      "brief": "第三十二期：左腿右腿都给你，请冲我来！",
+      "type": "2",
+      "videoLength": "01:18",
+      "id": "VSET100284428836",
+      "order": "11"
+    },
+    {
+      "url": "http://live.ipanda.com/2017/01/19/VIDEUsZFlMmOJiFb2eOrddzB170119.shtml",
+      "image": "http://p1.img.cctvpic.com/photoworkspace/2017/01/19/2017011917530770881.jpg",
+      "title": "《熊猫百科全说》（暂停更新）",
+      "brief": "第十期：我们需要你的守护",
+      "type": "2",
+      "videoLength": "05:31",
+      "id": "VSET100295754839",
+      "order": "12"
+    }
+  ]
+}
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1.熊猫播报-索引 (url来自来自1的tab标签)
+
+// 20180302143602
+// http://www.ipanda.com//kehuduan//news//index.json
+
+{
+  "data": {
+    "bigImg": [
+      {
+        "image": "http://p1.img.cctvpic.com/photoworkspace/2018/02/19/2018021911254788849.jpg",
+        "title": "广东大熊猫三胞胎给大家拜大年",
+        "url": "http://live.ipanda.com/2018/02/19/VIDE1qpdKZtsMXxGqM2pPjmN180219.shtml",
+        "id": "TITE1519145285340611",
+        "type": "2",
+        "stype": "",
+        "pid": "0f31fe00c4b64d8cb8a8f87690363c5f",
+        "vid": "",
+        "order": "1"
+      }
+    ],
+    "listurl": "http://api.cntv.cn/apicommon/index?path=iphoneInterface/general/getArticleAndVideoListInfo.json&primary_id=PAGE1422435191506336&serviceId=panda"
+  }
+}
+
+2.熊猫播报-列表（url来自熊猫播报-索引listurl）
+
+// 20180302143602
+// http://www.ipanda.com//kehuduan//news//index.json
+
+// 20180302143928
+// http://api.cntv.cn/apicommon/index?path=iphoneInterface/general/getArticleAndVideoListInfo.json&primary_id=PAGE1422435191506336&serviceId=panda
+
+{
+  "total": 251,
+  "list": [
+    {
+      "num": 1,
+      "datatype": "article",
+      "id": "ARTIv4TCwP0vb2gTMbQcXYbb180223",
+      "title": "大熊猫“圆圆”进入发情高峰 台北动物园人工授精助添丁",
+      "videolength": "",
+      "guid": "",
+      "picurl": "http://p1.img.cctvpic.com/photoworkspace/2018/02/23/2018022310091492494.jpg",
+      "picurl2": "",
+      "picurl3": "",
+      "url": "http://news.ipanda.com/2018/02/23/ARTIv4TCwP0vb2gTMbQcXYbb180223.shtml",
+      "focus_date": 1519351775000,
+      "isaixiyou": "0"
+    },
+    {
+      "num": 2,
+      "datatype": "article",
+      "id": "ARTIg4EhhvEQxBuQRr9kV3ec180215",
+      "title": "中国大熊猫保护研究中心17只熊猫宝宝集体亮相 向全国人民拜年",
+      "videolength": "",
+      "guid": "",
+      "picurl": "http://p1.img.cctvpic.com/photoworkspace/2018/02/15/2018021517543235178.jpg",
+      "picurl2": "",
+      "picurl3": "",
+      "url": "http://news.ipanda.com/2018/02/15/ARTIg4EhhvEQxBuQRr9kV3ec180215.shtml",
+      "focus_date": 1518688828000,
+      "isaixiyou": "0"
+    },
+    {
+      "num": 3,
+      "datatype": "article",
+      "id": "ARTIRPRFgzDBRH0iesey79hD180215",
+      "title": "成都基地大熊猫欢欢喜喜收“年货”",
+      "videolength": "",
+      "guid": "",
+      "picurl": "http://p1.img.cctvpic.com/photoworkspace/2018/02/15/2018021512194429005.jpg",
+      "picurl2": "",
+      "picurl3": "",
+      "url": "http://news.ipanda.com/2018/02/15/ARTIRPRFgzDBRH0iesey79hD180215.shtml",
+      "focus_date": 1518668439000,
+      "isaixiyou": "0"
+    },
+    {
+      "num": 4,
+      "datatype": "article",
+      "id": "ARTIdJ2rbznYhUFbH1Xt3oIs180208",
+      "title": "大熊猫“星语”“星愿”赴泉州生活",
+      "videolength": "",
+      "guid": "",
+      "picurl": "http://p1.img.cctvpic.com/photoworkspace/2018/02/08/2018020812101033998.jpg",
+      "picurl2": "",
+      "picurl3": "",
+      "url": "http://news.ipanda.com/2018/02/08/ARTIdJ2rbznYhUFbH1Xt3oIs180208.shtml",
+      "focus_date": 1518055963000,
+      "isaixiyou": "0"
+    },
+    {
+      "num": 5,
+      "datatype": "article",
+      "id": "ARTIQcTkZObGZH7hGFkEMrPt180201",
+      "title": "四川省天全县三湾河国有林区再现大熊猫身影",
+      "videolength": "",
+      "guid": "",
+      "picurl": "http://p1.img.cctvpic.com/photoworkspace/2018/02/01/2018020109335564402.jpg",
+      "picurl2": "",
+      "picurl3": "",
+      "url": "http://news.ipanda.com/2018/02/01/ARTIQcTkZObGZH7hGFkEMrPt180201.shtml",
+      "focus_date": 1517448945000,
+      "isaixiyou": "0"
+    },
+    {
+      "num": 6,
+      "datatype": "article",
+      "id": "ARTI5VvwVAkr2BK20wjfIya1180129",
+      "title": "四川省大熊猫小种群保护与复壮研究开放实验室建成投入使用",
+      "videolength": "",
+      "guid": "",
+      "picurl": "http://p1.img.cctvpic.com/photoworkspace/2018/01/29/2018012910303123844.jpg",
+      "picurl2": "",
+      "picurl3": "",
+      "url": "http://news.ipanda.com/2018/01/29/ARTI5VvwVAkr2BK20wjfIya1180129.shtml",
+      "focus_date": 1517193114000,
+      "isaixiyou": "0"
+    },
+    {
+      "num": 7,
+      "datatype": "article",
+      "id": "ARTInH8S8adFDutCvYorABNl180127",
+      "title": "饮料瓶落入熊猫馆遭大熊猫撕咬 工作人员紧急“打捞”",
+      "videolength": "",
+      "guid": "",
+      "picurl": "http://p1.img.cctvpic.com/photoworkspace/2018/01/27/2018012716311693440.jpg",
+      "picurl2": "",
+      "picurl3": "",
+      "url": "http://news.ipanda.com/2018/01/27/ARTInH8S8adFDutCvYorABNl180127.shtml",
+      "focus_date": 1517042707000,
+      "isaixiyou": "0"
+    },
+    {
+      "num": 8,
+      "datatype": "article",
+      "id": "ARTIHfdaVa6govVDhsWCmRR6180119",
+      "title": "旅马大熊猫“兴兴”和“靓靓”家族再添新丁！",
+      "videolength": "",
+      "guid": "",
+      "picurl": "http://p1.img.cctvpic.com/photoworkspace/2018/01/19/2018011914590022264.jpg",
+      "picurl2": "",
+      "picurl3": "",
+      "url": "http://news.ipanda.com/2018/01/19/ARTIHfdaVa6govVDhsWCmRR6180119.shtml",
+      "focus_date": 1516344374000,
+      "isaixiyou": "0"
+    },
+    {
+      "num": 9,
+      "datatype": "article",
+      "id": "ARTIE6zdjNUI9wVum1KqOrls180119",
+      "title": "旅澳大熊猫“福妮”现怀孕迹象 动物园或迎熊猫宝宝",
+      "videolength": "",
+      "guid": "",
+      "picurl": "http://p1.img.cctvpic.com/photoworkspace/2018/01/19/2018011914223324390.jpg",
+      "picurl2": "",
+      "picurl3": "",
+      "url": "http://news.ipanda.com/2018/01/19/ARTIE6zdjNUI9wVum1KqOrls180119.shtml",
+      "focus_date": 1516343049000,
+      "isaixiyou": "0"
+    },
+    {
+      "num": 10,
+      "datatype": "article",
+      "id": "ARTIP38PfN2FqQSIaVUs8tS7180117",
+      "title": "大熊猫“华豹”“金宝宝”启程前往芬兰",
+      "videolength": "",
+      "guid": "",
+      "picurl": "http://p1.img.cctvpic.com/photoworkspace/2018/01/17/2018011711584994394.jpg",
+      "picurl2": "",
+      "picurl3": "",
+      "url": "http://news.ipanda.com/2018/01/17/ARTIP38PfN2FqQSIaVUs8tS7180117.shtml",
+      "focus_date": 1516161943000,
+      "isaixiyou": "0"
+    },
+    {
+      "num": 11,
+      "datatype": "article",
+      "id": "ARTIGssEK2nWRHWOEJXnQ8bz180115",
+      "title": "旅法大熊猫“圆梦”正式亮相 民众参观热情高涨",
+      "videolength": "",
+      "guid": "",
+      "picurl": "http://p1.img.cctvpic.com/photoworkspace/2018/01/15/2018011511234961310.jpg",
+      "picurl2": "",
+      "picurl3": "",
+      "url": "http://news.ipanda.com/2018/01/15/ARTIGssEK2nWRHWOEJXnQ8bz180115.shtml",
+      "focus_date": 1515987110000,
+      "isaixiyou": "0"
+    },
+    {
+      "num": 12,
+      "datatype": "article",
+      "id": "ARTIxhg6NdNkenTFkxE2hcWB180110",
+      "title": "首届中国大熊猫保护研究“九寨”杯国际摄影大赛获奖作品揭晓",
+      "videolength": "",
+      "guid": "",
+      "picurl": "http://p1.img.cctvpic.com/photoworkspace/2018/01/10/2018011014192749775.jpg",
+      "picurl2": "",
+      "picurl3": "",
+      "url": "http://news.ipanda.com/2018/01/10/ARTIxhg6NdNkenTFkxE2hcWB180110.shtml",
+      "focus_date": 1515565191000,
+      "isaixiyou": "0"
+    }
+  ]
+}
+
+
+
+
+
