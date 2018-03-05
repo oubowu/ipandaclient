@@ -23,7 +23,6 @@ import com.oubowu.ipanda.di.Injectable;
 import com.oubowu.ipanda.ui.adapter.FragmentDataBindingComponent;
 import com.oubowu.ipanda.ui.adapter.PandaLiveOtherAdapter;
 import com.oubowu.ipanda.viewmodel.PandaLiveOtherViewModel;
-import com.oushangfeng.pinnedsectionitemdecoration.SmallPinnedHeaderItemDecoration;
 
 import javax.inject.Inject;
 
@@ -80,19 +79,23 @@ public class PandaLiveOtherFragment extends LazyFragment implements Injectable {
 
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                if (parent.getChildAdapterPosition(view) == 0) {
+                int position = parent.getChildAdapterPosition(view);
+                if (position == 0) {
                     outRect.top = mPaddingTop + drawable.getIntrinsicHeight();
+                    outRect.left = drawable.getIntrinsicHeight();
+                    outRect.right = drawable.getIntrinsicHeight();
                 } else {
-                    outRect.top = 0;
+                    outRect.top = drawable.getIntrinsicHeight();
+                    outRect.left = drawable.getIntrinsicHeight();
+                    outRect.right = drawable.getIntrinsicHeight();
+                    if (position == parent.getAdapter().getItemCount() - 1) {
+                        outRect.bottom = drawable.getIntrinsicHeight();
+                    }
                 }
             }
         });
 
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext(), LinearLayoutManager.VERTICAL, false));
-        SmallPinnedHeaderItemDecoration itemDecoration = new SmallPinnedHeaderItemDecoration.Builder(-1, -1).setDividerId(R.drawable.divider_panda_live_fragment)
-                .enableDivider(true).create();
-        itemDecoration.disableDrawHeader(true);
-        mBinding.recyclerView.addItemDecoration(itemDecoration);
 
         return mBinding.getRoot();
     }

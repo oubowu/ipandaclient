@@ -100,8 +100,8 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
 
     @Override
     public void onVideoPause() {
-//        super.onVideoPause();
-        if (GSYVideoManager.instance().getMediaPlayer() != null) {
+        //        super.onVideoPause();
+        if (GSYVideoManager.instance().getMediaPlayer() != null && GSYVideoManager.instance().getMediaPlayer().isPlaying()) {
             if (mMyUrl != null) {
                 setStateAndUi(CURRENT_STATE_PAUSE);
                 GSYVideoManager.instance().getMediaPlayer().stop();
@@ -399,7 +399,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
     }
 
     private void onDanmukuResume() {
-        if (mDanmakuView != null && mDanmakuView.isPrepared() && mDanmakuView.isPaused()) {
+        if (mDanmakuView != null && mDanmakuView.isPrepared() /*&& mDanmakuView.isPaused()*/) {
             mDanmakuView.resume();
         }
     }

@@ -4,11 +4,14 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,7 +31,6 @@ import com.oubowu.ipanda.util.CommonUtil;
 import com.oubowu.ipanda.viewmodel.HostViewModel;
 import com.oubowu.stickyitemdecoration.StickyHeadContainer;
 import com.oubowu.stickyitemdecoration.StickyItemDecoration;
-import com.oushangfeng.pinnedsectionitemdecoration.SmallPinnedHeaderItemDecoration;
 
 import javax.inject.Inject;
 
@@ -92,10 +94,24 @@ public class HostFragment extends Fragment implements Injectable {
 
         RecyclerView recyclerView = mBinding.recyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
-        SmallPinnedHeaderItemDecoration itemDecoration = new SmallPinnedHeaderItemDecoration.Builder(R.id.header_tag, HostAdapter.TYPE_PANDA_NEWS,
-                HostAdapter.TYPE_VIDEO_GRID, HostAdapter.TYPE_VIDEO_LIST).setDividerId(R.drawable.divider_host_fragment).enableDivider(true).create();
-        itemDecoration.disableDrawHeader(true);
-        recyclerView.addItemDecoration(itemDecoration);
+        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+
+            Drawable drawable = ContextCompat.getDrawable(mContext, R.drawable.divider_panda_live_fragment);
+
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+
+                int position = parent.getChildAdapterPosition(view);
+                if (position == 0) {
+                    outRect.top = 0;
+                } else {
+                    outRect.top = drawable.getIntrinsicHeight();
+                    if (position == parent.getAdapter().getItemCount() - 1) {
+                        outRect.bottom = drawable.getIntrinsicHeight();
+                    }
+                }
+            }
+        });
 
         final StickyHeadContainer container = mBinding.stickyHeadContainer;
         container.setDataCallback(pos -> {

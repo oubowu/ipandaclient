@@ -110,7 +110,7 @@ public class PandaVideoFragment extends Fragment implements Injectable {
                     outRect.top = drawable.getIntrinsicHeight();
                     outRect.left = drawable.getIntrinsicHeight();
                     outRect.right = drawable.getIntrinsicHeight();
-                    if (position == mPandaVideoAdapter.getItemCount() - 1) {
+                    if (position == parent.getAdapter().getItemCount() - 1) {
                         outRect.bottom = drawable.getIntrinsicHeight();
                     }
                 }

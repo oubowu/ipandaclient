@@ -283,7 +283,7 @@ public class PandaLiveSubFragment extends LazyFragment implements Injectable {
                                     if (liveTab != null && CommonUtil.isNotEmpty(liveTab.bookmark.watchTalk)) {
                                         LiveTab.BookmarkBean.WatchTalkBean watchTalkBean = liveTab.bookmark.watchTalk.get(0);
                                         pandaLiveSubViewModel.getLiveWatchTalk(40, 0, watchTalkBean.url).observe(PandaLiveSubFragment.this, watchTalkResource -> {
-                                            if (watchTalkResource != null) {
+                                            if (watchTalkResource != null && mDisposable == null) {
                                                 switch (watchTalkResource.status) {
                                                     case SUCCESS:
 
@@ -292,6 +292,7 @@ public class PandaLiveSubFragment extends LazyFragment implements Injectable {
                                                         if (watchTalk != null) {
                                                             addDanmu(watchTalk, new int[]{0});
                                                         }
+
 
                                                         break;
                                                     case LOADING:
