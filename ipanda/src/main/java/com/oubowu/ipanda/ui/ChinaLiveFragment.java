@@ -16,21 +16,23 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.oubowu.ipanda.R;
-import com.oubowu.ipanda.bean.pandalive.TabList;
+import com.oubowu.ipanda.bean.chinalive.ChinaLiveTab;
+import com.oubowu.ipanda.callback.HandleBackInterface;
 import com.oubowu.ipanda.callback.OnFragmentScrollListener;
-import com.oubowu.ipanda.databinding.FragmentPandaLiveBinding;
+import com.oubowu.ipanda.databinding.FragmentChinaLiveBinding;
 import com.oubowu.ipanda.di.Injectable;
 import com.oubowu.ipanda.ui.adapter.FragmentAdapter;
 import com.oubowu.ipanda.util.BarBehavior;
 import com.oubowu.ipanda.util.CommonUtil;
-import com.oubowu.ipanda.viewmodel.PandaLiveViewModel;
+import com.oubowu.ipanda.util.HandleBackUtil;
+import com.oubowu.ipanda.viewmodel.ChinaLiveViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class PandaLiveFragment extends Fragment implements Injectable {
+public class ChinaLiveFragment extends Fragment implements Injectable,HandleBackInterface {
 
     private static final String NAME = "name";
     private static final String URL = "url";
@@ -38,20 +40,20 @@ public class PandaLiveFragment extends Fragment implements Injectable {
     private String mName;
     private String mUrl;
     private Context mContext;
-    private FragmentPandaLiveBinding mBinding;
+    private FragmentChinaLiveBinding mBinding;
 
     private OnFragmentScrollListener mListener;
 
     @Inject
     ViewModelProvider.Factory mFactory;
-    private FragmentAdapter mFragmentAdapter;
+    private FragmentAdapter mPandaLiveFragmentAdapter;
 
-    public PandaLiveFragment() {
+    public ChinaLiveFragment() {
         // Required empty public constructor
     }
 
-    public static PandaLiveFragment newInstance(String name, String url) {
-        PandaLiveFragment fragment = new PandaLiveFragment();
+    public static ChinaLiveFragment newInstance(String name, String url) {
+        ChinaLiveFragment fragment = new ChinaLiveFragment();
         Bundle args = new Bundle();
         args.putString(NAME, name);
         args.putString(URL, url);
@@ -70,7 +72,7 @@ public class PandaLiveFragment extends Fragment implements Injectable {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_panda_live, container, false);
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_china_live, container, false);
         mBinding.setTitle(mName);
 
         CoordinatorLayout.LayoutParams clp = (CoordinatorLayout.LayoutParams) mBinding.toolbar.getLayoutParams();
@@ -111,28 +113,23 @@ public class PandaLiveFragment extends Fragment implements Injectable {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        PandaLiveViewModel pandaLiveViewModel = ViewModelProviders.of(this, mFactory).get(PandaLiveViewModel.class);
+        ChinaLiveViewModel chinaLiveViewModel = ViewModelProviders.of(this, mFactory).get(ChinaLiveViewModel.class);
 
-        pandaLiveViewModel.getTabList(mUrl).observe(this, listResource -> {
+        chinaLiveViewModel.getChinaLiveTab(mUrl).observe(this, listResource -> {
             if (listResource != null) {
                 switch (listResource.status) {
                     case SUCCESS:
-                        List<TabList> data = listResource.data;
-                        if (data != null) {
-                            List<Fragment> fragments = new ArrayList<>(data.size());
-                            List<String> titles = new ArrayList<>(data.size());
+                        ChinaLiveTab data = listResource.data;
+                        if (data != null && CommonUtil.isNotEmpty(data.tablist)) {
+                            List<Fragment> fragments = new ArrayList<>(data.tablist.size());
+                            List<String> titles = new ArrayList<>(data.tablist.size());
                             int paddingTop = mBinding.toolbar.getHeight() + mBinding.tabLayout.getHeight();
-                            for (TabList tab : data) {
+                            for (ChinaLiveTab.TablistBean tab : data.tablist) {
                                 titles.add(tab.title);
-                                if (!CommonUtil.isEmpty(tab.url)) {
-                                    fragments.add(PandaLiveSubFragment.newInstance(tab.title, tab.url, paddingTop));
-                                } else {
-                                    fragments.add(PandaLiveOtherFragment.newInstance(tab.title, tab.id, paddingTop));
-                                }
+                                fragments.add(ChinaLiveSubFragment.newInstance(tab.title, tab.url, paddingTop));
                             }
-                            // Log.e("PandaLiveFragment", "89行-onActivityCreated(): " + " ");
-                            mFragmentAdapter = new FragmentAdapter(getChildFragmentManager(), fragments, titles);
-                            mBinding.viewPager.setAdapter(mFragmentAdapter);
+                            mPandaLiveFragmentAdapter = new FragmentAdapter(getChildFragmentManager(), fragments, titles);
+                            mBinding.viewPager.setAdapter(mPandaLiveFragmentAdapter);
                             mBinding.tabLayout.setupWithViewPager(mBinding.viewPager);
                         }
                         break;
@@ -171,11 +168,16 @@ public class PandaLiveFragment extends Fragment implements Injectable {
 
     @Override
     public void onHiddenChanged(boolean hidden) {
-        if (mFragmentAdapter != null) {
-            List<Fragment> fragments = mFragmentAdapter.getFragments();
+        if (mPandaLiveFragmentAdapter != null) {
+            List<Fragment> fragments = mPandaLiveFragmentAdapter.getFragments();
             for (Fragment f : fragments) {
                 f.onHiddenChanged(hidden);
             }
         }
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        return HandleBackUtil.handleBackPress(this);
     }
 }

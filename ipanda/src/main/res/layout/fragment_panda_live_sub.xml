@@ -14,6 +14,8 @@
             name="liveBean"
             type="com.oubowu.ipanda.bean.pandalive.LiveTab.LiveBean"/>
 
+        <import type="android.text.TextUtils"/>
+
     </data>
 
     <android.support.v4.widget.NestedScrollView
@@ -56,10 +58,11 @@
             <TextView
                 android:id="@+id/live_desc_title"
                 android:layout_width="match_parent"
-                android:layout_height="37dp"
+                android:layout_height="wrap_content"
                 android:background="@color/toolbarBgColor"
+                android:includeFontPadding="true"
                 android:padding="8dp"
-                android:text="@{@string/live_now+liveBean.title}"
+                android:text='@{@string/live_now+(TextUtils.isEmpty(liveBean.title)?"......":liveBean.title)}'
                 android:textColor="@color/toolbarSelectTextColor"
                 android:textSize="16dp"
                 app:layout_constraintTop_toBottomOf="@+id/danmaku_view"
@@ -68,8 +71,8 @@
 
             <TextView
                 android:id="@+id/summary"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:background="@color/toolbarBgColor"
                 android:gravity="center_vertical"
                 android:paddingEnd="8dp"
@@ -78,6 +81,8 @@
                 android:textColor="@color/toolbarNormalTextColor"
                 android:textSize="14dp"
                 app:layout_constraintBottom_toBottomOf="@+id/live_desc_arrow"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/live_desc_arrow"/>
 
             <ImageView
@@ -102,15 +107,15 @@
                 android:text="@{@string/line_break+liveBean.brief+@string/line_break}"
                 android:textColor="@color/toolbarSelectTextColor"
                 android:textSize="0dp"
-                app:layout_constraintTop_toBottomOf="@+id/summary"
+                app:layout_constraintTop_toBottomOf="@+id/live_desc_arrow"
                 tools:text="翻身、吃饭、睡觉、喝奶、打闹、攀爬……这里是成都大熊猫繁育研究基地，24小时高清直播大熊猫生活实况的地方。成年园、幼年园、幼儿园、母子园、一号别墅，11路直播信号28个摄像头，让你零距离了解国宝们的日常起居。"/>
 
             <com.oubowu.ipanda.ui.widget.FlexImageLayout
                 android:id="@+id/flexImageLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bottom_navigation_rect"
                 android:layout_marginTop="4dp"
+                android:background="@drawable/bottom_navigation_rect"
                 android:padding="8dp"
                 app:layout_constraintTop_toBottomOf="@+id/live_desc"
                 app:spacing="8dp">

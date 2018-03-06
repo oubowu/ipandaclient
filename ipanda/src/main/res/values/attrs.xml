@@ -36,4 +36,8 @@
         <attr name="vSpacing" format="dimension"/>
     </declare-styleable>
 
+    <declare-styleable name="DescImageView">
+        <attr name="textRatio" format="fraction"/>
+    </declare-styleable>
+
 </resources>

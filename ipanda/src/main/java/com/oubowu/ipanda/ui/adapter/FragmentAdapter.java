@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Oubowu on 2018/2/7 15:58.
  */
-public class PandaLiveFragmentAdapter extends FragmentPagerAdapter {
+public class FragmentAdapter extends FragmentPagerAdapter {
 
     @NonNull
     public List<Fragment> getFragments() {
@@ -20,10 +20,11 @@ public class PandaLiveFragmentAdapter extends FragmentPagerAdapter {
 
     @NonNull
     private List<Fragment> mFragments;
+
     @NonNull
     private List<String> mTitles;
 
-    public PandaLiveFragmentAdapter(FragmentManager fm, @NonNull List<Fragment> fragments, List<String> titles) {
+    public FragmentAdapter(FragmentManager fm, @NonNull List<Fragment> fragments, List<String> titles) {
         super(fm);
         mFragments = fragments;
         mTitles = titles;

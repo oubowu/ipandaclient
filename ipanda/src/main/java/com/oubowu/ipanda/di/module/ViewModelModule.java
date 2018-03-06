@@ -4,6 +4,8 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
 import com.oubowu.ipanda.di.qualifier.ViewModelKey;
+import com.oubowu.ipanda.viewmodel.ChinaLiveSubViewModel;
+import com.oubowu.ipanda.viewmodel.ChinaLiveViewModel;
 import com.oubowu.ipanda.viewmodel.HomeViewModel;
 import com.oubowu.ipanda.viewmodel.HostViewModel;
 import com.oubowu.ipanda.viewmodel.PandaBroadcastViewModel;
@@ -65,6 +67,16 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(PandaBroadcastViewModel.class)
     abstract ViewModel bindPandaBroadcastViewModel(PandaBroadcastViewModel pandaBroadcastViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ChinaLiveViewModel.class)
+    abstract ViewModel bindChinaLiveViewModel(ChinaLiveViewModel chinaLiveViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ChinaLiveSubViewModel.class)
+    abstract ViewModel bindChinaLiveSubViewModel(ChinaLiveSubViewModel chinaLiveSubViewModel);
 
     // IpandaViewModelFactory作为注入，构造函数需要传入参数Map<Class<? extends ViewModel>, Provider<ViewModel>> creators；要实现这个可以写个provideCreators提供传入
     // 使用@Binds可以替代这个做法，不用再写provideCreators了

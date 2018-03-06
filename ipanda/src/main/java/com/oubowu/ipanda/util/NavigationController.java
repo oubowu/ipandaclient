@@ -8,6 +8,7 @@ import android.support.v4.util.ArrayMap;
 import android.util.Log;
 
 import com.oubowu.ipanda.R;
+import com.oubowu.ipanda.ui.ChinaLiveFragment;
 import com.oubowu.ipanda.ui.HomeActivity;
 import com.oubowu.ipanda.ui.HostFragment;
 import com.oubowu.ipanda.ui.PandaBroadcastFragment;
@@ -52,6 +53,11 @@ public class NavigationController extends FragmentManager.FragmentLifecycleCallb
     public void navigateToPandaBroadcast(String name, String url) {
         Log.e("NavigationController", "跳转熊猫播报碎片");
         changeFragment(PandaBroadcastFragment.class, () -> PandaBroadcastFragment.newInstance(name, url));
+    }
+
+    public void navigateToChinaLive(String name, String url) {
+        Log.e("NavigationController", "跳转直播中国碎片");
+        changeFragment(ChinaLiveFragment.class, () -> ChinaLiveFragment.newInstance(name, url));
     }
 
     private void changeFragment(Class clz, Closure closure) {

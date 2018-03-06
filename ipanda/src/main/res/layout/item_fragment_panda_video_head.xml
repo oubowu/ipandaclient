@@ -21,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:onClick="@{(view)->event.clickBigImg(view,videoBean.id)}"
+        app:textRatio="90%"
         app:loadDescImage1="@{videoBean}"
         tools:src="@drawable/xxx"/>
 

@@ -21,7 +21,7 @@ import android.view.ViewGroup;
 import com.oubowu.ipanda.R;
 import com.oubowu.ipanda.bean.pandabroadcast.PandaBroadcastIndex;
 import com.oubowu.ipanda.bean.pandabroadcast.PandaBroadcastList;
-import com.oubowu.ipanda.callback.OnFragmentInteractionListener;
+import com.oubowu.ipanda.callback.OnFragmentScrollListener;
 import com.oubowu.ipanda.databinding.FragmentPandaBroadcastBinding;
 import com.oubowu.ipanda.di.Injectable;
 import com.oubowu.ipanda.ui.adapter.FragmentDataBindingComponent;
@@ -42,7 +42,7 @@ public class PandaBroadcastFragment extends Fragment implements Injectable {
     private String mName;
     private String mUrl;
 
-    private OnFragmentInteractionListener mListener;
+    private OnFragmentScrollListener mListener;
     private FragmentPandaBroadcastBinding mBinding;
 
     private Context mContext;
@@ -195,8 +195,8 @@ public class PandaBroadcastFragment extends Fragment implements Injectable {
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnFragmentScrollListener) {
+            mListener = (OnFragmentScrollListener) context;
         } else {
             throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
         }

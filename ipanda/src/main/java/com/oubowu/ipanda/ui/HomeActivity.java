@@ -17,9 +17,10 @@ import android.widget.Toast;
 import com.orhanobut.logger.Logger;
 import com.oubowu.ipanda.R;
 import com.oubowu.ipanda.bean.TabIndex;
-import com.oubowu.ipanda.callback.OnFragmentInteractionListener;
+import com.oubowu.ipanda.callback.OnFragmentScrollListener;
 import com.oubowu.ipanda.databinding.ActivityHomeBinding;
 import com.oubowu.ipanda.util.BottomNavigationViewHelper;
+import com.oubowu.ipanda.util.HandleBackUtil;
 import com.oubowu.ipanda.util.NavigationController;
 import com.oubowu.ipanda.util.StatusBarUtil;
 import com.oubowu.ipanda.viewmodel.HomeViewModel;
@@ -34,7 +35,7 @@ import dagger.android.support.HasSupportFragmentInjector;
 
 // 架构：UI负责从ViewModule取数据进行UI更新；ViewModule负责从Repository中取数据；Repository负责具体的数据业务请求，一般有网络和本地数据业务逻辑
 // UI<---ViewModule<----Repository
-public class HomeActivity extends AppCompatActivity implements HasSupportFragmentInjector, OnFragmentInteractionListener {
+public class HomeActivity extends AppCompatActivity implements HasSupportFragmentInjector, OnFragmentScrollListener {
 
     ActivityHomeBinding mHomeBinding;
 
@@ -76,7 +77,9 @@ public class HomeActivity extends AppCompatActivity implements HasSupportFragmen
 
     @Override
     public void onBackPressed() {
-        moveTaskToBack(true);
+        if (!HandleBackUtil.handleBackPress(this)) {
+            moveTaskToBack(true);
+        }
     }
 
     @SuppressLint("RestrictedApi")
@@ -102,7 +105,7 @@ public class HomeActivity extends AppCompatActivity implements HasSupportFragmen
                     mNavigationController.navigateToPandaBroadcast(name, url);
                     break;
                 case 4:
-
+                    mNavigationController.navigateToChinaLive(name, url);
                     break;
             }
             return true;
@@ -138,7 +141,7 @@ public class HomeActivity extends AppCompatActivity implements HasSupportFragmen
                         Toast.makeText(HomeActivity.this, "请求失败" + resource.message, Toast.LENGTH_SHORT).show();
                         break;
                     case LOADING:
-                        Toast.makeText(HomeActivity.this, "加载中......", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(HomeActivity.this, "加载中......", Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
@@ -159,11 +162,6 @@ public class HomeActivity extends AppCompatActivity implements HasSupportFragmen
         }
         mNavigationView
                 .setY(Math.max(Math.min(mNavigationView.getY() + dyConsumed, mFirstBottomNavigationTopY + mNavigationView.getHeight()), mFirstBottomNavigationTopY));
-    }
-
-    @Override
-    public void onButtonPressed() {
-
     }
 
 }

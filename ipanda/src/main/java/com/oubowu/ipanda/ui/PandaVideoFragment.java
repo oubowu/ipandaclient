@@ -19,7 +19,7 @@ import android.view.ViewGroup;
 
 import com.oubowu.ipanda.R;
 import com.oubowu.ipanda.bean.pandavideo.PandaVideoIndex;
-import com.oubowu.ipanda.callback.OnFragmentInteractionListener;
+import com.oubowu.ipanda.callback.OnFragmentScrollListener;
 import com.oubowu.ipanda.databinding.FragmentPandaVideoBinding;
 import com.oubowu.ipanda.di.Injectable;
 import com.oubowu.ipanda.ui.adapter.FragmentDataBindingComponent;
@@ -38,7 +38,7 @@ public class PandaVideoFragment extends Fragment implements Injectable {
     private String mName;
     private String mUrl;
 
-    private OnFragmentInteractionListener mListener;
+    private OnFragmentScrollListener mListener;
 
     private FragmentPandaVideoBinding mBinding;
     private PandaVideoAdapter mPandaVideoAdapter;
@@ -156,8 +156,8 @@ public class PandaVideoFragment extends Fragment implements Injectable {
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnFragmentScrollListener) {
+            mListener = (OnFragmentScrollListener) context;
         } else {
             throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
         }

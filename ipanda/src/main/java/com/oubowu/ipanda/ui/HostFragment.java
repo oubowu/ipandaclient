@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.oubowu.ipanda.R;
 import com.oubowu.ipanda.bean.home.HomeIndex;
-import com.oubowu.ipanda.callback.OnFragmentInteractionListener;
+import com.oubowu.ipanda.callback.OnFragmentScrollListener;
 import com.oubowu.ipanda.databinding.FragmentHostBinding;
 import com.oubowu.ipanda.di.Injectable;
 import com.oubowu.ipanda.ui.adapter.FragmentDataBindingComponent;
@@ -43,7 +43,7 @@ public class HostFragment extends Fragment implements Injectable {
     private String mName;
     private String mUrl;
 
-    private OnFragmentInteractionListener mListener;
+    private OnFragmentScrollListener mListener;
 
     private FragmentHostBinding mBinding;
 
@@ -213,18 +213,12 @@ public class HostFragment extends Fragment implements Injectable {
 
     }
 
-    public void onButtonPressed() {
-        if (mListener != null) {
-            mListener.onButtonPressed();
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnFragmentScrollListener) {
+            mListener = (OnFragmentScrollListener) context;
         } else {
             throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
         }

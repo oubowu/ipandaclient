@@ -4,6 +4,8 @@ import android.arch.lifecycle.LiveData;
 
 import com.oubowu.ipanda.api.response.ApiResponse;
 import com.oubowu.ipanda.bean.base.VideoList;
+import com.oubowu.ipanda.bean.chinalive.ChinaLiveDetail;
+import com.oubowu.ipanda.bean.chinalive.ChinaLiveTab;
 import com.oubowu.ipanda.bean.home.HomeIndex;
 import com.oubowu.ipanda.bean.pandabroadcast.PandaBroadcastIndex;
 import com.oubowu.ipanda.bean.pandabroadcast.PandaBroadcastList;
@@ -116,7 +118,7 @@ public interface IpandaService {
     // 熊猫播报-索引
     @Headers("realHost:www.ipanda.com")
     @GET
-    LiveData<ApiResponse<Map<String,PandaBroadcastIndex>>> getPandaBroadcastIndex(@Url String url);
+    LiveData<ApiResponse<Map<String, PandaBroadcastIndex>>> getPandaBroadcastIndex(@Url String url);
 
     // 熊猫播报-列表
     @Headers("realHost:api.cntv.cn")
@@ -124,5 +126,19 @@ public interface IpandaService {
     LiveData<ApiResponse<PandaBroadcastList>> getPandaBroadcastList(@Url String url);
 
     /**************************************************************************************************************/
+
+
+    // 直播中国-tab
+    @Headers("realHost:www.ipanda.com")
+    @GET
+    LiveData<ApiResponse<ChinaLiveTab>> getChinaLiveTab(@Url String url);
+
+    // 直播中国-某个tab直播视频列表
+    @Headers("realHost:www.ipanda.com")
+    @GET
+    LiveData<ApiResponse<Map<String, List<ChinaLiveDetail>>>> getChinaLiveDetail(@Url String url);
+
+    /**************************************************************************************************************/
+
 
 }

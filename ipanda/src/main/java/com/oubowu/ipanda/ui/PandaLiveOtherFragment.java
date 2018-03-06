@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 
 import com.oubowu.ipanda.R;
 import com.oubowu.ipanda.base.LazyFragment;
-import com.oubowu.ipanda.callback.OnFragmentInteractionListener;
+import com.oubowu.ipanda.callback.OnFragmentScrollListener;
 import com.oubowu.ipanda.databinding.FragmentPandaLiveOtherBinding;
 import com.oubowu.ipanda.di.Injectable;
 import com.oubowu.ipanda.ui.adapter.FragmentDataBindingComponent;
@@ -36,7 +36,7 @@ public class PandaLiveOtherFragment extends LazyFragment implements Injectable {
     private String mId;
     private int mPaddingTop;
 
-    private OnFragmentInteractionListener mListener;
+    private OnFragmentScrollListener mListener;
 
     private FragmentPandaLiveOtherBinding mBinding;
 
@@ -144,8 +144,8 @@ public class PandaLiveOtherFragment extends LazyFragment implements Injectable {
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnFragmentScrollListener) {
+            mListener = (OnFragmentScrollListener) context;
         } else {
             throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
         }

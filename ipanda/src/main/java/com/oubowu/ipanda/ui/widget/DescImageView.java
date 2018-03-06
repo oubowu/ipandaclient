@@ -1,6 +1,7 @@
 package com.oubowu.ipanda.ui.widget;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
@@ -13,6 +14,7 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
+import com.oubowu.ipanda.R;
 import com.oubowu.ipanda.util.MeasureUtil;
 
 /**
@@ -31,6 +33,8 @@ public class DescImageView extends android.support.v7.widget.AppCompatImageView 
 
     private StaticLayout mStaticLayout;
 
+    private float mTextRatio;
+
     public void setDesc(String desc) {
         mDesc = desc;
         postInvalidate();
@@ -48,10 +52,16 @@ public class DescImageView extends android.support.v7.widget.AppCompatImageView 
 
     public DescImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context);
+        init(context, attrs);
     }
 
-    private void init(Context context) {
+    private void init(Context context, AttributeSet attrs) {
+
+        if (attrs != null) {
+            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.DescImageView);
+            mTextRatio = ta.getFraction(R.styleable.DescImageView_textRatio, 1, 1, 0.7f);
+            ta.recycle();
+        }
 
         mTextPadding = MeasureUtil.dip2px(getContext(), 8);
 
@@ -82,7 +92,7 @@ public class DescImageView extends android.support.v7.widget.AppCompatImageView 
 
             canvas.save();
             if (mStaticLayout == null) {
-                float outerWidth = (int) (getWidth() * 0.7f);
+                float outerWidth = (int) (getWidth() * mTextRatio);
 
                 float w = mTextPaint.measureText(mDesc);
                 if (w > outerWidth) {
