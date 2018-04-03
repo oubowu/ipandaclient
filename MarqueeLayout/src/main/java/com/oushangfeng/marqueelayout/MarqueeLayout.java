@@ -7,6 +7,7 @@ import android.database.DataSetObserver;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
@@ -174,6 +175,19 @@ public class MarqueeLayout extends ViewGroup {
     protected void onWindowVisibilityChanged(int visibility) {
         super.onWindowVisibilityChanged(visibility);
         mVisible = visibility == VISIBLE;
+        // Log.e("MarqueeLayout", "178行-onWindowVisibilityChanged(): " + mVisible);
+        if (visibility == VISIBLE) {
+            carryOn();
+        } else {
+            pause();
+        }
+    }
+
+    @Override
+    protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
+        super.onVisibilityChanged(changedView, visibility);
+        mVisible = visibility == VISIBLE;
+        // Log.e("MarqueeLayout", "191行-onVisibilityChanged(): " + mVisible);
         if (visibility == VISIBLE) {
             carryOn();
         } else {
@@ -189,10 +203,27 @@ public class MarqueeLayout extends ViewGroup {
         } else {
             mVisible = screenState == 1;
         }
+        // Log.e("MarqueeLayout", "189行-onScreenStateChanged(): " + mVisible);
         if (screenState == View.SCREEN_STATE_OFF) {
             pause();
         } else {
             carryOn();
+        }
+    }
+
+    private void carryOn() {
+        if (mIsStart && mHandler != null) {
+            mHandler.removeMessages(100);
+            mHandler.sendEmptyMessageDelayed(100, mSwitchTime);
+            // Log.e("MarqueeLayout", "190行-onWindowVisibilityChanged(): " + "carryOn");
+        }
+    }
+
+    private void pause() {
+        if (mIsStart && mHandler != null) {
+            mHandler.removeMessages(100);
+            // mScroller.abortAnimation();
+            // Log.e("MarqueeLayout", "193行-onWindowVisibilityChanged(): " + "pause");
         }
     }
 
@@ -362,23 +393,6 @@ public class MarqueeLayout extends ViewGroup {
         }
         mIsStart = false;
         mHandler.removeMessages(100);
-    }
-
-    private void carryOn() {
-        if (mIsStart && mHandler != null) {
-            mHandler.removeMessages(100);
-            mHandler.sendEmptyMessageDelayed(100, mSwitchTime);
-            // Log.e("MarqueeLayout", "190行-onWindowVisibilityChanged(): " + "carryOn");
-        }
-    }
-
-    private void pause() {
-        if (mIsStart && mHandler != null) {
-            mHandler.removeMessages(100);
-            // mScroller.abortAnimation();
-
-            // Log.e("MarqueeLayout", "193行-onWindowVisibilityChanged(): " + "pause");
-        }
     }
 
     private class MarqueeObserver extends DataSetObserver {
