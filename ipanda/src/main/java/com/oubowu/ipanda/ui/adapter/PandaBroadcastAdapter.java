@@ -1,8 +1,12 @@
 package com.oubowu.ipanda.ui.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +18,10 @@ import com.oubowu.ipanda.callback.EventListenerAdapter;
 import com.oubowu.ipanda.databinding.ItemFragmentPandaBroadcastBinding;
 import com.oubowu.ipanda.databinding.ItemFragmentPandaBroadcastHeadBinding;
 import com.oubowu.ipanda.ui.VideoActivity;
+import com.oubowu.ipanda.ui.WebViewActivity;
 import com.oubowu.ipanda.util.CommonUtil;
+
+import java.util.List;
 
 /**
  * Created by Oubowu on 2018/2/28 16:24.
@@ -50,7 +57,7 @@ public class PandaBroadcastAdapter extends DataBoundListAdapter<PandaBroadcastLi
             videoHeadBinding.setEvent(new EventListenerAdapter() {
                 @Override
                 public void clickBigImg(View v, String id) {
-                    Log.e("PandaBroadcastAdapter","53行-clickBigImg(): "+" ");
+                    Log.e("PandaBroadcastAdapter", "53行-clickBigImg(): " + " ");
                     VideoActivity.start((Activity) v.getContext(), v, id);
                 }
             });
@@ -60,8 +67,16 @@ public class PandaBroadcastAdapter extends DataBoundListAdapter<PandaBroadcastLi
             pandaVideoBinding.setEvent(new EventListenerAdapter() {
                 @Override
                 public void clickItem(View v, String id) {
-                    // TODO: 2018/3/4 跳转网页
-                    Log.e("PandaBroadcastAdapter","64行-clickItem(): "+" ");
+                    Log.e("PandaBroadcastAdapter", "64行-clickItem(): " + " ");
+                    WebViewActivity.start((Activity) v.getContext(), id);
+
+                    Intent intent1 = new Intent(Intent.ACTION_VIEW, Uri.parse(id));
+                    List<ResolveInfo> list1 = v.getContext().getPackageManager().queryIntentActivities(intent1, PackageManager.MATCH_DEFAULT_ONLY);
+                    if (list1.size() > 0) {
+                        v.getContext().startActivity(intent1);
+                    }
+
+
                 }
             });
         }

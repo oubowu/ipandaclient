@@ -22,6 +22,7 @@ import com.oubowu.ipanda.ui.VideoActivity;
 import com.oubowu.ipanda.ui.widget.SimpleVideoImageView;
 import com.oubowu.ipanda.ui.widget.VideoImageView;
 import com.oubowu.ipanda.util.CommonUtil;
+import com.oubowu.ipanda.util.GlideConfig;
 import com.oushangfeng.marqueelayout.MarqueeLayoutAdapter;
 
 /**
@@ -87,7 +88,7 @@ public class HostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     protected void initView(View view, int position, HomeIndex.PandaeyeBean.ItemsBean item) {
                         TextView tvBrief = view.findViewById(R.id.tv_brief);
                         TextView tvTitle = view.findViewById(R.id.tv_title);
-                        tvBrief.setTextColor(Color.parseColor(item.bgcolor));
+                        tvBrief.setTextColor(CommonUtil.isEmpty(item.bgcolor) ? Color.parseColor("#ff0a5a") : Color.parseColor(item.bgcolor));
                         tvBrief.setText(item.brief);
                         tvTitle.setText(item.title);
                     }
@@ -137,7 +138,7 @@ public class HostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             } else {
                                 videoImageView.setInfo("Live", item.title, item.daytime);
                             }
-                            Glide.with(view.getContext()).load(item.image).into(videoImageView);
+                            Glide.with(view.getContext()).load(item.image).apply(GlideConfig.getInstance()).into(videoImageView);
 
                             view.setOnClickListener(v -> {
                                 if (position == 1 || position == 2) {
@@ -172,7 +173,7 @@ public class HostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     protected void initView(View view, int position, VideoList item) {
                         SimpleVideoImageView simpleVideoImageView = view.findViewById(R.id.simpleVideoImageView);
                         simpleVideoImageView.setVideoLength(item.videoLength);
-                        Glide.with(view.getContext()).load(item.image).into(simpleVideoImageView);
+                        Glide.with(view.getContext()).load(item.image).apply(GlideConfig.getInstance()).into(simpleVideoImageView);
 
                         TextView title = view.findViewById(R.id.tv_title);
                         TextView date = view.findViewById(R.id.tv_date);

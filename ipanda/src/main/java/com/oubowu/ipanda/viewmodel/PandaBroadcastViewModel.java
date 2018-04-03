@@ -3,6 +3,7 @@ package com.oubowu.ipanda.viewmodel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
+import com.oubowu.ipanda.bean.pandabroadcast.PandaBroadcastDetail;
 import com.oubowu.ipanda.bean.pandabroadcast.PandaBroadcastIndex;
 import com.oubowu.ipanda.bean.pandabroadcast.PandaBroadcastList;
 import com.oubowu.ipanda.repository.PandaBroadcastRepository;
@@ -28,6 +29,10 @@ public class PandaBroadcastViewModel extends ViewModel {
 
     public LiveData<Resource<PandaBroadcastList>> getPandaBroadcastList(String url) {
         return mPandaBroadcastRepository.getPandaBroadcastList(url);
+    }
+
+    public LiveData<Resource<PandaBroadcastDetail>> getPandaBroadcastDetail(String id) {
+        return mPandaBroadcastRepository.getPandaBroadcastDetail(id);
     }
 
 }

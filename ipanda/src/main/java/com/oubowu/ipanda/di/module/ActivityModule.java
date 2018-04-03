@@ -3,6 +3,7 @@ package com.oubowu.ipanda.di.module;
 
 import com.oubowu.ipanda.ui.HomeActivity;
 import com.oubowu.ipanda.ui.VideoActivity;
+import com.oubowu.ipanda.ui.WebViewActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -18,5 +19,8 @@ public abstract class ActivityModule {
 
     @ContributesAndroidInjector()
     abstract VideoActivity contributesVideoActivity();
+
+    @ContributesAndroidInjector()
+    abstract WebViewActivity contributesWebViewActivity();
 
 }

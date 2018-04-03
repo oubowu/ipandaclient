@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bottom_navigation_rect"
-        android:onClick="@{(view)->event.clickItem(view,videoBean.url)}"
+        android:onClick="@{(view)->event.clickItem(view,videoBean.id)}"
         android:padding="4dp">
 
         <com.oubowu.ipanda.ui.widget.SimpleVideoImageView
@@ -33,7 +33,7 @@
             android:scaleType="centerCrop"
             app:loadImageUrl="@{videoBean.picurl}"
             app:wRatio="35%"
-            tools:src="@drawable/xxx"/>
+            tools:src="@drawable/ic_loading"/>
 
         <TextView
             android:id="@+id/tv_title"

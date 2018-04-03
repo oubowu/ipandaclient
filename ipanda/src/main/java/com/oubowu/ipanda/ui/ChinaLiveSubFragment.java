@@ -122,7 +122,6 @@ public class ChinaLiveSubFragment extends LazyFragment implements Injectable, Ha
                 if (recordTabResource != null) {
                     switch (recordTabResource.status) {
                         case SUCCESS:
-
                             mIsFirstInit = true;
 
                             mAdapter = new ChinaLiveSubAdapter(this, new FragmentDataBindingComponent(this), videoViewModel);
@@ -134,10 +133,8 @@ public class ChinaLiveSubFragment extends LazyFragment implements Injectable, Ha
                             }
                             break;
                         case ERROR:
-
                             break;
                         case LOADING:
-
                             break;
                         default:
                             break;
@@ -147,21 +144,20 @@ public class ChinaLiveSubFragment extends LazyFragment implements Injectable, Ha
 
         } else if (isVisible && isFirstInit) {
             Log.e("ChinaLiveSubFragment", mName + " 可见并且初始化过，不做网络请求");
-            GSYVideoManager.onResume();
 
-            OrientationUtils orientationUtils = mAdapter.getOrientationUtils();
-            if (orientationUtils != null) {
-                orientationUtils.setEnable(mAdapter.hasPlayed());
+            if (mAdapter != null) {
+                if (mAdapter.hasPlayed()) {
+                    // GSYVideoManager.onResume();
+                }
+
+                handleOrientationUtils(mAdapter.hasPlayed());
             }
 
         } else if (!isVisible) {
 
             GSYVideoManager.onPause();
 
-            OrientationUtils orientationUtils = mAdapter.getOrientationUtils();
-            if (orientationUtils != null) {
-                orientationUtils.setEnable(false);
-            }
+            handleOrientationUtils(false);
         }
     }
 
@@ -199,15 +195,7 @@ public class ChinaLiveSubFragment extends LazyFragment implements Injectable, Ha
 
         GSYVideoManager.onPause();
 
-        if (mAdapter == null) {
-            return;
-        }
-
-        OrientationUtils orientationUtils = mAdapter.getOrientationUtils();
-        if (orientationUtils != null) {
-            orientationUtils.setEnable(false);
-        }
-
+        handleOrientationUtils(false);
     }
 
     @Override
@@ -215,22 +203,21 @@ public class ChinaLiveSubFragment extends LazyFragment implements Injectable, Ha
         super.onResume();
         mIsPause = false;
 
-        if (!mIsFragmentVisible || (getParentFragment() != null && !getParentFragment().isVisible()) || mAdapter == null) {
+        if (!mIsFragmentVisible || (getParentFragment() != null && !getParentFragment().isVisible())) {
             return;
         }
 
-        GSYVideoManager.onResume();
-
-        OrientationUtils orientationUtils = mAdapter.getOrientationUtils();
-        if (orientationUtils != null) {
-            orientationUtils.setEnable(mAdapter.hasPlayed());
+        if (mAdapter != null) {
+            if (mAdapter.hasPlayed()) {
+                // GSYVideoManager.onResume();
+            }
+            handleOrientationUtils(mAdapter.hasPlayed());
         }
-
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
-        if (mBinding == null || mAdapter == null) {
+        if (mBinding == null) {
             return;
         }
         if (!mIsFragmentVisible) {
@@ -239,43 +226,48 @@ public class ChinaLiveSubFragment extends LazyFragment implements Injectable, Ha
         if (hidden) {
             GSYVideoManager.onPause();
 
-            OrientationUtils orientationUtils = mAdapter.getOrientationUtils();
-            if (orientationUtils != null) {
-                orientationUtils.setEnable(false);
+            handleOrientationUtils(false);
+
+        } else if (mAdapter != null) {
+            if (mAdapter.hasPlayed()) {
+                // GSYVideoManager.onResume();
             }
 
-        } else {
-            GSYVideoManager.onResume();
+            handleOrientationUtils(mAdapter.hasPlayed());
+        }
+    }
 
-            OrientationUtils orientationUtils = mAdapter.getOrientationUtils();
-            if (orientationUtils != null) {
-                orientationUtils.setEnable(mAdapter.hasPlayed());
-            }
-
+    private void handleOrientationUtils(boolean enable) {
+        if (mAdapter == null) {
+            return;
+        }
+        OrientationUtils orientationUtils = mAdapter.getOrientationUtils();
+        if (orientationUtils != null) {
+            orientationUtils.setEnable(enable);
         }
     }
 
     private void onBackPressAdapter() {
-        //为了支持重力旋转
+        // 为了支持重力旋转
         if (mAdapter != null && mAdapter.getListNeedAutoLand()) {
             mAdapter.onBackPressed();
         }
     }
 
-    /********************************为了支持重力旋转********************************/
+    /**
+     * ****************************为了支持重力旋转*******************************
+     */
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        Log.e("ChinaLiveSubFragment", "202行-onConfigurationChanged(): " + " ");
         if (mAdapter != null && mAdapter.getListNeedAutoLand() && !mIsPause) {
             mAdapter.onConfigurationChanged(getActivity(), newConfig);
         }
     }
 
-
     @Override
     public boolean onBackPressed() {
-        //为了支持重力旋转
+        // 为了支持重力旋转
         onBackPressAdapter();
 
         return StandardGSYVideoPlayer.backFromWindowFull(getActivity());

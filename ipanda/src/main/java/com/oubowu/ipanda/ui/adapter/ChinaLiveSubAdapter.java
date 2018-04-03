@@ -115,7 +115,7 @@ public class ChinaLiveSubAdapter extends DataBoundListAdapter<ChinaLiveDetail, I
         player.setNeedLockFull(true);
         player.setPlayPosition(position);
 
-        player.loadCoverImage(detail.image, R.drawable.xxx);
+        player.loadCoverImage(detail.image, R.drawable.ic_loading);
 
         player.setStandardVideoAllCallBack(new VideoCallback() {
 

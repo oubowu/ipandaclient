@@ -7,6 +7,7 @@ import com.oubowu.ipanda.bean.base.VideoList;
 import com.oubowu.ipanda.bean.chinalive.ChinaLiveDetail;
 import com.oubowu.ipanda.bean.chinalive.ChinaLiveTab;
 import com.oubowu.ipanda.bean.home.HomeIndex;
+import com.oubowu.ipanda.bean.pandabroadcast.PandaBroadcastDetail;
 import com.oubowu.ipanda.bean.pandabroadcast.PandaBroadcastIndex;
 import com.oubowu.ipanda.bean.pandabroadcast.PandaBroadcastList;
 import com.oubowu.ipanda.bean.pandalive.LiveTab;
@@ -124,6 +125,10 @@ public interface IpandaService {
     @Headers("realHost:api.cntv.cn")
     @GET
     LiveData<ApiResponse<PandaBroadcastList>> getPandaBroadcastList(@Url String url);
+
+    @Headers("realHost:api.cntv.cn")
+    @GET("/article/contentinfo")
+    LiveData<ApiResponse<PandaBroadcastDetail>> getPandaBroadcastDetail(@Query("id") String id, @Query("serviceId") String serviceId);
 
     /**************************************************************************************************************/
 

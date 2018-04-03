@@ -108,8 +108,6 @@ public class PandaLiveSubFragment extends LazyFragment implements Injectable {
 
         mBinding.space.getLayoutParams().height = mPaddingTop;
 
-        mBinding.videoView.setDanmakuView(mBinding.danmakuView);
-
         return mBinding.getRoot();
 
     }
@@ -308,6 +306,12 @@ public class PandaLiveSubFragment extends LazyFragment implements Injectable {
                                         });
                                     }
                                 }
+
+                                @Override
+                                public void onClickResume(String url, Object... objects) {
+                                    super.onClickResume(url, objects);
+                                    mBinding.videoView.onDanmukuResume();
+                                }
                             });
 
 
@@ -326,7 +330,7 @@ public class PandaLiveSubFragment extends LazyFragment implements Injectable {
 
         } else if (isVisible && isFirstInit) {
             Log.e("PandaLiveSubFragment", mName + " 可见并且初始化过，不做网络请求");
-            mBinding.videoView.onVideoResume();
+            //mBinding.videoView.onVideoResume();
         } else if (!isVisible) {
             mBinding.videoView.onVideoPause();
         }
@@ -384,7 +388,7 @@ public class PandaLiveSubFragment extends LazyFragment implements Injectable {
         if (!mIsFragmentVisible || (getParentFragment() != null && !getParentFragment().isVisible())) {
             return;
         }
-        mBinding.videoView.onVideoResume();
+        //mBinding.videoView.onVideoResume();
     }
 
     @Override
@@ -398,7 +402,7 @@ public class PandaLiveSubFragment extends LazyFragment implements Injectable {
         if (hidden) {
             mBinding.videoView.onVideoPause();
         } else {
-            mBinding.videoView.onVideoResume();
+            //mBinding.videoView.onVideoResume();
         }
     }
 

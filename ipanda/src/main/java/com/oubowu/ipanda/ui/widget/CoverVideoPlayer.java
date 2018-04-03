@@ -2,6 +2,7 @@ package com.oubowu.ipanda.ui.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -74,4 +75,15 @@ public class CoverVideoPlayer extends StandardGSYVideoPlayer {
         return mUrl;
     }
 
+    @Override
+    public void onVideoPause() {
+        super.onVideoPause();
+        Log.e("CoverVideoPlayer","80行-onVideoPause(): "+" ");
+    }
+
+    @Override
+    public void onVideoResume() {
+        super.onVideoResume();
+        Log.e("CoverVideoPlayer","87行-onVideoResume(): "+" ");
+    }
 }

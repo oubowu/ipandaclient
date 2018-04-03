@@ -27,7 +27,7 @@
             app:hRatio="20%"
             app:loadImageUrl="@{videoBean.img}"
             app:wRatio="35%"
-            tools:src="@drawable/xxx"/>
+            tools:src="@drawable/ic_loading"/>
 
         <TextView
             android:id="@+id/tv_title"

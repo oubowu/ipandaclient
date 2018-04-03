@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 
 import com.oubowu.ipanda.api.response.ApiResponse;
 import com.oubowu.ipanda.api.service.IpandaService;
+import com.oubowu.ipanda.bean.pandabroadcast.PandaBroadcastDetail;
 import com.oubowu.ipanda.bean.pandabroadcast.PandaBroadcastIndex;
 import com.oubowu.ipanda.bean.pandabroadcast.PandaBroadcastList;
 import com.oubowu.ipanda.util.MapUtil;
@@ -97,6 +98,43 @@ public class PandaBroadcastRepository {
 
             @Override
             protected LiveData<PandaBroadcastList> loadFromDb() {
+                if (mLiveData == null) {
+                    mLiveData = new MutableLiveData<>();
+                    mLiveData.postValue(null);
+                }
+                return mLiveData;
+            }
+        }.asLiveData();
+    }
+
+    public LiveData<Resource<PandaBroadcastDetail>> getPandaBroadcastDetail(String id) {
+        return new NetworkBoundResource<PandaBroadcastDetail, PandaBroadcastDetail>() {
+
+            MutableLiveData<PandaBroadcastDetail> mLiveData;
+
+            @Override
+            protected void onCallFailed() {
+
+            }
+
+            @Override
+            protected void saveCallResponseToDb(@NonNull PandaBroadcastDetail response) {
+                mLiveData.postValue(response);
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ApiResponse<PandaBroadcastDetail>> createCall() {
+                return mIpandaService.getPandaBroadcastDetail(id, "panda");
+            }
+
+            @Override
+            protected boolean shouldCall(@Nullable PandaBroadcastDetail data) {
+                return true;
+            }
+
+            @Override
+            protected LiveData<PandaBroadcastDetail> loadFromDb() {
                 if (mLiveData == null) {
                     mLiveData = new MutableLiveData<>();
                     mLiveData.postValue(null);
