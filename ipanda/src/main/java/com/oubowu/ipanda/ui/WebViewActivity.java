@@ -1,5 +1,7 @@
 package com.oubowu.ipanda.ui;
 
+import android.animation.Animator;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
@@ -16,6 +18,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -47,6 +51,9 @@ public class WebViewActivity extends AppCompatActivity implements HasSupportFrag
 
     public static void start(Activity activity, String id) {
         Intent intent = new Intent(activity, WebViewActivity.class).putExtra(ID, id);
+
+        //        ActivityCompat.startActivity(activity, intent, ActivityOptionsCompat.makeSceneTransitionAnimation(activity).toBundle());
+
         activity.startActivity(intent);
     }
 
@@ -63,6 +70,10 @@ public class WebViewActivity extends AppCompatActivity implements HasSupportFrag
         }
 
         mWebViewBinding = DataBindingUtil.setContentView(this, R.layout.activity_web_view);
+
+//        //进入退出效果 注意这里 创建的效果对象是 Explode()
+//        getWindow().setEnterTransition(new Fade().setDuration(250));
+//        getWindow().setExitTransition(new Fade().setDuration(250));
 
         setSupportActionBar(mWebViewBinding.toolbar);
         mWebViewBinding.toolbar.setContentInsetStartWithNavigation(0);
@@ -86,9 +97,11 @@ public class WebViewActivity extends AppCompatActivity implements HasSupportFrag
                     case SUCCESS:
                         PandaBroadcastDetail data = resource.data;
                         if (data != null) {
-                            mWebViewBinding.webView.loadDataWithBaseURL(null, getHtmlData(
-                                    data.content + "<div class=\"exp1\">" + data.source + "   " + data.pubtime + "</div>"),
-                                    "text/html", "utf-8", null);
+                            animateRevealShow(mWebViewBinding.webView);
+                            animateRevealShow(mWebViewBinding.toolbar);
+                            mWebViewBinding.webView
+                                    .loadDataWithBaseURL(null, getHtmlData(data.content + "<div class=\"exp1\">" + data.source + "   " + data.pubtime + "</div>"),
+                                            "text/html", "utf-8", null);
                             mWebViewBinding.toolbar.setTitle(data.title);
                         }
                         break;
@@ -106,6 +119,38 @@ public class WebViewActivity extends AppCompatActivity implements HasSupportFrag
 
         // mWebViewBinding.webView.loadUrl(id);
 
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void animateRevealShow(View viewRoot) {
+        int cx = (viewRoot.getLeft() + viewRoot.getRight()) / 2;
+        int cy = (viewRoot.getTop() + viewRoot.getBottom()) / 2;
+        int finalRadius = Math.max(viewRoot.getWidth(), viewRoot.getHeight());
+        Animator anim = ViewAnimationUtils.createCircularReveal(viewRoot, cx, cy, finalRadius / 3, finalRadius);
+        viewRoot.setVisibility(View.VISIBLE);
+        anim.setDuration(500);
+        anim.start();
+
+        anim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
     }
 
     private String getHtmlData(String bodyHTML) {
@@ -167,8 +212,7 @@ public class WebViewActivity extends AppCompatActivity implements HasSupportFrag
                     } else {
                         //跳转外部浏览器
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                        List<ResolveInfo> list = getPackageManager()
-                                .queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+                        List<ResolveInfo> list = getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
                         if (list.size() > 0) {
                             startActivity(intent);
                         }

@@ -8,8 +8,12 @@ import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Fade;
 import android.transition.Transition;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +25,7 @@ import com.oubowu.ipanda.bean.base.RecordVideo;
 import com.oubowu.ipanda.callback.VideoCallback;
 import com.oubowu.ipanda.databinding.ActivityVideoBinding;
 import com.oubowu.ipanda.util.StatusBarUtil;
+import com.oubowu.ipanda.util.ToastUtil;
 import com.oubowu.ipanda.viewmodel.VideoViewModel;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
@@ -51,11 +56,9 @@ public class VideoActivity extends AppCompatActivity implements HasSupportFragme
     public static void start(Activity activity, View view, String pid) {
         Intent intent = new Intent(activity, VideoActivity.class).putExtra(PID, pid);
 
-        //        Pair pair = new Pair<>(view, VideoActivity.IMG_TRANSITION);
-        //        ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, pair);
-        //        ActivityCompat.startActivity(activity, intent, activityOptions.toBundle());
+        ActivityCompat.startActivity(activity, intent, ActivityOptionsCompat.makeSceneTransitionAnimation(activity, Pair.create(view, "myButton4")).toBundle());
 
-        activity.startActivity(intent);
+        // activity.startActivity(intent);
     }
 
     public static void start(Activity activity, View view, String id, String title) {
@@ -65,7 +68,9 @@ public class VideoActivity extends AppCompatActivity implements HasSupportFragme
         //        ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, pair);
         //        ActivityCompat.startActivity(activity, intent, activityOptions.toBundle());
 
-        activity.startActivity(intent);
+        ActivityCompat.startActivity(activity, intent, ActivityOptionsCompat.makeSceneTransitionAnimation(activity, Pair.create(view, "myButton4")).toBundle());
+
+        //        activity.startActivity(intent);
     }
 
     @Override
@@ -76,6 +81,13 @@ public class VideoActivity extends AppCompatActivity implements HasSupportFragme
         StatusBarUtil.setStatusBarColor(this, R.color.black);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_video);
+
+        //进入退出效果 注意这里 创建的效果对象是 Explode()
+        getWindow().setEnterTransition(new Fade().setDuration(300));
+        getWindow().setExitTransition(new Fade().setDuration(300));
+
+        /*Glide.with(getApplicationContext()).setDefaultRequestOptions(new RequestOptions().centerCrop().error(R.drawable.ic_panda_loading).placeholder(R.drawable.ic_panda_loading)).load("http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2018/4/8/1523162530651_241.jpg")
+                .into(mBinding.thumbImage);*/
 
         String pid = getIntent().getStringExtra(PID);
         String liveId = getIntent().getStringExtra(LIVE_ID);
@@ -100,8 +112,6 @@ public class VideoActivity extends AppCompatActivity implements HasSupportFragme
 
         }
 
-        //过渡动画
-        initTransition();
 
     }
 
@@ -109,6 +119,16 @@ public class VideoActivity extends AppCompatActivity implements HasSupportFragme
         videoViewModel.getRecordVideo(pid).observe(this, new ObserverImpl<RecordVideo>() {
             @Override
             protected void onSuccess(@NonNull RecordVideo data) {
+
+                mBinding.videoView.setStandardVideoAllCallBack(new VideoCallback() {
+                    @Override
+                    public void onPlayError(String url, Object... objects) {
+                        super.onPlayError(url, objects);
+                        Log.e("VideoActivity", "154行-onPlayError(): " + url);
+                        Log.e("VideoActivity", "155行-onPlayError(): " + objects[0] + ";" + objects[1]);
+                        ToastUtil.showErrorMsg("播放视频异常");
+                    }
+                });
 
                 mBinding.setVideoName(data.title);
                 mBinding.setVideoPath(data.hls_url);
@@ -147,15 +167,6 @@ public class VideoActivity extends AppCompatActivity implements HasSupportFragme
 
                 mBinding.videoView.startPlayLogic();
 
-                mBinding.videoView.setStandardVideoAllCallBack(new VideoCallback(){
-                    @Override
-                    public void onPlayError(String url, Object... objects) {
-                        super.onPlayError(url, objects);
-                        Log.e("VideoActivity","154行-onPlayError(): "+url);
-                        Log.e("VideoActivity","155行-onPlayError(): "+objects[0]+";"+objects[1]);
-                    }
-                });
-
             }
         });
     }
@@ -165,9 +176,18 @@ public class VideoActivity extends AppCompatActivity implements HasSupportFragme
             @Override
             protected void onSuccess(@NonNull LiveVideo data) {
 
+                mBinding.videoView.setStandardVideoAllCallBack(new VideoCallback() {
+                    @Override
+                    public void onPlayError(String url, Object... objects) {
+                        super.onPlayError(url, objects);
+                        Log.e("VideoActivity", "154行-onPlayError(): " + url);
+                        Log.e("VideoActivity", "155行-onPlayError(): " + objects[0] + ";" + objects[1]);
+                        ToastUtil.showErrorMsg("播放视频异常");
+                    }
+                });
+
                 mBinding.setVideoName("");
                 mBinding.setVideoPath(data.hls_url.hls1);
-
 
                 // Log.e("VideoActivity", "53行-onCreate(): " + recordVideo.hls_url);
                 mBinding.videoView.setUp(data.hls_url.hls1, false, liveTitle);
@@ -239,64 +259,10 @@ public class VideoActivity extends AppCompatActivity implements HasSupportFragme
         super.onBackPressed();
     }
 
-
-    private void initTransition() {
-        //        postponeEnterTransition();
-        //        ViewCompat.setTransitionName(mBinding.videoView, IMG_TRANSITION);
-        //        addTransitionListener();
-        //        startPostponedEnterTransition();
-    }
-
-    private boolean addTransitionListener() {
-        mTransition = getWindow().getSharedElementEnterTransition();
-        if (mTransition != null) {
-            Log.e("VideoActivity", "178行-addTransitionListener(): " + " ");
-            mTransition.addListener(new OnTransitionListener() {
-                @Override
-                public void onTransitionEnd(Transition transition) {
-                    super.onTransitionEnd(transition);
-                    Log.e("VideoActivity", "183行-onTransitionEnd(): " + " ");
-                    mBinding.videoView.startPlayLogic();
-                    transition.removeListener(this);
-                }
-            });
-            return true;
-        }
-        return false;
-    }
-
     @Override
     public AndroidInjector<Fragment> supportFragmentInjector() {
         return null;
     }
 
-    public class OnTransitionListener implements Transition.TransitionListener {
-
-
-        @Override
-        public void onTransitionStart(Transition transition) {
-
-        }
-
-        @Override
-        public void onTransitionEnd(Transition transition) {
-
-        }
-
-        @Override
-        public void onTransitionCancel(Transition transition) {
-
-        }
-
-        @Override
-        public void onTransitionPause(Transition transition) {
-
-        }
-
-        @Override
-        public void onTransitionResume(Transition transition) {
-
-        }
-    }
 
 }

@@ -34,6 +34,7 @@ import com.oubowu.ipanda.ui.adapter.FlexImageAdapter;
 import com.oubowu.ipanda.ui.widget.VideoImageView;
 import com.oubowu.ipanda.util.CommonUtil;
 import com.oubowu.ipanda.util.GlideConfig;
+import com.oubowu.ipanda.util.ToastUtil;
 import com.oubowu.ipanda.viewmodel.PandaLiveSubViewModel;
 import com.oubowu.ipanda.viewmodel.VideoViewModel;
 
@@ -188,6 +189,12 @@ public class PandaLiveSubFragment extends LazyFragment implements Injectable {
             public void onClickResume(String url, Object... objects) {
                 super.onClickResume(url, objects);
                 mBinding.videoView.onDanmukuResume();
+            }
+
+            @Override
+            public void onPlayError(String url, Object... objects) {
+                super.onPlayError(url, objects);
+                ToastUtil.showErrorMsg("播放视频异常");
             }
         });
     }

@@ -14,12 +14,12 @@
 
     <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         tools:context="com.oubowu.ipanda.ui.VideoActivity">
+
 
         <com.oubowu.ipanda.ui.widget.StandardVideoPlayer
             android:id="@+id/video_view"
@@ -27,6 +27,25 @@
             android:layout_height="match_parent">
 
         </com.oubowu.ipanda.ui.widget.StandardVideoPlayer>
+
+        <!--<RelativeLayout
+            android:id="@+id/thumb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:background="#000000"
+            android:scaleType="fitCenter">
+
+            <ImageView
+                android:id="@+id/thumbImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/ic_panda_loading"
+                android:transitionName="myButton4"/>
+
+        </RelativeLayout>-->
 
     </FrameLayout>
 

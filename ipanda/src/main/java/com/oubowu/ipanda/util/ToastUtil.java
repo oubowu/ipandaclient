@@ -1,6 +1,6 @@
 package com.oubowu.ipanda.util;
 
-import android.content.Context;
+import android.app.Application;
 import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Looper;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oubowu.ipanda.R;
+
+import java.lang.ref.WeakReference;
 
 /**
  * 作者：特种兵__AK47
@@ -26,10 +28,9 @@ public class ToastUtil {
     //    private static View sToastView = sInflater.inflate(R.layout.layout_top_toast, null);
     //    private static TextView sMsgView = (TextView) sToastView.findViewById(R.id.tv_msg_text);
 
-    private static Context sContext = null;
-    private static LayoutInflater sInflater = null;
-    private static View sToastView = null;
-    private static TextView sMsgView = null;
+    private static Application sContext = null;
+    private static WeakReference<View> sToastView = null;
+    private static WeakReference<TextView> sMsgView = null;
 
     private static final int TYPE_CODE_SUCCESS = 0x01;
     private static final int TYPE_CODE_ERROR = 0x02;
@@ -40,11 +41,10 @@ public class ToastUtil {
     private static Toast sToast;// 系统提示类
     private static Handler sHandler;
 
-    public static void init(Context context) {
+    public static void init(Application context) {
         sContext = context;// App生命周期中唯一Context，BaseApplication继承Application
-        sInflater = LayoutInflater.from(sContext);// 布局加载
-        sToastView = sInflater.inflate(R.layout.layout_top_toast,null);
-        sMsgView = (TextView) sToastView.findViewById(R.id.tv_msg_text);
+        sToastView = new WeakReference<>(LayoutInflater.from(sContext).inflate(R.layout.layout_top_toast, null));
+        sMsgView = new WeakReference<>(sToastView.get().findViewById(R.id.tv_msg_text));
         COLOR_SUCCESS = sContext.getResources().getColor(R.color.msg_status_success);
         COLOR_ERROR = sContext.getResources().getColor(R.color.msg_status_warn);
     }
@@ -77,7 +77,7 @@ public class ToastUtil {
         if (sContext == null//
                 || ForegroundCallbacks.get().isBackground()// 如果APP回到后台，则不显示
                 || msg == null) {
-            Log.e("ToastUtil","80行-showMsg(): "+"如果APP回到后台，则不显示");
+            Log.e("ToastUtil", "80行-showMsg(): " + "如果APP回到后台，则不显示");
             return;
         }
 
@@ -104,12 +104,15 @@ public class ToastUtil {
                         msgViewBagColor = COLOR_SUCCESS;
                         break;
                 }
-                sMsgView.setBackgroundColor(msgViewBagColor);
-                sMsgView.setText(msg);
-                sToast.setView(sToastView);
-                sToast.setGravity(Gravity.TOP | Gravity.FILL_HORIZONTAL, 0, 0);// 顶部居中
-                sToast.setDuration(Toast.LENGTH_SHORT);
-                sToast.show();
+                if (sMsgView.get() != null && sToastView.get() != null) {
+                    Log.e("ToastUtil","108行-run(): "+" ");
+                    sMsgView.get().setBackgroundColor(msgViewBagColor);
+                    sMsgView.get().setText(msg);
+                    sToast.setView(sToastView.get());
+                    sToast.setGravity(Gravity.TOP | Gravity.FILL_HORIZONTAL, 0, 0);// 顶部居中
+                    sToast.setDuration(Toast.LENGTH_SHORT);
+                    sToast.show();
+                }
             }
         }, DEFAULT_TIME_DELAY);
     }

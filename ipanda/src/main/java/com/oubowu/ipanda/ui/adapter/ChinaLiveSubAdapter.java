@@ -21,6 +21,7 @@ import com.oubowu.ipanda.callback.VideoCallback;
 import com.oubowu.ipanda.databinding.ItemFragmentChinaLiveSubBinding;
 import com.oubowu.ipanda.ui.widget.CoverVideoPlayer;
 import com.oubowu.ipanda.util.CommonUtil;
+import com.oubowu.ipanda.util.ToastUtil;
 import com.oubowu.ipanda.viewmodel.VideoViewModel;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
@@ -159,6 +160,12 @@ public class ChinaLiveSubAdapter extends DataBoundListAdapter<ChinaLiveDetail, I
                 if (getListNeedAutoLand()) {
                     ChinaLiveSubAdapter.this.onAutoComplete();
                 }
+            }
+
+            @Override
+            public void onPlayError(String url, Object... objects) {
+                super.onPlayError(url, objects);
+                ToastUtil.showErrorMsg("播放视频异常");
             }
         });
 
