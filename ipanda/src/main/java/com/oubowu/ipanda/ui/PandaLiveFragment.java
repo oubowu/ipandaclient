@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.oubowu.ipanda.R;
+import com.oubowu.ipanda.base.ObserverImpl;
 import com.oubowu.ipanda.bean.pandalive.TabList;
 import com.oubowu.ipanda.callback.OnFragmentScrollListener;
 import com.oubowu.ipanda.databinding.FragmentPandaLiveBinding;
@@ -76,9 +77,15 @@ public class PandaLiveFragment extends Fragment implements Injectable {
         CoordinatorLayout.LayoutParams clp = (CoordinatorLayout.LayoutParams) mBinding.toolbar.getLayoutParams();
         CoordinatorLayout.Behavior behavior = clp.getBehavior();
         if (behavior != null && behavior instanceof BarBehavior) {
-            ((BarBehavior) behavior).setOnNestedScrollListener((dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type) -> {
-                if (mListener != null) {
-                    mListener.onNestedScrollListener(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type);
+            ((BarBehavior) behavior).setOnNestedScrollListener(new BarBehavior.OnNestedScrollListener() {
+                @Override
+                public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+                    mListener.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+                }
+
+                @Override
+                public boolean onNestedFling(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, float velocityX, float velocityY, boolean consumed) {
+                    return mListener.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
                 }
             });
         }
@@ -98,7 +105,7 @@ public class PandaLiveFragment extends Fragment implements Injectable {
             public void onPageScrollStateChanged(int state) {
                 switch (state) {
                     case ViewPager.SCROLL_STATE_DRAGGING:
-                        mBinding.coordinatorLayout.onNestedScroll(mBinding.viewPager, 0, -10000, 0, 0);
+                        mBinding.coordinatorLayout.onNestedFling(mBinding.viewPager, 0, -10000, false);
                         break;
                 }
             }
@@ -113,38 +120,24 @@ public class PandaLiveFragment extends Fragment implements Injectable {
 
         PandaLiveViewModel pandaLiveViewModel = ViewModelProviders.of(this, mFactory).get(PandaLiveViewModel.class);
 
-        pandaLiveViewModel.getTabList(mUrl).observe(this, listResource -> {
-            if (listResource != null) {
-                switch (listResource.status) {
-                    case SUCCESS:
-                        List<TabList> data = listResource.data;
-                        if (data != null) {
-                            List<Fragment> fragments = new ArrayList<>(data.size());
-                            List<String> titles = new ArrayList<>(data.size());
-                            int paddingTop = mBinding.toolbar.getHeight() + mBinding.tabLayout.getHeight();
-                            for (TabList tab : data) {
-                                titles.add(tab.title);
-                                if (!CommonUtil.isEmpty(tab.url)) {
-                                    fragments.add(PandaLiveSubFragment.newInstance(tab.title, tab.url, paddingTop));
-                                } else {
-                                    fragments.add(PandaLiveOtherFragment.newInstance(tab.title, tab.id, paddingTop));
-                                }
-                            }
-                            // Log.e("PandaLiveFragment", "89行-onActivityCreated(): " + " ");
-                            mFragmentAdapter = new FragmentAdapter(getChildFragmentManager(), fragments, titles);
-                            mBinding.viewPager.setAdapter(mFragmentAdapter);
-                            mBinding.tabLayout.setupWithViewPager(mBinding.viewPager);
-                        }
-                        break;
-                    case ERROR:
-
-                        break;
-                    case LOADING:
-
-                        break;
-                    default:
-                        break;
+        pandaLiveViewModel.getTabList(mUrl).observe(this, new ObserverImpl<List<TabList>>() {
+            @Override
+            protected void onSuccess(@NonNull List<TabList> data) {
+                List<Fragment> fragments = new ArrayList<>(data.size());
+                List<String> titles = new ArrayList<>(data.size());
+                int paddingTop = mBinding.toolbar.getHeight() + mBinding.tabLayout.getHeight();
+                for (TabList tab : data) {
+                    titles.add(tab.title);
+                    if (!CommonUtil.isEmpty(tab.url)) {
+                        fragments.add(PandaLiveSubFragment.newInstance(tab.title, tab.url, paddingTop));
+                    } else {
+                        fragments.add(PandaLiveOtherFragment.newInstance(tab.title, tab.id, paddingTop));
+                    }
                 }
+                // Log.e("PandaLiveFragment", "89行-onActivityCreated(): " + " ");
+                mFragmentAdapter = new FragmentAdapter(getChildFragmentManager(), fragments, titles);
+                mBinding.viewPager.setAdapter(mFragmentAdapter);
+                mBinding.tabLayout.setupWithViewPager(mBinding.viewPager);
             }
         });
 

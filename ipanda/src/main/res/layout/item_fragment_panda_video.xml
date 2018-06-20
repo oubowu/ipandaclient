@@ -31,7 +31,7 @@
             android:scaleType="centerCrop"
             app:loadImageUrl="@{videoBean.image}"
             app:wRatio="35%"
-            tools:src="@drawable/ic_loading"/>
+            tools:src="@drawable/ic_panda_loading"/>
 
         <TextView
             android:id="@+id/tv_title"

@@ -10,6 +10,7 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.util.TypedValue;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.oubowu.ipanda.R;
 import com.oubowu.ipanda.base.LazyFragment;
+import com.oubowu.ipanda.base.ObserverImpl;
 import com.oubowu.ipanda.bean.base.LiveVideo;
 import com.oubowu.ipanda.bean.pandalive.LiveTab;
 import com.oubowu.ipanda.bean.pandalive.MultipleLive;
@@ -35,6 +37,7 @@ import com.oubowu.ipanda.util.GlideConfig;
 import com.oubowu.ipanda.viewmodel.PandaLiveSubViewModel;
 import com.oubowu.ipanda.viewmodel.VideoViewModel;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -128,204 +131,33 @@ public class PandaLiveSubFragment extends LazyFragment implements Injectable {
 
             mVideoViewModel = ViewModelProviders.of(this, mFactory).get(VideoViewModel.class);
 
-            pandaLiveSubViewModel.getLiveTab(mUrl).observe(this, liveTabResource -> {
-                if (liveTabResource != null) {
-                    switch (liveTabResource.status) {
-                        case SUCCESS:
+            pandaLiveSubViewModel.getLiveTab(mUrl).observe(this, new ObserverImpl<LiveTab>() {
+                @Override
+                protected void onSuccess(@NonNull LiveTab data) {
 
-                            mIsFirstInit = true;
+                    mIsFirstInit = true;
 
-                            LiveTab liveTab = liveTabResource.data;
-                            if (liveTab != null && CommonUtil.isNotEmpty(liveTab.live)) {
+                    if (CommonUtil.isNotEmpty(data.live)) {
 
-                                LiveTab.LiveBean liveBean = liveTab.live.get(0);
+                        LiveTab.LiveBean liveBean = data.live.get(0);
 
-                                mBinding.setLiveBean(liveBean);
+                        mBinding.setLiveBean(liveBean);
 
-                                ValueAnimator valueAnimator = ValueAnimator.ofFloat(mBinding.liveDescArrow.getRotation(), mBinding.liveDescArrow.getRotation() + 180)
-                                        .setDuration(250);
+                        setArrowEvent();
 
-                                mBinding.setEvent(new EventListenerAdapter() {
-                                    @Override
-                                    public void clickArrow(View v) {
-                                        super.clickArrow(v);
-                                        boolean extend = (boolean) mBinding.liveDescArrow.getTag(-1);
-
-                                        mBinding.liveDescArrow.setClickable(false);
-
-                                        valueAnimator.setFloatValues(mBinding.liveDescArrow.getRotation(), mBinding.liveDescArrow.getRotation() + 180);
-
-                                        valueAnimator.addUpdateListener(animation -> {
-                                            mBinding.liveDescArrow.setRotation((Float) animation.getAnimatedValue());
-                                            float fraction = animation.getAnimatedFraction();
-
-                                            if (!extend) {
-                                                mBinding.liveDesc.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fraction * 14);
-                                            } else {
-                                                mBinding.liveDesc.setTextSize(TypedValue.COMPLEX_UNIT_DIP, (1 - fraction) * 14);
-                                            }
-                                        });
-
-                                        valueAnimator.addListener(new AnimatorListenerAdapter() {
-                                            @Override
-                                            public void onAnimationEnd(Animator animation) {
-                                                mBinding.liveDescArrow.setClickable(true);
-                                                valueAnimator.removeAllListeners();
-                                                valueAnimator.removeAllUpdateListeners();
-                                                mBinding.liveDescArrow.setTag(-1, !extend);
-                                            }
-                                        });
-
-                                        valueAnimator.start();
-                                    }
-                                });
-
-                                mVideoViewModel.getLiveVideo(liveBean.id).observe(PandaLiveSubFragment.this, liveVideoResource -> {
-                                    if (liveVideoResource != null) {
-                                        switch (liveVideoResource.status) {
-                                            case SUCCESS:
-                                                LiveVideo liveVideo = liveVideoResource.data;
-                                                if (liveVideo != null) {
-                                                    mBinding.videoView.setUp(liveVideo.hls_url.hls1, false, liveBean.title);
-                                                    mBinding.videoView.startPlayLogic();
-                                                }
-                                                break;
-                                            case ERROR:
-
-                                                break;
-                                            case LOADING:
-
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                    }
-                                });
-                            }
-
-                            mBinding.flexImageLayout.setVisibility(View.VISIBLE);
-                            if (liveTab != null && CommonUtil.isNotEmpty(liveTab.bookmark.multiple) && mBinding.flexImageLayout.getTag() == null) {
-                                LiveTab.BookmarkBean.MultipleBean multipleBean = liveTab.bookmark.multiple.get(0);
-                                pandaLiveSubViewModel.getMultipleLive(multipleBean.url).observe(PandaLiveSubFragment.this, multipleLiveResource -> {
-                                    if (multipleLiveResource != null) {
-                                        switch (multipleLiveResource.status) {
-                                            case SUCCESS:
-                                                mBinding.flexImageLayout.setAdapter(new FlexImageAdapter<MultipleLive>(multipleLiveResource.data) {
-
-                                                    @Override
-                                                    protected int getItemLayoutId() {
-                                                        return R.layout.item_host_video_grid;
-                                                    }
-
-                                                    @Override
-                                                    protected void initView(View view, int p, MultipleLive item) {
-                                                        VideoImageView videoImageView = view.findViewById(R.id.video_image_view);
-                                                        videoImageView.setInfo("Live", item.title, item.daytime);
-
-                                                        Glide.with(view.getContext()).load(item.image).apply(GlideConfig.getInstance()).into(videoImageView);
-                                                        view.setTag(-2, item.id);
-                                                        view.setTag(-1, item.title);
-
-                                                        view.setOnClickListener(v -> {
-
-                                                            Log.e("PandaLiveSubFragment", "233行-initView(): " + (String) view.getTag(-1));
-
-                                                            mBinding.liveDescTitle.setText(String.format("%s%s", getString(R.string.live_now), (String) view.getTag(-1)));
-
-                                                            mVideoViewModel.getLiveVideo((String) view.getTag(-2))
-                                                                    .observe(PandaLiveSubFragment.this, liveVideoResource -> {
-                                                                        if (liveVideoResource != null) {
-                                                                            switch (liveVideoResource.status) {
-                                                                                case SUCCESS:
-                                                                                    LiveVideo liveVideo = liveVideoResource.data;
-                                                                                    if (liveVideo != null) {
-                                                                                        mBinding.videoView.setUp(liveVideo.hls_url.hls1, false, (String) view.getTag(-1));
-                                                                                        mBinding.videoView.startPlayLogic();
-                                                                                    }
-                                                                                    break;
-                                                                                case ERROR:
-
-                                                                                    break;
-                                                                                case LOADING:
-
-                                                                                    break;
-                                                                                default:
-                                                                                    break;
-                                                                            }
-                                                                        }
-                                                                    });
-                                                        });
-
-                                                    }
-
-                                                });
-                                                mBinding.flexImageLayout.setTag(true);
-                                                break;
-                                            case ERROR:
-
-                                                break;
-                                            case LOADING:
-
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                    }
-                                });
-                            }
-
-                            mBinding.videoView.setStandardVideoAllCallBack(new VideoCallback() {
-                                @Override
-                                public void onPrepared(String url, Object... objects) {
-                                    super.onPrepared(url, objects);
-                                    if (liveTab != null && CommonUtil.isNotEmpty(liveTab.bookmark.watchTalk)) {
-                                        LiveTab.BookmarkBean.WatchTalkBean watchTalkBean = liveTab.bookmark.watchTalk.get(0);
-                                        pandaLiveSubViewModel.getLiveWatchTalk(40, 0, watchTalkBean.url).observe(PandaLiveSubFragment.this, watchTalkResource -> {
-                                            if (watchTalkResource != null && mDisposable == null) {
-                                                switch (watchTalkResource.status) {
-                                                    case SUCCESS:
-
-                                                        WatchTalk watchTalk = watchTalkResource.data;
-
-                                                        if (watchTalk != null) {
-                                                            addDanmu(watchTalk, new int[]{0});
-                                                        }
-
-
-                                                        break;
-                                                    case LOADING:
-
-                                                        break;
-                                                    case ERROR:
-
-                                                        break;
-                                                    default:
-                                                        break;
-                                                }
-                                            }
-                                        });
-                                    }
-                                }
-
-                                @Override
-                                public void onClickResume(String url, Object... objects) {
-                                    super.onClickResume(url, objects);
-                                    mBinding.videoView.onDanmukuResume();
-                                }
-                            });
-
-
-                            break;
-                        case ERROR:
-
-                            break;
-                        case LOADING:
-
-                            break;
-                        default:
-                            break;
+                        getLiveVideo(liveBean);
                     }
+
+                    mBinding.flexImageLayout.setVisibility(View.VISIBLE);
+                    if (CommonUtil.isNotEmpty(data.bookmark.multiple) && mBinding.flexImageLayout.getTag() == null) {
+                        LiveTab.BookmarkBean.MultipleBean multipleBean = data.bookmark.multiple.get(0);
+                        getMultipleLive(multipleBean, pandaLiveSubViewModel);
+                    }
+
+                    getLiveWatchTalk(data, pandaLiveSubViewModel);
+
                 }
+
             });
 
         } else if (isVisible && isFirstInit) {
@@ -336,6 +168,151 @@ public class PandaLiveSubFragment extends LazyFragment implements Injectable {
         }
     }
 
+    private void getLiveWatchTalk(@NonNull LiveTab data, PandaLiveSubViewModel pandaLiveSubViewModel) {
+        mBinding.videoView.setStandardVideoAllCallBack(new VideoCallback() {
+            @Override
+            public void onPrepared(String url, Object... objects) {
+                super.onPrepared(url, objects);
+                if (CommonUtil.isNotEmpty(data.bookmark.watchTalk)) {
+                    LiveTab.BookmarkBean.WatchTalkBean watchTalkBean = data.bookmark.watchTalk.get(0);
+                    pandaLiveSubViewModel.getLiveWatchTalk(40, 0, watchTalkBean.url).observe(PandaLiveSubFragment.this, new ObserverImpl<WatchTalk>() {
+                        @Override
+                        protected void onSuccess(@NonNull WatchTalk data) {
+                            addDanmu(data, new int[]{0});
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onClickResume(String url, Object... objects) {
+                super.onClickResume(url, objects);
+                mBinding.videoView.onDanmukuResume();
+            }
+        });
+    }
+
+    private void getMultipleLive(LiveTab.BookmarkBean.MultipleBean multipleBean, PandaLiveSubViewModel pandaLiveSubViewModel) {
+        pandaLiveSubViewModel.getMultipleLive(multipleBean.url).observe(PandaLiveSubFragment.this, new ObserverImpl<List<MultipleLive>>() {
+            @Override
+            protected void onSuccess(@NonNull List<MultipleLive> data) {
+                mBinding.flexImageLayout.setAdapter(new FlexImageAdapter<MultipleLive>(data) {
+
+                    @Override
+                    protected int getItemLayoutId() {
+                        return R.layout.item_host_video_grid;
+                    }
+
+                    @SuppressWarnings("unchecked")
+                    @Override
+                    protected void initView(View view, int p, MultipleLive item) {
+                        VideoImageView videoImageView = view.findViewById(R.id.video_image_view);
+                        videoImageView.setInfo("Live", item.title, item.daytime);
+
+                        Glide.with(view.getContext()).load(item.image).apply(GlideConfig.getInstance()).into(videoImageView);
+                        view.setTag(-2, item.id);
+                        view.setTag(-1, item.title);
+
+                        view.setOnClickListener(v -> {
+
+                            // Log.e("PandaLiveSubFragment", "233行-initView(): " + (String) view.getTag(-1));
+
+                            mBinding.liveDescTitle.setText(String.format("%s%s", getString(R.string.live_now), (String) view.getTag(-1)));
+
+                            getLiveVideo(view);
+
+                            if (getParentFragment() instanceof PandaLiveFragment) {
+                                View root = getParentFragment().getView();
+                                if (root != null && root instanceof CoordinatorLayout) {
+                                    CoordinatorLayout coordinatorLayout = (CoordinatorLayout) root;
+                                    final int childCount = coordinatorLayout.getChildCount();
+                                    for (int i = 0; i < childCount; i++) {
+                                        final View child = coordinatorLayout.getChildAt(i);
+                                        if (child.getVisibility() == View.GONE) {
+                                            // If the child is GONE, skip...
+                                            continue;
+                                        }
+                                        final CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) child.getLayoutParams();
+                                        final CoordinatorLayout.Behavior viewBehavior = lp.getBehavior();
+                                        if (viewBehavior != null) {
+                                            viewBehavior.onNestedFling(coordinatorLayout, child, root.findViewById(R.id.view_pager), 0, -10000, false);
+                                        }
+                                    }
+                                }
+                            }
+
+                            mBinding.scrollView.fling(0);
+                            mBinding.scrollView.smoothScrollTo(0, 0);
+
+
+                        });
+
+                    }
+
+                });
+                mBinding.flexImageLayout.setTag(true);
+            }
+        });
+    }
+
+    private void getLiveVideo(View view) {
+        mVideoViewModel.getLiveVideo((String) view.getTag(-2)).observe(PandaLiveSubFragment.this, new ObserverImpl<LiveVideo>() {
+            @Override
+            protected void onSuccess(@NonNull LiveVideo data) {
+                mBinding.videoView.setUp(data.hls_url.hls1, false, (String) view.getTag(-1));
+                mBinding.videoView.startPlayLogic();
+            }
+        });
+    }
+
+    private void getLiveVideo(LiveTab.LiveBean liveBean) {
+        mVideoViewModel.getLiveVideo(liveBean.id).observe(PandaLiveSubFragment.this, new ObserverImpl<LiveVideo>() {
+            @Override
+            protected void onSuccess(@NonNull LiveVideo data) {
+                mBinding.videoView.setUp(data.hls_url.hls1, false, liveBean.title);
+                mBinding.videoView.startPlayLogic();
+            }
+        });
+    }
+
+    private void setArrowEvent() {
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(mBinding.liveDescArrow.getRotation(), mBinding.liveDescArrow.getRotation() + 180).setDuration(250);
+
+        mBinding.setEvent(new EventListenerAdapter() {
+            @Override
+            public void clickArrow(View v) {
+                super.clickArrow(v);
+                boolean extend = (boolean) mBinding.liveDescArrow.getTag(-1);
+
+                mBinding.liveDescArrow.setClickable(false);
+
+                valueAnimator.setFloatValues(mBinding.liveDescArrow.getRotation(), mBinding.liveDescArrow.getRotation() + 180);
+
+                valueAnimator.addUpdateListener(animation -> {
+                    mBinding.liveDescArrow.setRotation((Float) animation.getAnimatedValue());
+                    float fraction = animation.getAnimatedFraction();
+
+                    if (!extend) {
+                        mBinding.liveDesc.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fraction * 14);
+                    } else {
+                        mBinding.liveDesc.setTextSize(TypedValue.COMPLEX_UNIT_DIP, (1 - fraction) * 14);
+                    }
+                });
+
+                valueAnimator.addListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        mBinding.liveDescArrow.setClickable(true);
+                        valueAnimator.removeAllListeners();
+                        valueAnimator.removeAllUpdateListeners();
+                        mBinding.liveDescArrow.setTag(-1, !extend);
+                    }
+                });
+
+                valueAnimator.start();
+            }
+        });
+    }
 
     private void addDanmu(WatchTalk mWatchTalk, int[] mStartIndex) {
         mDisposable = Observable //

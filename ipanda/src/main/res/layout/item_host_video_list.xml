@@ -4,14 +4,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:id="@+id/ConstraintLayout"
+    android:background="@drawable/ripple_with_no_mask">
 
     <com.oubowu.ipanda.ui.widget.SimpleVideoImageView
         android:id="@+id/simpleVideoImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:wRatio="45%"
-        tools:src="@drawable/ic_loading"/>
+        tools:src="@drawable/ic_panda_loading"/>
 
 
     <TextView

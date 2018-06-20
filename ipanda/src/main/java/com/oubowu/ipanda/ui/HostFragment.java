@@ -17,9 +17,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.oubowu.ipanda.R;
+import com.oubowu.ipanda.base.ObserverImpl;
+import com.oubowu.ipanda.bean.base.VideoList;
 import com.oubowu.ipanda.bean.home.HomeIndex;
 import com.oubowu.ipanda.callback.OnFragmentScrollListener;
 import com.oubowu.ipanda.databinding.FragmentHostBinding;
@@ -28,9 +29,12 @@ import com.oubowu.ipanda.ui.adapter.FragmentDataBindingComponent;
 import com.oubowu.ipanda.ui.adapter.HostAdapter;
 import com.oubowu.ipanda.util.BarBehavior;
 import com.oubowu.ipanda.util.CommonUtil;
+import com.oubowu.ipanda.util.ToastUtil;
 import com.oubowu.ipanda.viewmodel.HostViewModel;
 import com.oubowu.stickyitemdecoration.StickyHeadContainer;
 import com.oubowu.stickyitemdecoration.StickyItemDecoration;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -143,74 +147,72 @@ public class HostFragment extends Fragment implements Injectable {
 
         HostViewModel hostViewModel = ViewModelProviders.of(this, mFactory).get(HostViewModel.class);
 
-        hostViewModel.getHomeIndex(mUrl).observe(this, homeIndexResource -> {
-            if (homeIndexResource != null) {
-                switch (homeIndexResource.status) {
-                    case SUCCESS:
-                        // Logger.d(homeIndexResource.data);
-                        if (homeIndexResource.data != null) {
-                            mBinding.carouselViewPager.setList(homeIndexResource.data.bigImg);
-                            mHostAdapter.replace(homeIndexResource.data);
+        hostViewModel.getHomeIndex(mUrl).observe(this, new ObserverImpl<HomeIndex>() {
+            @Override
+            protected void onError(@NonNull String errorMsg) {
+                ToastUtil.showSuccessMsg(errorMsg);
+            }
 
-                            if (CommonUtil.isNotEmpty(homeIndexResource.data.cctv.listurl)) {
-                                hostViewModel.getWonderfulMomentIndex(homeIndexResource.data.cctv.listurl).observe(HostFragment.this, listResource -> {
-                                    if (listResource != null) {
-                                        switch (listResource.status) {
-                                            case ERROR:
-                                                break;
-                                            case LOADING:
-                                                break;
-                                            case SUCCESS:
-                                                homeIndexResource.data.cctv.list = listResource.data;
-                                                mHostAdapter.notifyItemInserted(3);
-                                                break;
-                                        }
-                                    }
-                                });
-                            }
+            @Override
+            protected void onLoading() {
+                ToastUtil.showSuccessMsg("加载中......");
+            }
 
-                            if (CommonUtil.isNotEmpty(homeIndexResource.data.list)) {
-                                HomeIndex.ListBeanXX listBean = homeIndexResource.data.list.get(0);
-                                if (CommonUtil.isNotEmpty(listBean.listUrl)) {
-                                    hostViewModel.getGungunVideoIndex(listBean.listUrl).observe(HostFragment.this, listResource -> {
-                                        if (listResource != null) {
-                                            switch (listResource.status) {
-                                                case ERROR:
-                                                    break;
-                                                case LOADING:
-                                                    break;
-                                                case SUCCESS:
-                                                    listBean.list = listResource.data;
-                                                    mHostAdapter.notifyItemInserted(4);
-                                                    break;
-                                            }
-                                        }
-                                    });
-                                }
-                            }
+            @Override
+            protected void onSuccess(@NonNull HomeIndex data) {
+                mBinding.carouselViewPager.setList(data.bigImg);
+                mHostAdapter.replace(data);
 
-                        }
-                        break;
-                    case ERROR:
-                        Toast.makeText(mContext, "请求失败" + homeIndexResource.message, Toast.LENGTH_SHORT).show();
-                        break;
-                    case LOADING:
-                        Toast.makeText(mContext, "加载中......", Toast.LENGTH_SHORT).show();
-                        break;
+                if (CommonUtil.isNotEmpty(data.cctv.listurl)) {
+                    getWonderfulMomentIndex(data, hostViewModel);
                 }
+
+                if (CommonUtil.isNotEmpty(data.list)) {
+                    getGungunVideoIndex(data, hostViewModel);
+                }
+
             }
         });
 
         CoordinatorLayout.LayoutParams clp = (CoordinatorLayout.LayoutParams) mBinding.toolbar.getLayoutParams();
         CoordinatorLayout.Behavior behavior = clp.getBehavior();
         if (behavior != null && behavior instanceof BarBehavior) {
-            ((BarBehavior) behavior).setOnNestedScrollListener((dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type) -> {
-                if (mListener != null) {
-                    mListener.onNestedScrollListener(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type);
+            ((BarBehavior) behavior).setOnNestedScrollListener(new BarBehavior.OnNestedScrollListener() {
+                @Override
+                public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+                    mListener.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+                }
+
+                @Override
+                public boolean onNestedFling(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, float velocityX, float velocityY, boolean consumed) {
+                    return mListener.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
                 }
             });
         }
 
+    }
+
+    private void getGungunVideoIndex(@NonNull HomeIndex data, HostViewModel hostViewModel) {
+        HomeIndex.ListBeanXX listBean = data.list.get(0);
+        if (CommonUtil.isNotEmpty(listBean.listUrl)) {
+            hostViewModel.getGungunVideoIndex(listBean.listUrl).observe(HostFragment.this, new ObserverImpl<List<VideoList>>() {
+                @Override
+                protected void onSuccess(@NonNull List<VideoList> data) {
+                    listBean.list = data;
+                    mHostAdapter.notifyItemInserted(4);
+                }
+            });
+        }
+    }
+
+    private void getWonderfulMomentIndex(@NonNull HomeIndex homeIndex, HostViewModel hostViewModel) {
+        hostViewModel.getWonderfulMomentIndex(homeIndex.cctv.listurl).observe(HostFragment.this, new ObserverImpl<List<VideoList>>() {
+            @Override
+            protected void onSuccess(@NonNull List<VideoList> data) {
+                homeIndex.cctv.list = data;
+                mHostAdapter.notifyItemInserted(3);
+            }
+        });
     }
 
     @Override

@@ -23,6 +23,6 @@
         android:onClick="@{(view)->event.clickBigImg(view,videoBean.id)}"
         app:loadDescImage2="@{videoBean}"
         app:textRatio="90%"
-        tools:src="@drawable/ic_loading"/>
+        tools:src="@drawable/ic_panda_loading"/>
 
 </layout>

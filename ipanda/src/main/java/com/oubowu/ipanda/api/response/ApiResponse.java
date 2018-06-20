@@ -2,10 +2,21 @@ package com.oubowu.ipanda.api.response;
 
 
 import android.support.annotation.Nullable;
+import android.util.Log;
+
+import com.google.gson.JsonParseException;
+import com.oubowu.ipanda.BasicApp;
+import com.oubowu.ipanda.util.NetUtil;
+
+import org.json.JSONException;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+import java.text.ParseException;
 
 import okhttp3.ResponseBody;
+import retrofit2.HttpException;
 import retrofit2.Response;
 
 /**
@@ -13,18 +24,47 @@ import retrofit2.Response;
  */
 public class ApiResponse<T> {
 
-    public final int code;
+    public int code;
 
     @Nullable
     public final T body;
 
     @Nullable
-    public final String errorMessage;
+    public String errorMessage;
 
     public ApiResponse(Throwable error) {
         code = 500;
         body = null;
         errorMessage = error.getMessage();
+
+        if (error instanceof HttpException) {
+            code = ((HttpException) error).code();
+            Log.e("ApiResponse","41行-ApiResponse(): "+code+";"+errorMessage);
+            switch (code) {
+                case 403:
+                    errorMessage = "没有权限访问此链接！";
+                    break;
+                case 504:
+                    if (!NetUtil.isConnected(BasicApp.getInstance())) {
+                        errorMessage = "没有联网哦！";
+                    } else {
+                        errorMessage = "网络连接超时！";
+                    }
+                    break;
+                default:
+                    errorMessage = ((HttpException) error).message();
+                    break;
+            }
+        } else if (error instanceof UnknownHostException) {
+            errorMessage = "链接找不到了！";
+        } else if (error instanceof SocketTimeoutException) {
+            errorMessage = "网络连接超时！";
+        }else if (error instanceof JsonParseException
+                || error instanceof JSONException
+                || error instanceof ParseException){
+            errorMessage = "数据解析异常！";
+        }
+
     }
 
     public ApiResponse(Response<T> response) {

@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.oubowu.ipanda.R;
+import com.oubowu.ipanda.base.ObserverImpl;
 import com.oubowu.ipanda.bean.pandabroadcast.PandaBroadcastIndex;
 import com.oubowu.ipanda.bean.pandabroadcast.PandaBroadcastList;
 import com.oubowu.ipanda.callback.OnFragmentScrollListener;
@@ -79,9 +80,15 @@ public class PandaBroadcastFragment extends Fragment implements Injectable {
         CoordinatorLayout.LayoutParams clp = (CoordinatorLayout.LayoutParams) mBinding.toolbar.getLayoutParams();
         CoordinatorLayout.Behavior behavior = clp.getBehavior();
         if (behavior != null && behavior instanceof BarBehavior) {
-            ((BarBehavior) behavior).setOnNestedScrollListener((dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type) -> {
-                if (mListener != null) {
-                    mListener.onNestedScrollListener(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type);
+            ((BarBehavior) behavior).setOnNestedScrollListener(new BarBehavior.OnNestedScrollListener() {
+                @Override
+                public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+                    mListener.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+                }
+
+                @Override
+                public boolean onNestedFling(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, float velocityX, float velocityY, boolean consumed) {
+                    return mListener.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
                 }
             });
         }
@@ -123,72 +130,43 @@ public class PandaBroadcastFragment extends Fragment implements Injectable {
 
         PandaBroadcastViewModel pandaBroadcastViewModel = ViewModelProviders.of(this, mFactory).get(PandaBroadcastViewModel.class);
 
-        pandaBroadcastViewModel.getPandaBroadcastIndex(mUrl).observe(this, pandaBroadcastIndexResource -> {
-            if (pandaBroadcastIndexResource != null) {
-                switch (pandaBroadcastIndexResource.status) {
-                    case SUCCESS:
+        pandaBroadcastViewModel.getPandaBroadcastIndex(mUrl).observe(this, new ObserverImpl<PandaBroadcastIndex>() {
+            @Override
+            protected void onSuccess(@NonNull PandaBroadcastIndex data) {
 
-                        PandaBroadcastIndex data = pandaBroadcastIndexResource.data;
+                List<PandaBroadcastIndex.BigImgBean> bigImg = data.bigImg;
 
-                        if (data != null) {
-                            List<PandaBroadcastIndex.BigImgBean> bigImg = data.bigImg;
+                getPandaBroadcastList(data, bigImg, pandaBroadcastViewModel);
 
-                            pandaBroadcastViewModel.getPandaBroadcastList(data.listurl).observe(PandaBroadcastFragment.this, pandaBroadcastListResource -> {
-                                if (pandaBroadcastListResource != null) {
-                                    switch (pandaBroadcastListResource.status) {
-                                        case SUCCESS:
-
-                                            PandaBroadcastList broadcastList = pandaBroadcastListResource.data;
-
-                                            if (broadcastList != null) {
-
-                                                if (CommonUtil.isNotEmpty(broadcastList.list)) {
-
-                                                    if (CommonUtil.isNotEmpty(bigImg)) {
-                                                        PandaBroadcastIndex.BigImgBean bigImgBean = bigImg.get(0);
-                                                        PandaBroadcastList.ListBean item = new PandaBroadcastList.ListBean();
-                                                        item.id = bigImgBean.pid;
-                                                        item.picurl = bigImgBean.image;
-                                                        item.title = bigImgBean.title;
-                                                        item.url = bigImgBean.url;
-                                                        item.datatype = bigImgBean.type;
-                                                        broadcastList.list.add(0, item);
-                                                    }
-
-                                                    mPandaBroadcastAdapter.replace(broadcastList.list);
-
-                                                }
-
-                                            }
-
-                                            break;
-                                        case ERROR:
-
-                                            break;
-                                        case LOADING:
-
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                }
-                            });
-
-                        }
-
-                        break;
-                    case LOADING:
-
-                        break;
-                    case ERROR:
-
-                        break;
-                    default:
-                        break;
-                }
             }
         });
 
+    }
+
+    private void getPandaBroadcastList(@NonNull PandaBroadcastIndex broadcastIndex, List<PandaBroadcastIndex.BigImgBean> bigImg, PandaBroadcastViewModel pandaBroadcastViewModel) {
+        pandaBroadcastViewModel.getPandaBroadcastList(broadcastIndex.listurl).observe(PandaBroadcastFragment.this, new ObserverImpl<PandaBroadcastList>() {
+            @Override
+            protected void onSuccess(@NonNull PandaBroadcastList data) {
+
+                if (CommonUtil.isNotEmpty(data.list)) {
+
+                    if (CommonUtil.isNotEmpty(bigImg)) {
+                        PandaBroadcastIndex.BigImgBean bigImgBean = bigImg.get(0);
+                        PandaBroadcastList.ListBean item = new PandaBroadcastList.ListBean();
+                        item.id = bigImgBean.pid;
+                        item.picurl = bigImgBean.image;
+                        item.title = bigImgBean.title;
+                        item.url = bigImgBean.url;
+                        item.datatype = bigImgBean.type;
+                        data.list.add(0, item);
+                    }
+
+                    mPandaBroadcastAdapter.replace(data.list);
+
+                }
+
+            }
+        });
     }
 
     @Override

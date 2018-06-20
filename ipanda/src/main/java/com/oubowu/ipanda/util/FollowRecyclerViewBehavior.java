@@ -4,20 +4,19 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.oubowu.ipanda.R;
+import com.oubowu.ipanda.ui.widget.CarouselViewPager;
 
 /**
  * Created by Oubowu on 2018/1/16 0:42.
  */
-public class FollowRecyclerViewBehavior extends CoordinatorLayout.Behavior<View> {
+public class FollowRecyclerViewBehavior extends CoordinatorLayout.Behavior<CarouselViewPager> {
 
     private float mFirstTopY = Integer.MIN_VALUE;
     private final int mFollowId;
@@ -43,7 +42,7 @@ public class FollowRecyclerViewBehavior extends CoordinatorLayout.Behavior<View>
     private RecyclerView.ItemDecoration mItemDecoration = null;
 
     @Override
-    public boolean onDependentViewChanged(CoordinatorLayout parent, View child, View dependency) {
+    public boolean onDependentViewChanged(CoordinatorLayout parent, CarouselViewPager child, View dependency) {
 
         if (mFirstTopY == Integer.MIN_VALUE && dependency.getId() == mDependenceId) {
             child.setY(dependency.getY() + dependency.getHeight());
@@ -70,6 +69,18 @@ public class FollowRecyclerViewBehavior extends CoordinatorLayout.Behavior<View>
                         };
                         recyclerView.addItemDecoration(mItemDecoration);
                         recyclerView.setAlpha(1);
+
+                        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                            @Override
+                            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                                super.onScrolled(recyclerView, dx, dy);
+                                View view = recyclerView.getChildAt(0);
+                                if (view != null) {
+                                    child.setY(view.getY() - child.getHeight() - mDividerDrawable.getIntrinsicHeight());
+                                }
+                            }
+                        });
+
                     }
 
                     final int height = child.getHeight();
@@ -89,23 +100,40 @@ public class FollowRecyclerViewBehavior extends CoordinatorLayout.Behavior<View>
     }
 
     @Override
-    public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
+    public boolean layoutDependsOn(CoordinatorLayout parent, CarouselViewPager child, View dependency) {
         return mDependenceId == dependency.getId();
     }
 
-    @Override
-    public boolean onStartNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View directTargetChild, @NonNull View target, int axes, int type) {
-        return (axes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
-    }
+    //    @Override
+    //    public boolean onStartNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull CarouselViewPager child, @NonNull View directTargetChild, @NonNull View target, int axes, int type) {
+    //        return (axes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
+    //    }
+    //
+    //    @Override
+    //    public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull CarouselViewPager child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
+    //        if (target instanceof RecyclerView) {
+    //            RecyclerView recyclerView = (RecyclerView) target;
+    //            View view = recyclerView.getChildAt(0);
+    //            if (view != null) {
+    //                child.setY(view.getY() - child.getHeight() - mDividerDrawable.getIntrinsicHeight());
+    //            }
+    //        }
+    //    }
 
-    @Override
-    public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
-        if (target instanceof RecyclerView) {
-            RecyclerView recyclerView = (RecyclerView) target;
-            View view = recyclerView.getChildAt(0);
-            if (view != null) {
-                child.setY(view.getY() - child.getHeight() - mDividerDrawable.getIntrinsicHeight());
-            }
-        }
-    }
+    //    @Override
+    //    public boolean onStartNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull CarouselViewPager child, @NonNull View directTargetChild, @NonNull View target, int axes) {
+    //        return (axes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
+    //    }
+    //
+    //    @Override
+    //    public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull CarouselViewPager child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+    //        if (target instanceof RecyclerView) {
+    //            RecyclerView recyclerView = (RecyclerView) target;
+    //            View view = recyclerView.getChildAt(0);
+    //            if (view != null) {
+    //                child.setY(view.getY() - child.getHeight() - mDividerDrawable.getIntrinsicHeight());
+    //            }
+    //        }
+    //    }
+
 }

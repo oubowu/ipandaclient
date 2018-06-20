@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 
 import com.oubowu.ipanda.R;
 import com.oubowu.ipanda.base.LazyFragment;
+import com.oubowu.ipanda.base.ObserverImpl;
+import com.oubowu.ipanda.bean.pandalive.RecordTab;
 import com.oubowu.ipanda.callback.OnFragmentScrollListener;
 import com.oubowu.ipanda.databinding.FragmentPandaLiveOtherBinding;
 import com.oubowu.ipanda.di.Injectable;
@@ -106,34 +108,20 @@ public class PandaLiveOtherFragment extends LazyFragment implements Injectable {
 
             PandaLiveOtherViewModel pandaLiveOtherViewModel = ViewModelProviders.of(this, mFactory).get(PandaLiveOtherViewModel.class);
 
-            pandaLiveOtherViewModel.getRecordTab(mId, 10, 0).observe(this, recordTabResource -> {
-                if (recordTabResource != null) {
-                    switch (recordTabResource.status) {
-                        case SUCCESS:
+            pandaLiveOtherViewModel.getRecordTab(mId, 10, 0).observe(this, new ObserverImpl<RecordTab>() {
+                @Override
+                protected void onSuccess(@NonNull RecordTab data) {
+                    mIsFirstInit = true;
 
-                            mIsFirstInit = true;
+                    PandaLiveOtherAdapter adapter = new PandaLiveOtherAdapter(new FragmentDataBindingComponent(PandaLiveOtherFragment.this));
 
-                            PandaLiveOtherAdapter adapter = new PandaLiveOtherAdapter(new FragmentDataBindingComponent(this));
+                    mBinding.recyclerView.setAdapter(adapter);
 
-                            mBinding.recyclerView.setAdapter(adapter);
+                    adapter.setClickCallback((view, position) -> {
+                        VideoActivity.start(getActivity(), view, adapter.getItem(position).vid);
+                    });
 
-                            adapter.setClickCallback((view, position) -> {
-                                VideoActivity.start(getActivity(), view, adapter.getItem(position).vid);
-                            });
-
-                            if (recordTabResource.data != null) {
-                                adapter.replace(recordTabResource.data.video);
-                            }
-                            break;
-                        case ERROR:
-
-                            break;
-                        case LOADING:
-
-                            break;
-                        default:
-                            break;
-                    }
+                    adapter.replace(data.video);
                 }
             });
 

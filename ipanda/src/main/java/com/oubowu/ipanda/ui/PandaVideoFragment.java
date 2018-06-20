@@ -7,6 +7,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.oubowu.ipanda.R;
+import com.oubowu.ipanda.base.ObserverImpl;
 import com.oubowu.ipanda.bean.pandavideo.PandaVideoIndex;
 import com.oubowu.ipanda.callback.OnFragmentScrollListener;
 import com.oubowu.ipanda.databinding.FragmentPandaVideoBinding;
@@ -75,9 +77,15 @@ public class PandaVideoFragment extends Fragment implements Injectable {
         CoordinatorLayout.LayoutParams clp = (CoordinatorLayout.LayoutParams) mBinding.toolbar.getLayoutParams();
         CoordinatorLayout.Behavior behavior = clp.getBehavior();
         if (behavior != null && behavior instanceof BarBehavior) {
-            ((BarBehavior) behavior).setOnNestedScrollListener((dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type) -> {
-                if (mListener != null) {
-                    mListener.onNestedScrollListener(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type);
+            ((BarBehavior) behavior).setOnNestedScrollListener(new BarBehavior.OnNestedScrollListener() {
+                @Override
+                public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+                    mListener.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+                }
+
+                @Override
+                public boolean onNestedFling(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, float velocityX, float velocityY, boolean consumed) {
+                    return mListener.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
                 }
             });
         }
@@ -119,34 +127,20 @@ public class PandaVideoFragment extends Fragment implements Injectable {
 
         PandaVideoViewModel pandaVideoViewModel = ViewModelProviders.of(this, mFactory).get(PandaVideoViewModel.class);
 
-        pandaVideoViewModel.getPandaVideoIndex(mUrl).observe(this, listResource -> {
-            if (listResource != null) {
-                switch (listResource.status) {
-                    case SUCCESS:
-                        PandaVideoIndex data = listResource.data;
-                        if (data != null) {
-                            if (CommonUtil.isNotEmpty(data.bigImg)) {
-                                PandaVideoIndex.BigImgBean bigImgBean = data.bigImg.get(0);
-                                PandaVideoIndex.ListBean listBean = new PandaVideoIndex.ListBean();
-                                listBean.title = bigImgBean.title;
-                                listBean.image = bigImgBean.image;
-                                listBean.id = bigImgBean.pid;
-                                listBean.url = bigImgBean.url;
-                                listBean.type = bigImgBean.type;
-                                data.list.add(0, listBean);
-                            }
-                            mPandaVideoAdapter.replace(data.list);
-                        }
-                        break;
-                    case ERROR:
-
-                        break;
-                    case LOADING:
-
-                        break;
-                    default:
-                        break;
+        pandaVideoViewModel.getPandaVideoIndex(mUrl).observe(this, new ObserverImpl<PandaVideoIndex>() {
+            @Override
+            protected void onSuccess(@NonNull PandaVideoIndex data) {
+                if (CommonUtil.isNotEmpty(data.bigImg)) {
+                    PandaVideoIndex.BigImgBean bigImgBean = data.bigImg.get(0);
+                    PandaVideoIndex.ListBean listBean = new PandaVideoIndex.ListBean();
+                    listBean.title = bigImgBean.title;
+                    listBean.image = bigImgBean.image;
+                    listBean.id = bigImgBean.pid;
+                    listBean.url = bigImgBean.url;
+                    listBean.type = bigImgBean.type;
+                    data.list.add(0, listBean);
                 }
+                mPandaVideoAdapter.replace(data.list);
             }
         });
 

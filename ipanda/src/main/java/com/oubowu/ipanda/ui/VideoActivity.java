@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Transition;
@@ -14,8 +15,10 @@ import android.util.Log;
 import android.view.View;
 
 import com.oubowu.ipanda.R;
+import com.oubowu.ipanda.base.ObserverImpl;
 import com.oubowu.ipanda.bean.base.LiveVideo;
 import com.oubowu.ipanda.bean.base.RecordVideo;
+import com.oubowu.ipanda.callback.VideoCallback;
 import com.oubowu.ipanda.databinding.ActivityVideoBinding;
 import com.oubowu.ipanda.util.StatusBarUtil;
 import com.oubowu.ipanda.viewmodel.VideoViewModel;
@@ -89,129 +92,118 @@ public class VideoActivity extends AppCompatActivity implements HasSupportFragme
             mBinding.videoView.findViewById(com.shuyu.gsyvideoplayer.R.id.bottom_progressbar).setAlpha(0);
             mBinding.videoView.setLive(true);
 
-            videoViewModel.getLiveVideo(liveId).observe(this, liveVideoResource -> {
-                if (liveVideoResource != null) {
-                    switch (liveVideoResource.status) {
-                        case SUCCESS:
-                            LiveVideo liveVideo = liveVideoResource.data;
+            getLiveVideo(liveId, liveTitle, videoViewModel);
 
-                            if (liveVideo != null) {
-
-                                mBinding.setVideoName("");
-                                mBinding.setVideoPath(liveVideo.hls_url.hls1);
-
-
-                                // Log.e("VideoActivity", "53行-onCreate(): " + recordVideo.hls_url);
-                                mBinding.videoView.setUp(liveVideo.hls_url.hls1, false, liveTitle);
-
-                                //增加title
-                                mBinding.videoView.getTitleTextView().setVisibility(View.VISIBLE);
-                                //videoPlayer.setShowPauseCover(false);
-
-                                //videoPlayer.setSpeed(2f);
-
-                                //设置返回键
-                                mBinding.videoView.getBackButton().setVisibility(View.VISIBLE);
-
-                                //设置旋转
-                                mOrientationUtils = new OrientationUtils(this, mBinding.videoView);
-
-                                //设置全屏按键功能,这是使用的是选择屏幕，而不是全屏
-                                mBinding.videoView.getFullscreenButton().setOnClickListener(v -> mOrientationUtils.resolveByClick());
-
-                                //videoPlayer.setBottomProgressBarDrawable(getResources().getDrawable(R.drawable.video_new_progress));
-                                //videoPlayer.setDialogVolumeProgressBar(getResources().getDrawable(R.drawable.video_new_volume_progress_bg));
-                                //videoPlayer.setDialogProgressBar(getResources().getDrawable(R.drawable.video_new_progress));
-                                //videoPlayer.setBottomShowProgressBarDrawable(getResources().getDrawable(R.drawable.video_new_seekbar_progress),
-                                //getResources().getDrawable(R.drawable.video_new_seekbar_thumb));
-                                //videoPlayer.setDialogProgressColor(getResources().getColor(R.color.colorAccent), -11);
-
-                                //是否可以滑动调整
-                                mBinding.videoView.setIsTouchWiget(true);
-
-                                //设置返回按键功能
-                                mBinding.videoView.getBackButton().setOnClickListener(v -> onBackPressed());
-
-                                mBinding.videoView.startPlayLogic();
-
-                            }
-
-                            break;
-                        case ERROR:
-
-                            break;
-                        case LOADING:
-
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            });
         } else {
-            videoViewModel.getRecordVideo(pid).observe(this, recordVideoResource -> {
-                if (recordVideoResource != null) {
-                    switch (recordVideoResource.status) {
-                        case SUCCESS:
-                            RecordVideo recordVideo = recordVideoResource.data;
 
-                            if (recordVideo != null) {
-                                mBinding.setVideoName(recordVideo.title);
-                                mBinding.setVideoPath(recordVideo.hls_url);
+            getRecordVideo(pid, videoViewModel);
 
-
-                                // Log.e("VideoActivity", "53行-onCreate(): " + recordVideo.hls_url);
-                                mBinding.videoView.setUp(recordVideo.video.chapters.get(0).url, true, recordVideo.title);
-
-                                //增加title
-                                mBinding.videoView.getTitleTextView().setVisibility(View.VISIBLE);
-                                //videoPlayer.setShowPauseCover(false);
-
-                                //videoPlayer.setSpeed(2f);
-
-                                //设置返回键
-                                mBinding.videoView.getBackButton().setVisibility(View.VISIBLE);
-
-                                //设置旋转
-                                mOrientationUtils = new OrientationUtils(this, mBinding.videoView);
-
-                                //设置全屏按键功能,这是使用的是选择屏幕，而不是全屏
-                                mBinding.videoView.getFullscreenButton().setOnClickListener(v -> mOrientationUtils.resolveByClick());
-
-                                //videoPlayer.setBottomProgressBarDrawable(getResources().getDrawable(R.drawable.video_new_progress));
-                                //videoPlayer.setDialogVolumeProgressBar(getResources().getDrawable(R.drawable.video_new_volume_progress_bg));
-                                //videoPlayer.setDialogProgressBar(getResources().getDrawable(R.drawable.video_new_progress));
-                                //videoPlayer.setBottomShowProgressBarDrawable(getResources().getDrawable(R.drawable.video_new_seekbar_progress),
-                                //getResources().getDrawable(R.drawable.video_new_seekbar_thumb));
-                                //videoPlayer.setDialogProgressColor(getResources().getColor(R.color.colorAccent), -11);
-
-                                //是否可以滑动调整
-                                mBinding.videoView.setIsTouchWiget(true);
-
-                                //设置返回按键功能
-                                mBinding.videoView.getBackButton().setOnClickListener(v -> onBackPressed());
-
-                                mBinding.videoView.startPlayLogic();
-
-                            }
-
-                            break;
-                        case LOADING:
-
-                            break;
-                        case ERROR:
-
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            });
         }
 
         //过渡动画
         initTransition();
 
+    }
+
+    private void getRecordVideo(String pid, VideoViewModel videoViewModel) {
+        videoViewModel.getRecordVideo(pid).observe(this, new ObserverImpl<RecordVideo>() {
+            @Override
+            protected void onSuccess(@NonNull RecordVideo data) {
+
+                mBinding.setVideoName(data.title);
+                mBinding.setVideoPath(data.hls_url);
+
+
+                // Log.e("VideoActivity", "53行-onCreate(): " + recordVideo.hls_url);
+                mBinding.videoView.setUp(data.video.chapters.get(0).url, true, data.title);
+
+                //增加title
+                mBinding.videoView.getTitleTextView().setVisibility(View.VISIBLE);
+                //videoPlayer.setShowPauseCover(false);
+
+                //videoPlayer.setSpeed(2f);
+
+                //设置返回键
+                mBinding.videoView.getBackButton().setVisibility(View.VISIBLE);
+
+                //设置旋转
+                mOrientationUtils = new OrientationUtils(VideoActivity.this, mBinding.videoView);
+
+                //设置全屏按键功能,这是使用的是选择屏幕，而不是全屏
+                mBinding.videoView.getFullscreenButton().setOnClickListener(v -> mOrientationUtils.resolveByClick());
+
+                //videoPlayer.setBottomProgressBarDrawable(getResources().getDrawable(R.drawable.video_new_progress));
+                //videoPlayer.setDialogVolumeProgressBar(getResources().getDrawable(R.drawable.video_new_volume_progress_bg));
+                //videoPlayer.setDialogProgressBar(getResources().getDrawable(R.drawable.video_new_progress));
+                //videoPlayer.setBottomShowProgressBarDrawable(getResources().getDrawable(R.drawable.video_new_seekbar_progress),
+                //getResources().getDrawable(R.drawable.video_new_seekbar_thumb));
+                //videoPlayer.setDialogProgressColor(getResources().getColor(R.color.colorAccent), -11);
+
+                //是否可以滑动调整
+                mBinding.videoView.setIsTouchWiget(true);
+
+                //设置返回按键功能
+                mBinding.videoView.getBackButton().setOnClickListener(v -> onBackPressed());
+
+                mBinding.videoView.startPlayLogic();
+
+                mBinding.videoView.setStandardVideoAllCallBack(new VideoCallback(){
+                    @Override
+                    public void onPlayError(String url, Object... objects) {
+                        super.onPlayError(url, objects);
+                        Log.e("VideoActivity","154行-onPlayError(): "+url);
+                        Log.e("VideoActivity","155行-onPlayError(): "+objects[0]+";"+objects[1]);
+                    }
+                });
+
+            }
+        });
+    }
+
+    private void getLiveVideo(String liveId, String liveTitle, VideoViewModel videoViewModel) {
+        videoViewModel.getLiveVideo(liveId).observe(this, new ObserverImpl<LiveVideo>() {
+            @Override
+            protected void onSuccess(@NonNull LiveVideo data) {
+
+                mBinding.setVideoName("");
+                mBinding.setVideoPath(data.hls_url.hls1);
+
+
+                // Log.e("VideoActivity", "53行-onCreate(): " + recordVideo.hls_url);
+                mBinding.videoView.setUp(data.hls_url.hls1, false, liveTitle);
+
+                //增加title
+                mBinding.videoView.getTitleTextView().setVisibility(View.VISIBLE);
+                //videoPlayer.setShowPauseCover(false);
+
+                //videoPlayer.setSpeed(2f);
+
+                //设置返回键
+                mBinding.videoView.getBackButton().setVisibility(View.VISIBLE);
+
+                //设置旋转
+                mOrientationUtils = new OrientationUtils(VideoActivity.this, mBinding.videoView);
+
+                //设置全屏按键功能,这是使用的是选择屏幕，而不是全屏
+                mBinding.videoView.getFullscreenButton().setOnClickListener(v -> mOrientationUtils.resolveByClick());
+
+                //videoPlayer.setBottomProgressBarDrawable(getResources().getDrawable(R.drawable.video_new_progress));
+                //videoPlayer.setDialogVolumeProgressBar(getResources().getDrawable(R.drawable.video_new_volume_progress_bg));
+                //videoPlayer.setDialogProgressBar(getResources().getDrawable(R.drawable.video_new_progress));
+                //videoPlayer.setBottomShowProgressBarDrawable(getResources().getDrawable(R.drawable.video_new_seekbar_progress),
+                //getResources().getDrawable(R.drawable.video_new_seekbar_thumb));
+                //videoPlayer.setDialogProgressColor(getResources().getColor(R.color.colorAccent), -11);
+
+                //是否可以滑动调整
+                mBinding.videoView.setIsTouchWiget(true);
+
+                //设置返回按键功能
+                mBinding.videoView.getBackButton().setOnClickListener(v -> onBackPressed());
+
+                mBinding.videoView.startPlayLogic();
+
+            }
+        });
     }
 
     @Override

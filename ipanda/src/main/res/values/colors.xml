@@ -19,5 +19,7 @@
     <color name="toolbarNormalTextColor">#999999</color>
     <color name="black">#000000</color>
 
+    <color name="msg_status_success">#00ee00</color>
+    <color name="msg_status_warn">#eeee00</color>
 
 </resources>

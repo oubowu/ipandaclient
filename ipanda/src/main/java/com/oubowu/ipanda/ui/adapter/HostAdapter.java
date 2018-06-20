@@ -30,7 +30,7 @@ import com.oushangfeng.marqueelayout.MarqueeLayoutAdapter;
  */
 public class HostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private DataBindingComponent mDataBindingComponent;
+    private android.databinding.DataBindingComponent mDataBindingComponent;
 
     private HomeIndex mHomeIndex;
 
@@ -50,20 +50,16 @@ public class HostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ItemFragmentHostPandaeyeBinding binding = DataBindingUtil
                         .inflate(LayoutInflater.from(parent.getContext()), R.layout.item_fragment_host_pandaeye, parent, false, mDataBindingComponent);
 
-                DataBoundViewHolder<ItemFragmentHostPandaeyeBinding> viewHolder = new DataBoundViewHolder<>(binding);
-
-                return viewHolder;
+                return new DataBoundViewHolder<>(binding);
             case TYPE_VIDEO_GRID:
                 // Log.e("xxx","48行-onCreateViewHolder(): "+" ");
                 ItemFragmentHostVideoGridBinding binding1 = DataBindingUtil
                         .inflate(LayoutInflater.from(parent.getContext()), R.layout.item_fragment_host_video_grid, parent, false, mDataBindingComponent);
-                DataBoundViewHolder<ItemFragmentHostVideoGridBinding> viewHolder1 = new DataBoundViewHolder<>(binding1);
-                return viewHolder1;
+                return new DataBoundViewHolder<>(binding1);
             case TYPE_VIDEO_LIST:
                 ItemFragmentHostVideoListBinding binding2 = DataBindingUtil
                         .inflate(LayoutInflater.from(parent.getContext()), R.layout.item_fragment_host_video_list, parent, false, mDataBindingComponent);
-                DataBoundViewHolder<ItemFragmentHostVideoListBinding> viewHolder2 = new DataBoundViewHolder<>(binding2);
-                return viewHolder2;
+                return new DataBoundViewHolder<>(binding2);
             default:
                 break;
         }

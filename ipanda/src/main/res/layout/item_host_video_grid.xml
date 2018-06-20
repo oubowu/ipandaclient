@@ -6,7 +6,7 @@
     android:layout_width="100dp"
     android:layout_height="wrap_content"
     android:background="@drawable/ripple_with_no_mask"
-    tools:src="@drawable/ic_loading">
+    tools:src="@drawable/ic_panda_loading">
 
 </com.oubowu.ipanda.ui.widget.VideoImageView>
 

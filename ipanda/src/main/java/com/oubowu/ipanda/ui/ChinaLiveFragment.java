@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.oubowu.ipanda.R;
+import com.oubowu.ipanda.base.ObserverImpl;
 import com.oubowu.ipanda.bean.chinalive.ChinaLiveTab;
 import com.oubowu.ipanda.callback.HandleBackInterface;
 import com.oubowu.ipanda.callback.OnFragmentScrollListener;
@@ -78,9 +79,15 @@ public class ChinaLiveFragment extends Fragment implements Injectable,HandleBack
         CoordinatorLayout.LayoutParams clp = (CoordinatorLayout.LayoutParams) mBinding.toolbar.getLayoutParams();
         CoordinatorLayout.Behavior behavior = clp.getBehavior();
         if (behavior != null && behavior instanceof BarBehavior) {
-            ((BarBehavior) behavior).setOnNestedScrollListener((dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type) -> {
-                if (mListener != null) {
-                    mListener.onNestedScrollListener(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type);
+            ((BarBehavior) behavior).setOnNestedScrollListener(new BarBehavior.OnNestedScrollListener() {
+                @Override
+                public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+                    mListener.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+                }
+
+                @Override
+                public boolean onNestedFling(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, float velocityX, float velocityY, boolean consumed) {
+                    return mListener.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
                 }
             });
         }
@@ -114,37 +121,23 @@ public class ChinaLiveFragment extends Fragment implements Injectable,HandleBack
         super.onActivityCreated(savedInstanceState);
 
         ChinaLiveViewModel chinaLiveViewModel = ViewModelProviders.of(this, mFactory).get(ChinaLiveViewModel.class);
-
-        chinaLiveViewModel.getChinaLiveTab(mUrl).observe(this, listResource -> {
-            if (listResource != null) {
-                switch (listResource.status) {
-                    case SUCCESS:
-                        ChinaLiveTab data = listResource.data;
-                        if (data != null && CommonUtil.isNotEmpty(data.tablist)) {
-                            List<Fragment> fragments = new ArrayList<>(data.tablist.size());
-                            List<String> titles = new ArrayList<>(data.tablist.size());
-                            int paddingTop = mBinding.toolbar.getHeight() + mBinding.tabLayout.getHeight();
-                            for (ChinaLiveTab.TablistBean tab : data.tablist) {
-                                titles.add(tab.title);
-                                fragments.add(ChinaLiveSubFragment.newInstance(tab.title, tab.url, paddingTop));
-                            }
-                            mPandaLiveFragmentAdapter = new FragmentAdapter(getChildFragmentManager(), fragments, titles);
-                            mBinding.viewPager.setAdapter(mPandaLiveFragmentAdapter);
-                            mBinding.tabLayout.setupWithViewPager(mBinding.viewPager);
-                        }
-                        break;
-                    case ERROR:
-
-                        break;
-                    case LOADING:
-
-                        break;
-                    default:
-                        break;
+        chinaLiveViewModel.getChinaLiveTab(mUrl).observe(this, new ObserverImpl<ChinaLiveTab>() {
+            @Override
+            protected void onSuccess(@NonNull ChinaLiveTab data) {
+                if (CommonUtil.isNotEmpty(data.tablist)) {
+                    List<Fragment> fragments = new ArrayList<>(data.tablist.size());
+                    List<String> titles = new ArrayList<>(data.tablist.size());
+                    int paddingTop = mBinding.toolbar.getHeight() + mBinding.tabLayout.getHeight();
+                    for (ChinaLiveTab.TablistBean tab : data.tablist) {
+                        titles.add(tab.title);
+                        fragments.add(ChinaLiveSubFragment.newInstance(tab.title, tab.url, paddingTop));
+                    }
+                    mPandaLiveFragmentAdapter = new FragmentAdapter(getChildFragmentManager(), fragments, titles);
+                    mBinding.viewPager.setAdapter(mPandaLiveFragmentAdapter);
+                    mBinding.tabLayout.setupWithViewPager(mBinding.viewPager);
                 }
             }
         });
-
     }
 
     @Override

@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 
 import com.oubowu.ipanda.R;
 import com.oubowu.ipanda.base.LazyFragment;
+import com.oubowu.ipanda.base.ObserverImpl;
+import com.oubowu.ipanda.bean.chinalive.ChinaLiveDetail;
 import com.oubowu.ipanda.callback.HandleBackInterface;
 import com.oubowu.ipanda.callback.OnFragmentScrollListener;
 import com.oubowu.ipanda.databinding.FragmentChinaLiveSubBinding;
@@ -31,6 +33,8 @@ import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -118,27 +122,16 @@ public class ChinaLiveSubFragment extends LazyFragment implements Injectable, Ha
             ChinaLiveSubViewModel chinaLiveSubViewModel = ViewModelProviders.of(this, mFactory).get(ChinaLiveSubViewModel.class);
             VideoViewModel videoViewModel = ViewModelProviders.of(this, mFactory).get(VideoViewModel.class);
 
-            chinaLiveSubViewModel.getChinaLiveDetail(mUrl).observe(this, recordTabResource -> {
-                if (recordTabResource != null) {
-                    switch (recordTabResource.status) {
-                        case SUCCESS:
-                            mIsFirstInit = true;
+            chinaLiveSubViewModel.getChinaLiveDetail(mUrl).observe(this, new ObserverImpl<List<ChinaLiveDetail>>() {
+                @Override
+                protected void onSuccess(@NonNull List<ChinaLiveDetail> data) {
+                    mIsFirstInit = true;
 
-                            mAdapter = new ChinaLiveSubAdapter(this, new FragmentDataBindingComponent(this), videoViewModel);
+                    mAdapter = new ChinaLiveSubAdapter(ChinaLiveSubFragment.this, new FragmentDataBindingComponent(ChinaLiveSubFragment.this), videoViewModel);
 
-                            mBinding.recyclerView.setAdapter(mAdapter);
+                    mBinding.recyclerView.setAdapter(mAdapter);
 
-                            if (recordTabResource.data != null) {
-                                mAdapter.replace(recordTabResource.data);
-                            }
-                            break;
-                        case ERROR:
-                            break;
-                        case LOADING:
-                            break;
-                        default:
-                            break;
-                    }
+                    mAdapter.replace(data);
                 }
             });
 

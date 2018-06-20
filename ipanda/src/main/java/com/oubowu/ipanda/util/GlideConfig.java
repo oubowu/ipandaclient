@@ -17,7 +17,7 @@ public class GlideConfig {
         if (REQUEST_OPTIONS == null) {
             synchronized (GlideConfig.class) {
                 if (REQUEST_OPTIONS == null) {
-                    REQUEST_OPTIONS = new RequestOptions().placeholder(R.drawable.ic_loading).error(R.drawable.ic_loading);
+                    REQUEST_OPTIONS = new RequestOptions().placeholder(R.drawable.ic_panda_loading).error(R.drawable.ic_panda_loading);
                 }
             }
         }
