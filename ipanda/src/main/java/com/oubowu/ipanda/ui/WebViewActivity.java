@@ -12,9 +12,12 @@ import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -49,12 +52,13 @@ public class WebViewActivity extends AppCompatActivity implements HasSupportFrag
     @Inject
     ViewModelProvider.Factory mFactory;
 
+    private PandaBroadcastDetail mBroadcastDetail;
+
     public static void start(Activity activity, String id) {
         Intent intent = new Intent(activity, WebViewActivity.class).putExtra(ID, id);
 
-        //        ActivityCompat.startActivity(activity, intent, ActivityOptionsCompat.makeSceneTransitionAnimation(activity).toBundle());
-
-        activity.startActivity(intent);
+        ActivityCompat.startActivity(activity, intent, ActivityOptionsCompat.makeSceneTransitionAnimation(activity).toBundle());
+        //        activity.startActivity(intent);
     }
 
     @Override
@@ -71,9 +75,9 @@ public class WebViewActivity extends AppCompatActivity implements HasSupportFrag
 
         mWebViewBinding = DataBindingUtil.setContentView(this, R.layout.activity_web_view);
 
-//        //进入退出效果 注意这里 创建的效果对象是 Explode()
-//        getWindow().setEnterTransition(new Fade().setDuration(250));
-//        getWindow().setExitTransition(new Fade().setDuration(250));
+        //进入退出效果 注意这里 创建的效果对象是 Explode()
+        getWindow().setEnterTransition(new Slide().setDuration(500));
+        getWindow().setExitTransition(new Slide().setDuration(500));
 
         setSupportActionBar(mWebViewBinding.toolbar);
         mWebViewBinding.toolbar.setContentInsetStartWithNavigation(0);
@@ -95,14 +99,15 @@ public class WebViewActivity extends AppCompatActivity implements HasSupportFrag
             if (resource != null) {
                 switch (resource.status) {
                     case SUCCESS:
-                        PandaBroadcastDetail data = resource.data;
-                        if (data != null) {
+                        mBroadcastDetail = resource.data;
+                        if (mBroadcastDetail != null) {
                             animateRevealShow(mWebViewBinding.webView);
-                            animateRevealShow(mWebViewBinding.toolbar);
+                            // animateRevealShow(mWebViewBinding.toolbar);
                             mWebViewBinding.webView
-                                    .loadDataWithBaseURL(null, getHtmlData(data.content + "<div class=\"exp1\">" + data.source + "   " + data.pubtime + "</div>"),
+                                    .loadDataWithBaseURL(null, getHtmlData(
+                                            mBroadcastDetail.content + "<div class=\"exp1\">" + mBroadcastDetail.source + "   " + mBroadcastDetail.pubtime + "</div>"),
                                             "text/html", "utf-8", null);
-                            mWebViewBinding.toolbar.setTitle(data.title);
+                            mWebViewBinding.toolbar.setTitle(mBroadcastDetail.title);
                         }
                         break;
                     case ERROR:
@@ -170,6 +175,11 @@ public class WebViewActivity extends AppCompatActivity implements HasSupportFrag
         mWebViewBinding.webView.onResume();
         mWebViewBinding.webView.resumeTimers();
         super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     private void initWebChromeClient() {
@@ -278,7 +288,8 @@ public class WebViewActivity extends AppCompatActivity implements HasSupportFrag
                 if (mWebViewBinding.webView.canGoBack()) {
                     mWebViewBinding.webView.goBack();
                 } else {
-                    finish();
+                    mWebViewBinding.webView.animate().translationY(mWebViewBinding.webView.getHeight()).setDuration(800).start();
+                    onBackPressed();
                 }
                 break;
             default:
@@ -294,6 +305,8 @@ public class WebViewActivity extends AppCompatActivity implements HasSupportFrag
             mWebViewBinding.webView.goBack();
             return true;
         }
+        // mWebViewBinding.webView.animate().alpha(0).setDuration(250).start();
+        mWebViewBinding.webView.animate().translationY(mWebViewBinding.webView.getHeight()).setDuration(800).start();
         return super.onKeyDown(keyCode, event);
     }
 

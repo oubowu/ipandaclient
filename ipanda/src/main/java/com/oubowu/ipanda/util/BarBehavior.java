@@ -27,8 +27,6 @@ public class BarBehavior extends CoordinatorLayout.Behavior implements Animator.
 
     private OnNestedScrollListener mOnNestedScrollListener;
 
-    private boolean mIsFling;
-
     public BarBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
         if (attrs == null) {
@@ -91,31 +89,37 @@ public class BarBehavior extends CoordinatorLayout.Behavior implements Animator.
         if (mOnNestedScrollListener != null) {
             mOnNestedScrollListener.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
         }
-        if (mIsFling) {
-            return super.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
-        }
         if (target instanceof RecyclerView) {
-            if (((RecyclerView) target).computeVerticalScrollOffset() == 0) {
-                return super.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
+            // int scrollRange = ((RecyclerView) target).computeVerticalScrollRange();
+            // int scrollOffset = ((RecyclerView) target).computeVerticalScrollOffset();
+            // int scrollExtent = ((RecyclerView) target).computeVerticalScrollExtent();
+            //            Log.e("xxx", child.getClass()
+            //                    .getSimpleName() + ";scrollRange: " + scrollRange + ";scrollOffset：" + scrollOffset + ";scrollExtent：" + scrollExtent + ";" + velocityY + ";itemCount: " + itemCount);
+            RecyclerView.Adapter adapter = ((RecyclerView) target).getAdapter();
+            if (adapter != null) {
+                int itemCount = adapter.getItemCount();
+                if (velocityY > 0 && (/*scrollOffset == 0 ||*/ itemCount <= 2)) {
+                    return false;
+                }
             }
         }
         switch (mDirection) {
             case DIRECTION_SAME:
                 if (velocityY > 1000) {
                     child.animate().translationY(-child.getHeight()).setListener(this).setDuration(250).start();
-                    return true;
+                    return false;
                 } else if (velocityY < -1000) {
                     child.animate().translationY(mFirstChangeTopY).setListener(this).setDuration(250).start();
-                    return true;
+                    return false;
                 }
                 break;
             case DIRECTION_REVERSE:
                 if (velocityY > 1000) {
                     child.animate().translationY(child.getHeight()).setListener(this).setDuration(250).start();
-                    return true;
+                    return false;
                 } else if (velocityY < -1000) {
                     child.animate().translationY(mFirstChangeTopY).setListener(this).setDuration(250).start();
-                    return true;
+                    return false;
                 }
                 break;
         }
@@ -124,17 +128,14 @@ public class BarBehavior extends CoordinatorLayout.Behavior implements Animator.
 
     @Override
     public void onAnimationStart(Animator animation) {
-        mIsFling = true;
     }
 
     @Override
     public void onAnimationEnd(Animator animation) {
-        mIsFling = false;
     }
 
     @Override
     public void onAnimationCancel(Animator animation) {
-        mIsFling = false;
     }
 
     @Override

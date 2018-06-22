@@ -83,8 +83,8 @@ public class VideoActivity extends AppCompatActivity implements HasSupportFragme
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_video);
 
         //进入退出效果 注意这里 创建的效果对象是 Explode()
-        getWindow().setEnterTransition(new Fade().setDuration(300));
-        getWindow().setExitTransition(new Fade().setDuration(300));
+        getWindow().setEnterTransition(new Fade().setDuration(500));
+        getWindow().setExitTransition(new Fade().setDuration(500));
 
         /*Glide.with(getApplicationContext()).setDefaultRequestOptions(new RequestOptions().centerCrop().error(R.drawable.ic_panda_loading).placeholder(R.drawable.ic_panda_loading)).load("http://p1.img.cctvpic.com/photoAlbum/page/performance/img/2018/4/8/1523162530651_241.jpg")
                 .into(mBinding.thumbImage);*/

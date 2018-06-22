@@ -13,8 +13,6 @@ import android.widget.Toast;
 
 import com.oubowu.ipanda.R;
 
-import java.lang.ref.WeakReference;
-
 /**
  * 作者：特种兵__AK47
  * 链接：https://www.jianshu.com/p/b6f207ce367b
@@ -29,8 +27,8 @@ public class ToastUtil {
     //    private static TextView sMsgView = (TextView) sToastView.findViewById(R.id.tv_msg_text);
 
     private static Application sContext = null;
-    private static WeakReference<View> sToastView = null;
-    private static WeakReference<TextView> sMsgView = null;
+    private static View sToastView = null;
+    private static TextView sMsgView = null;
 
     private static final int TYPE_CODE_SUCCESS = 0x01;
     private static final int TYPE_CODE_ERROR = 0x02;
@@ -43,8 +41,8 @@ public class ToastUtil {
 
     public static void init(Application context) {
         sContext = context;// App生命周期中唯一Context，BaseApplication继承Application
-        sToastView = new WeakReference<>(LayoutInflater.from(sContext).inflate(R.layout.layout_top_toast, null));
-        sMsgView = new WeakReference<>(sToastView.get().findViewById(R.id.tv_msg_text));
+        sToastView = LayoutInflater.from(sContext).inflate(R.layout.layout_top_toast, null);
+        sMsgView = sToastView.findViewById(R.id.tv_msg_text);
         COLOR_SUCCESS = sContext.getResources().getColor(R.color.msg_status_success);
         COLOR_ERROR = sContext.getResources().getColor(R.color.msg_status_warn);
     }
@@ -104,15 +102,12 @@ public class ToastUtil {
                         msgViewBagColor = COLOR_SUCCESS;
                         break;
                 }
-                if (sMsgView.get() != null && sToastView.get() != null) {
-                    Log.e("ToastUtil","108行-run(): "+" ");
-                    sMsgView.get().setBackgroundColor(msgViewBagColor);
-                    sMsgView.get().setText(msg);
-                    sToast.setView(sToastView.get());
-                    sToast.setGravity(Gravity.TOP | Gravity.FILL_HORIZONTAL, 0, 0);// 顶部居中
-                    sToast.setDuration(Toast.LENGTH_SHORT);
-                    sToast.show();
-                }
+                sMsgView.setBackgroundColor(msgViewBagColor);
+                sMsgView.setText(msg);
+                sToast.setView(sToastView);
+                sToast.setGravity(Gravity.TOP | Gravity.FILL_HORIZONTAL, 0, 0);// 顶部居中
+                sToast.setDuration(Toast.LENGTH_SHORT);
+                sToast.show();
             }
         }, DEFAULT_TIME_DELAY);
     }

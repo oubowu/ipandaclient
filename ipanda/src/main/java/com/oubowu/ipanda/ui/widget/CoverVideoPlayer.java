@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.oubowu.ipanda.R;
+import com.oubowu.ipanda.util.GlideConfig;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
 
@@ -55,7 +56,7 @@ public class CoverVideoPlayer extends StandardGSYVideoPlayer {
         mCoverOriginUrl = url;
         mDefaultRes = res;
         Glide.with(getContext().getApplicationContext()).setDefaultRequestOptions(new RequestOptions().centerCrop().error(res).placeholder(res)).load(url)
-                .into(mCoverImage);
+                .transition(GlideConfig.getTransitionOptions()).into(mCoverImage);
     }
 
     @Override
@@ -78,12 +79,12 @@ public class CoverVideoPlayer extends StandardGSYVideoPlayer {
     @Override
     public void onVideoPause() {
         super.onVideoPause();
-        Log.e("CoverVideoPlayer","80行-onVideoPause(): "+" ");
+        Log.e("CoverVideoPlayer", "80行-onVideoPause(): " + " ");
     }
 
     @Override
     public void onVideoResume() {
         super.onVideoResume();
-        Log.e("CoverVideoPlayer","87行-onVideoResume(): "+" ");
+        Log.e("CoverVideoPlayer", "87行-onVideoResume(): " + " ");
     }
 }

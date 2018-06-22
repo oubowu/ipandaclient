@@ -2,14 +2,13 @@ package com.oubowu.ipanda.api.calladapter;
 
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.oubowu.ipanda.api.response.ApiResponse;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-
-import javax.annotation.Nullable;
 
 import retrofit2.CallAdapter;
 import retrofit2.Retrofit;

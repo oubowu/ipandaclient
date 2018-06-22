@@ -34,7 +34,7 @@ public class FragmentBindingAdapters {
 
     @BindingAdapter("loadImageUrl")
     public void bindImage(ImageView imageView, String url) {
-        Glide.with(mFragment).load(url).apply(GlideConfig.getInstance()).into(imageView);
+        Glide.with(mFragment).load(url).apply(GlideConfig.getInstance()).transition(GlideConfig.getTransitionOptions()).into(imageView);
     }
 
     @BindingAdapter("loadDescImage1")
@@ -58,7 +58,7 @@ public class FragmentBindingAdapters {
                 imageView.setLayoutParams(params);
                 return false;
             }
-        }).into(imageView);
+        }).transition(GlideConfig.getTransitionOptions()).into(imageView);
     }
 
     @BindingAdapter("loadDescImage2")
@@ -82,7 +82,7 @@ public class FragmentBindingAdapters {
                 imageView.setLayoutParams(params);
                 return false;
             }
-        }).into(imageView);
+        }).transition(GlideConfig.getTransitionOptions()).into(imageView);
     }
 
 }

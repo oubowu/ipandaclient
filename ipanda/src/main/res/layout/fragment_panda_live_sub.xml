@@ -102,11 +102,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:background="@color/toolbarBgColor"
+                android:includeFontPadding="false"
                 android:paddingEnd="8dp"
                 android:paddingStart="8dp"
                 android:text="@{@string/line_break+liveBean.brief+@string/line_break}"
                 android:textColor="@color/toolbarSelectTextColor"
-                android:textSize="0dp"
+                android:textSize="14dp"
+                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/live_desc_arrow"
                 tools:text="翻身、吃饭、睡觉、喝奶、打闹、攀爬……这里是成都大熊猫繁育研究基地，24小时高清直播大熊猫生活实况的地方。成年园、幼年园、幼儿园、母子园、一号别墅，11路直播信号28个摄像头，让你零距离了解国宝们的日常起居。"/>
 
@@ -121,6 +123,20 @@
                 app:spacing="8dp">
 
             </com.oubowu.ipanda.ui.widget.FlexImageLayout>
+
+            <TextView
+                android:id="@+id/live_desc_fake"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:includeFontPadding="false"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:text="@{@string/line_break+liveBean.brief+@string/line_break}"
+                android:textSize="14dp"
+                android:visibility="invisible"
+                app:layout_constraintTop_toBottomOf="@+id/live_desc_arrow"
+                tools:text="翻身、吃饭、睡觉、喝奶、打闹、攀爬……这里是成都大熊猫繁育研究基地，24小时高清直播大熊猫生活实况的地方。成年园、幼年园、幼儿园、母子园、一号别墅，11路直播信号28个摄像头，让你零距离了解国宝们的日常起居。"/>
 
         </android.support.constraint.ConstraintLayout>
 

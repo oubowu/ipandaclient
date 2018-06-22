@@ -134,7 +134,7 @@ public class HostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             } else {
                                 videoImageView.setInfo("Live", item.title, item.daytime);
                             }
-                            Glide.with(view.getContext()).load(item.image).apply(GlideConfig.getInstance()).into(videoImageView);
+                            Glide.with(view.getContext()).load(item.image).apply(GlideConfig.getInstance()).transition(GlideConfig.getTransitionOptions()).into(videoImageView);
 
                             view.setOnClickListener(v -> {
                                 if (position == 1 || position == 2) {
@@ -169,7 +169,7 @@ public class HostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     protected void initView(View view, int position, VideoList item) {
                         SimpleVideoImageView simpleVideoImageView = view.findViewById(R.id.simpleVideoImageView);
                         simpleVideoImageView.setVideoLength(item.videoLength);
-                        Glide.with(view.getContext()).load(item.image).apply(GlideConfig.getInstance()).into(simpleVideoImageView);
+                        Glide.with(view.getContext()).load(item.image).apply(GlideConfig.getInstance()).transition(GlideConfig.getTransitionOptions()).into(simpleVideoImageView);
 
                         TextView title = view.findViewById(R.id.tv_title);
                         TextView date = view.findViewById(R.id.tv_date);

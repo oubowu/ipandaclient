@@ -13,9 +13,9 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
@@ -182,6 +182,8 @@ public class PandaLiveSubFragment extends LazyFragment implements Injectable {
                             addDanmu(data, new int[]{0});
                         }
                     });
+                } else {
+                    mBinding.videoView.onDanmukuResume();
                 }
             }
 
@@ -216,7 +218,8 @@ public class PandaLiveSubFragment extends LazyFragment implements Injectable {
                         VideoImageView videoImageView = view.findViewById(R.id.video_image_view);
                         videoImageView.setInfo("Live", item.title, item.daytime);
 
-                        Glide.with(view.getContext()).load(item.image).apply(GlideConfig.getInstance()).into(videoImageView);
+                        Glide.with(view.getContext()).load(item.image).apply(GlideConfig.getInstance()).transition(GlideConfig.getTransitionOptions())
+                                .into(videoImageView);
                         view.setTag(-2, item.id);
                         view.setTag(-1, item.title);
 
@@ -283,7 +286,7 @@ public class PandaLiveSubFragment extends LazyFragment implements Injectable {
     }
 
     private void setArrowEvent() {
-        ValueAnimator valueAnimator = ValueAnimator.ofFloat(mBinding.liveDescArrow.getRotation(), mBinding.liveDescArrow.getRotation() + 180).setDuration(250);
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(mBinding.liveDescArrow.getRotation(), mBinding.liveDescArrow.getRotation() + 180).setDuration(500);
 
         mBinding.setEvent(new EventListenerAdapter() {
             @Override
@@ -300,13 +303,58 @@ public class PandaLiveSubFragment extends LazyFragment implements Injectable {
                     float fraction = animation.getAnimatedFraction();
 
                     if (!extend) {
-                        mBinding.liveDesc.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fraction * 14);
+                        mBinding.liveDesc.setHeight((int) (fraction * mBinding.liveDescFake.getHeight()));
                     } else {
-                        mBinding.liveDesc.setTextSize(TypedValue.COMPLEX_UNIT_DIP, (1 - fraction) * 14);
+                        mBinding.liveDesc.setHeight((int) ((1 - fraction) * mBinding.liveDescFake.getHeight()));
                     }
                 });
 
                 valueAnimator.addListener(new AnimatorListenerAdapter() {
+
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        View viewRoot = mBinding.liveDesc;
+
+                        int cx = 0;
+                        int cy = 0;
+                        int finalRadius = mBinding.summary.getWidth();
+                        Animator anim;
+                        if (!extend) {
+                            anim = ViewAnimationUtils.createCircularReveal(viewRoot, cx, cy, 0, finalRadius);
+                        } else {
+                            anim = ViewAnimationUtils.createCircularReveal(viewRoot, cx, cy, finalRadius, 0);
+                        }
+                        viewRoot.setVisibility(View.VISIBLE);
+                        anim.setDuration(500);
+                        anim.start();
+
+                        anim.addListener(new Animator.AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(Animator animation) {
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                if (!extend) {
+                                    viewRoot.setVisibility(View.VISIBLE);
+                                } else {
+                                    viewRoot.setVisibility(View.GONE);
+                                }
+                            }
+
+                            @Override
+                            public void onAnimationCancel(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animator animation) {
+
+                            }
+                        });
+
+                    }
+
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         mBinding.liveDescArrow.setClickable(true);

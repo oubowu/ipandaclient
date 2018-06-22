@@ -52,7 +52,7 @@ public class BindingAdapters {
                 imageView.setLayoutParams(params);
                 return false;
             }
-        })*/.into(imageView);
+        })*/.transition(GlideConfig.getTransitionOptions()).into(imageView);
     }
 
 }
