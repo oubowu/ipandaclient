@@ -31,7 +31,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * Created by Oubowu on 2018/1/14 14:03.
  */
-public class CarouselViewPager extends RelativeLayout {
+public class CarouselViewPager extends RelativeLayout implements ViewPager.OnPageChangeListener {
 
     private CarousePagerBinding mBinding;
 
@@ -46,7 +46,29 @@ public class CarouselViewPager extends RelativeLayout {
     private int mLastPosition;
     long mAutoScrollTimeMillis;
 
-    private ViewPager.OnPageChangeListener mPageChangeListener;
+    private OnPageChangeListenerAdapter mPageChangeListener;
+
+    public static class OnPageChangeListenerAdapter implements ViewPager.OnPageChangeListener {
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    }
+
+    public void setPageChangeListener(OnPageChangeListenerAdapter pageChangeListener) {
+        mPageChangeListener = pageChangeListener;
+    }
 
     public void setList(List<HomeIndex.BigImgBean> list) {
         if (mPagerAdapter != null) {
@@ -54,10 +76,10 @@ public class CarouselViewPager extends RelativeLayout {
             mPagerAdapter.notifyDataSetChanged();
             if (mPagerAdapter.getCount() > 1) {
                 // 设置viewPager的监听事件
-                mViewPager.addOnPageChangeListener(mPageChangeListener);
+                mViewPager.addOnPageChangeListener(this);
                 mBinding.viewPager.setCurrentItem(1, false);
             } else {
-                mViewPager.removeOnPageChangeListener(mPageChangeListener);
+                mViewPager.removeOnPageChangeListener(this);
             }
         }
     }
@@ -105,39 +127,39 @@ public class CarouselViewPager extends RelativeLayout {
             return false;
         });
 
-        mPageChangeListener = new ViewPager.OnPageChangeListener() {
-            // 滑动状态改变的方法 state :draaging 拖拽 idle 静止 settling 惯性过程
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                //如果是静止状态,将当前页进行替换
-                if (state == ViewPager.SCROLL_STATE_IDLE && (mLastPosition == mPagerAdapter.getCount() - 1 || mLastPosition == 0)) {
-                    // 设置当前页,smoothScroll 平稳滑动
-                    mViewPager.setCurrentItem(mCurrentPosition, false);
-                }
-            }
+        //        mPageChangeListener = new ViewPager.OnPageChangeListener() {
+        //            // 滑动状态改变的方法 state :draaging 拖拽 idle 静止 settling 惯性过程
+        //            @Override
+        //            public void onPageScrollStateChanged(int state) {
+        //                //如果是静止状态,将当前页进行替换
+        //                if (state == ViewPager.SCROLL_STATE_IDLE && (mLastPosition == mPagerAdapter.getCount() - 1 || mLastPosition == 0)) {
+        //                    // 设置当前页,smoothScroll 平稳滑动
+        //                    mViewPager.setCurrentItem(mCurrentPosition, false);
+        //                }
+        //            }
 
-            // 滑动过程中的方法 position 索引值
-            // positionOffset 0-1
-            // positionOffsetPixels 偏移像素值
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
+        //            // 滑动过程中的方法 position 索引值
+        //            // positionOffset 0-1
+        //            // positionOffsetPixels 偏移像素值
+        //            @Override
+        //            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        //            }
 
-            // 选中某一页的监听
-            @Override
-            public void onPageSelected(int position) {
-                mLastPosition = position;
-                if (position == mPagerAdapter.getCount() - 1) {
-                    // 设置当前值为1
-                    mCurrentPosition = 1;
-                } else if (position == 0) {
-                    // 如果索引值为0了,就设置索引值为倒数第二个
-                    mCurrentPosition = mPagerAdapter.getCount() - 2;
-                } else {
-                    mCurrentPosition = position;
-                }
-            }
-        };
+        //            // 选中某一页的监听
+        //            @Override
+        //            public void onPageSelected(int position) {
+        //                mLastPosition = position;
+        //                if (position == mPagerAdapter.getCount() - 1) {
+        //                    // 设置当前值为1
+        //                    mCurrentPosition = 1;
+        //                } else if (position == 0) {
+        //                    // 如果索引值为0了,就设置索引值为倒数第二个
+        //                    mCurrentPosition = mPagerAdapter.getCount() - 2;
+        //                } else {
+        //                    mCurrentPosition = position;
+        //                }
+        //            }
+        //        };
 
         mDisposable = Observable //
                 .interval(4, 4, TimeUnit.SECONDS) //
@@ -154,6 +176,47 @@ public class CarouselViewPager extends RelativeLayout {
 
         mBinding.indicatorContainer.attachViewPager(mViewPager);
 
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        // 滑动过程中的方法 position 索引值
+        // positionOffset 0-1
+        // positionOffsetPixels 偏移像素值
+        if (mPageChangeListener != null) {
+            mPageChangeListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
+        }
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        // 选中某一页的监听
+        mLastPosition = position;
+        if (position == mPagerAdapter.getCount() - 1) {
+            // 设置当前值为1
+            mCurrentPosition = 1;
+        } else if (position == 0) {
+            // 如果索引值为0了,就设置索引值为倒数第二个
+            mCurrentPosition = mPagerAdapter.getCount() - 2;
+        } else {
+            mCurrentPosition = position;
+        }
+        if (mPageChangeListener != null) {
+            mPageChangeListener.onPageSelected(mCurrentPosition);
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+        // 滑动状态改变的方法 state :draaging 拖拽 idle 静止 settling 惯性过程
+        //如果是静止状态,将当前页进行替换
+        if (state == ViewPager.SCROLL_STATE_IDLE && (mLastPosition == mPagerAdapter.getCount() - 1 || mLastPosition == 0)) {
+            // 设置当前页,smoothScroll 平稳滑动
+            mViewPager.setCurrentItem(mCurrentPosition, false);
+        }
+        if (mPageChangeListener != null) {
+            mPageChangeListener.onPageScrollStateChanged(state);
+        }
     }
 
     private class CarouselPagerAdapter extends PagerAdapter implements OnClickListener {

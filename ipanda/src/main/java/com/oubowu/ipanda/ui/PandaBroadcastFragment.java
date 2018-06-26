@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -35,7 +36,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class PandaBroadcastFragment extends Fragment implements Injectable {
+public class PandaBroadcastFragment extends Fragment implements Injectable, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String NAME = "name";
     private static final String URL = "url";
@@ -51,6 +52,8 @@ public class PandaBroadcastFragment extends Fragment implements Injectable {
     @Inject
     ViewModelProvider.Factory mFactory;
     private PandaBroadcastAdapter mPandaBroadcastAdapter;
+
+    private PandaBroadcastViewModel mPandaBroadcastViewModel;
 
     public PandaBroadcastFragment() {
     }
@@ -77,22 +80,6 @@ public class PandaBroadcastFragment extends Fragment implements Injectable {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_panda_broadcast, container, false, new FragmentDataBindingComponent(this));
 
-        CoordinatorLayout.LayoutParams clp = (CoordinatorLayout.LayoutParams) mBinding.toolbar.getLayoutParams();
-        CoordinatorLayout.Behavior behavior = clp.getBehavior();
-        if (behavior != null && behavior instanceof BarBehavior) {
-            ((BarBehavior) behavior).setOnNestedScrollListener(new BarBehavior.OnNestedScrollListener() {
-                @Override
-                public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
-                    mListener.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
-                }
-
-                @Override
-                public boolean onNestedFling(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, float velocityX, float velocityY, boolean consumed) {
-                    return mListener.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
-                }
-            });
-        }
-
         mBinding.setTitle(mName);
 
         return mBinding.getRoot();
@@ -102,6 +89,34 @@ public class PandaBroadcastFragment extends Fragment implements Injectable {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        dispatchScrollEvent();
+
+        initSwipeRefreshLayout();
+
+        initRecyclerView();
+
+        getPandaBroadcastIndex();
+
+    }
+
+    private void getPandaBroadcastIndex() {
+        if (mPandaBroadcastViewModel == null) {
+            mPandaBroadcastViewModel = ViewModelProviders.of(this, mFactory).get(PandaBroadcastViewModel.class);
+        }
+
+        mPandaBroadcastViewModel.getPandaBroadcastIndex(mUrl).observe(this, new ObserverImpl<PandaBroadcastIndex>() {
+            @Override
+            protected void onSuccess(@NonNull PandaBroadcastIndex data) {
+
+                List<PandaBroadcastIndex.BigImgBean> bigImg = data.bigImg;
+
+                getPandaBroadcastList(data, bigImg, mPandaBroadcastViewModel);
+
+            }
+        });
+    }
+
+    private void initRecyclerView() {
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 
         mPandaBroadcastAdapter = new PandaBroadcastAdapter(new FragmentDataBindingComponent(this));
@@ -127,20 +142,32 @@ public class PandaBroadcastFragment extends Fragment implements Injectable {
                 }
             }
         });
+    }
 
-        PandaBroadcastViewModel pandaBroadcastViewModel = ViewModelProviders.of(this, mFactory).get(PandaBroadcastViewModel.class);
-
-        pandaBroadcastViewModel.getPandaBroadcastIndex(mUrl).observe(this, new ObserverImpl<PandaBroadcastIndex>() {
-            @Override
-            protected void onSuccess(@NonNull PandaBroadcastIndex data) {
-
-                List<PandaBroadcastIndex.BigImgBean> bigImg = data.bigImg;
-
-                getPandaBroadcastList(data, bigImg, pandaBroadcastViewModel);
-
-            }
+    private void initSwipeRefreshLayout() {
+        mBinding.toolbar.post(() -> {
+            mBinding.swipeRefreshLayout.setProgressViewOffset(false, mBinding.toolbar.getBottom(), (int) (mBinding.toolbar.getBottom() * 1.5));
+            mBinding.swipeRefreshLayout.setRefreshing(true);
+            mBinding.swipeRefreshLayout.setOnRefreshListener(this);
         });
+    }
 
+    private void dispatchScrollEvent() {
+        CoordinatorLayout.LayoutParams clp = (CoordinatorLayout.LayoutParams) mBinding.toolbar.getLayoutParams();
+        CoordinatorLayout.Behavior behavior = clp.getBehavior();
+        if (behavior != null && behavior instanceof BarBehavior) {
+            ((BarBehavior) behavior).setOnNestedScrollListener(new BarBehavior.OnNestedScrollListener() {
+                @Override
+                public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+                    mListener.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+                }
+
+                @Override
+                public boolean onNestedFling(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, float velocityX, float velocityY, boolean consumed) {
+                    return mListener.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
+                }
+            });
+        }
     }
 
     private void getPandaBroadcastList(@NonNull PandaBroadcastIndex broadcastIndex, List<PandaBroadcastIndex.BigImgBean> bigImg, PandaBroadcastViewModel pandaBroadcastViewModel) {
@@ -162,6 +189,8 @@ public class PandaBroadcastFragment extends Fragment implements Injectable {
                     }
 
                     mPandaBroadcastAdapter.replace(data.list);
+
+                    mBinding.swipeRefreshLayout.setRefreshing(false);
 
                 }
 
@@ -187,4 +216,8 @@ public class PandaBroadcastFragment extends Fragment implements Injectable {
         mListener = null;
     }
 
+    @Override
+    public void onRefresh() {
+        getPandaBroadcastIndex();
+    }
 }

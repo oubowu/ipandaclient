@@ -1,5 +1,6 @@
 package com.oubowu.ipanda.util;
 
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.transition.DrawableCrossFadeFactory;
@@ -19,7 +20,7 @@ public class GlideConfig {
         if (REQUEST_OPTIONS == null) {
             synchronized (GlideConfig.class) {
                 if (REQUEST_OPTIONS == null) {
-                    REQUEST_OPTIONS = new RequestOptions().placeholder(R.drawable.ic_panda_loading).error(R.drawable.ic_loading_fail).fitCenter();
+                    REQUEST_OPTIONS = new RequestOptions().placeholder(R.drawable.ic_panda_loading).error(R.drawable.ic_loading_fail).diskCacheStrategy(DiskCacheStrategy.RESOURCE);
                 }
             }
         }
@@ -27,7 +28,7 @@ public class GlideConfig {
     }
 
     public static DrawableTransitionOptions getTransitionOptions(){
-        return DrawableTransitionOptions.withCrossFade(new DrawableCrossFadeFactory.Builder(250).setCrossFadeEnabled(true));
+        return DrawableTransitionOptions.withCrossFade(new DrawableCrossFadeFactory.Builder(150).setCrossFadeEnabled(true));
     }
 
 }

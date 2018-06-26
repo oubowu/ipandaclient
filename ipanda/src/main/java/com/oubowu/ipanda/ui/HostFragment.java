@@ -12,6 +12,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,6 +29,7 @@ import com.oubowu.ipanda.databinding.FragmentHostBinding;
 import com.oubowu.ipanda.di.Injectable;
 import com.oubowu.ipanda.ui.adapter.FragmentDataBindingComponent;
 import com.oubowu.ipanda.ui.adapter.HostAdapter;
+import com.oubowu.ipanda.ui.widget.CarouselViewPager;
 import com.oubowu.ipanda.util.BarBehavior;
 import com.oubowu.ipanda.util.CommonUtil;
 import com.oubowu.ipanda.util.ToastUtil;
@@ -39,7 +42,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 
-public class HostFragment extends Fragment implements Injectable {
+public class HostFragment extends Fragment implements Injectable, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String NAME = "name";
     private static final String URL = "url";
@@ -58,6 +61,7 @@ public class HostFragment extends Fragment implements Injectable {
 
     private HostAdapter mHostAdapter;
 
+    private HostViewModel mHostViewModel;
 
     public HostFragment() {
         // Required empty public constructor
@@ -95,28 +99,39 @@ public class HostFragment extends Fragment implements Injectable {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        initSwipeRefreshLayout();
 
-        RecyclerView recyclerView = mBinding.recyclerView;
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
-        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+        initRecyclerView();
 
-            Drawable drawable = ContextCompat.getDrawable(mContext, R.drawable.divider_panda_live_fragment);
+        controlSwipeRefreshLayout();
 
-            @Override
-            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+        initStickyHeader();
 
-                int position = parent.getChildAdapterPosition(view);
-                if (position == 0) {
-                    outRect.top = 0;
-                } else {
-                    outRect.top = drawable.getIntrinsicHeight();
-                    if (position == parent.getAdapter().getItemCount() - 1) {
-                        outRect.bottom = drawable.getIntrinsicHeight();
-                    }
+        getHomeIndex();
+
+        dispatchScrollEvent();
+
+    }
+
+    private void dispatchScrollEvent() {
+        CoordinatorLayout.LayoutParams clp = (CoordinatorLayout.LayoutParams) mBinding.toolbar.getLayoutParams();
+        CoordinatorLayout.Behavior behavior = clp.getBehavior();
+        if (behavior != null && behavior instanceof BarBehavior) {
+            ((BarBehavior) behavior).setOnNestedScrollListener(new BarBehavior.OnNestedScrollListener() {
+                @Override
+                public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+                    mListener.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
                 }
-            }
-        });
 
+                @Override
+                public boolean onNestedFling(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, float velocityX, float velocityY, boolean consumed) {
+                    return mListener.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
+                }
+            });
+        }
+    }
+
+    private void initStickyHeader() {
         final StickyHeadContainer container = mBinding.stickyHeadContainer;
         container.setDataCallback(pos -> {
             HomeIndex homeIndex = mHostAdapter.getHomeIndex();
@@ -140,14 +155,77 @@ public class HostFragment extends Fragment implements Injectable {
                     break;
             }
         });
-        recyclerView.addItemDecoration(new StickyItemDecoration(container, HostAdapter.TYPE_PANDA_NEWS, HostAdapter.TYPE_VIDEO_GRID));
+        mBinding.recyclerView.addItemDecoration(new StickyItemDecoration(container, HostAdapter.TYPE_PANDA_NEWS, HostAdapter.TYPE_VIDEO_GRID));
+    }
 
+    private void controlSwipeRefreshLayout() {
+        mBinding.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                // int topRowVerticalPosition = recyclerView.getChildCount() == 0 ? 0 : recyclerView.getChildAt(0).getTop();
+                float topRowVerticalPosition = mBinding.carouselViewPager.getY();
+                mBinding.swipeRefreshLayout.setEnabled(topRowVerticalPosition >= mBinding.toolbar.getHeight());
+            }
+        });
+
+        mBinding.carouselViewPager.setPageChangeListener(new CarouselViewPager.OnPageChangeListenerAdapter() {
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if (mBinding.swipeRefreshLayout.getChildAt(mBinding.swipeRefreshLayout.getChildCount() - 1).getVisibility() == View.VISIBLE) {
+                    return;
+                }
+                if ((mBinding.carouselViewPager.getY() < mBinding.toolbar.getHeight())) {
+                    return;
+                }
+                if (state == ViewPager.SCROLL_STATE_IDLE) {
+                    mBinding.swipeRefreshLayout.setEnabled(true);
+                } else {
+                    mBinding.swipeRefreshLayout.setEnabled(false);
+                }
+            }
+        });
+    }
+
+    private void initRecyclerView() {
+        RecyclerView recyclerView = mBinding.recyclerView;
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
+        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+
+            Drawable drawable = ContextCompat.getDrawable(mContext, R.drawable.divider_panda_live_fragment);
+
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+
+                int position = parent.getChildAdapterPosition(view);
+                if (position == 0) {
+                    outRect.top = 0;
+                } else {
+                    outRect.top = drawable.getIntrinsicHeight();
+                    if (position == parent.getAdapter().getItemCount() - 1) {
+                        outRect.bottom = drawable.getIntrinsicHeight();
+                    }
+                }
+            }
+        });
         mHostAdapter = new HostAdapter(new FragmentDataBindingComponent(this));
         recyclerView.setAdapter(mHostAdapter);
+    }
 
-        HostViewModel hostViewModel = ViewModelProviders.of(this, mFactory).get(HostViewModel.class);
+    private void initSwipeRefreshLayout() {
+        mBinding.toolbar.post(() -> {
+            mBinding.swipeRefreshLayout.setProgressViewOffset(false, mBinding.toolbar.getBottom(), (int) (mBinding.toolbar.getBottom() * 1.5));
+            mBinding.swipeRefreshLayout.setRefreshing(true);
+            mBinding.swipeRefreshLayout.setOnRefreshListener(this);
+        });
+    }
 
-        hostViewModel.getHomeIndex(mUrl).observe(this, new ObserverImpl<HomeIndex>() {
+    private void getHomeIndex() {
+
+        if (mHostViewModel == null) {
+            mHostViewModel = ViewModelProviders.of(this, mFactory).get(HostViewModel.class);
+        }
+
+        mHostViewModel.getHomeIndex(mUrl).observe(this, new ObserverImpl<HomeIndex>() {
             @Override
             protected void onError(@NonNull String errorMsg) {
                 ToastUtil.showSuccessMsg(errorMsg);
@@ -163,33 +241,18 @@ public class HostFragment extends Fragment implements Injectable {
                 mBinding.carouselViewPager.setList(data.bigImg);
                 mHostAdapter.replace(data);
 
+                mBinding.swipeRefreshLayout.setRefreshing(false);
+
                 if (CommonUtil.isNotEmpty(data.cctv.listurl)) {
-                    getWonderfulMomentIndex(data, hostViewModel);
+                    getWonderfulMomentIndex(data, mHostViewModel);
                 }
 
                 if (CommonUtil.isNotEmpty(data.list)) {
-                    getGungunVideoIndex(data, hostViewModel);
+                    getGungunVideoIndex(data, mHostViewModel);
                 }
 
             }
         });
-
-        CoordinatorLayout.LayoutParams clp = (CoordinatorLayout.LayoutParams) mBinding.toolbar.getLayoutParams();
-        CoordinatorLayout.Behavior behavior = clp.getBehavior();
-        if (behavior != null && behavior instanceof BarBehavior) {
-            ((BarBehavior) behavior).setOnNestedScrollListener(new BarBehavior.OnNestedScrollListener() {
-                @Override
-                public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
-                    mListener.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
-                }
-
-                @Override
-                public boolean onNestedFling(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, float velocityX, float velocityY, boolean consumed) {
-                    return mListener.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
-                }
-            });
-        }
-
     }
 
     private void getGungunVideoIndex(@NonNull HomeIndex data, HostViewModel hostViewModel) {
@@ -232,5 +295,10 @@ public class HostFragment extends Fragment implements Injectable {
         mListener = null;
         // 取消所有异步任务
         mContext = null;
+    }
+
+    @Override
+    public void onRefresh() {
+        getHomeIndex();
     }
 }

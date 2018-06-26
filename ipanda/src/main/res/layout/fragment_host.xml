@@ -19,62 +19,67 @@
 
     </data>
 
-    <android.support.design.widget.CoordinatorLayout
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context="com.oubowu.ipanda.ui.HostFragment">
+        android:layout_height="match_parent">
 
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="1">
+            android:orientation="vertical"
+            tools:context="com.oubowu.ipanda.ui.HostFragment">
 
-        </android.support.v7.widget.RecyclerView>
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="1">
 
-        <com.oubowu.ipanda.ui.widget.CarouselViewPager
-            android:id="@+id/carouselViewPager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:minHeight="200dp"
-            app:dependenceId="@id/toolbar"
-            app:dividerId="@drawable/divider_host_fragment"
-            app:followId="@id/recyclerView"
-            app:layout_behavior="com.oubowu.ipanda.util.FollowRecyclerViewBehavior">
+            </android.support.v7.widget.RecyclerView>
 
-        </com.oubowu.ipanda.ui.widget.CarouselViewPager>
+            <com.oubowu.ipanda.ui.widget.CarouselViewPager
+                android:id="@+id/carouselViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="200dp"
+                app:dependenceId="@id/toolbar"
+                app:dividerId="@drawable/divider_host_fragment"
+                app:followId="@id/recyclerView"
+                app:layout_behavior="com.oubowu.ipanda.util.FollowRecyclerViewBehavior">
 
-        <com.oubowu.stickyitemdecoration.StickyHeadContainer
-            android:id="@+id/stickyHeadContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            </com.oubowu.ipanda.ui.widget.CarouselViewPager>
 
-            <include
-                layout="@layout/include_fragment_host_tag"
-                app:title='@{stickyTitle}'/>
+            <com.oubowu.stickyitemdecoration.StickyHeadContainer
+                android:id="@+id/stickyHeadContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        </com.oubowu.stickyitemdecoration.StickyHeadContainer>
+                <include
+                    layout="@layout/include_fragment_host_tag"
+                    app:title='@{stickyTitle}'/>
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:alpha="1"
-            android:background="@drawable/toolbar_rect"
-            android:elevation="2dp"
-            android:theme="@style/ToolbarStyle"
-            app:direction="same"
-            app:layout_behavior="com.oubowu.ipanda.util.BarBehavior"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:toolbarTitle="@{title}">
+            </com.oubowu.stickyitemdecoration.StickyHeadContainer>
 
-        </android.support.v7.widget.Toolbar>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:alpha="1"
+                android:background="@drawable/toolbar_rect"
+                android:elevation="2dp"
+                android:theme="@style/ToolbarStyle"
+                app:direction="same"
+                app:layout_behavior="com.oubowu.ipanda.util.BarBehavior"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:toolbarTitle="@{title}">
 
-    </android.support.design.widget.CoordinatorLayout>
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.CoordinatorLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </layout>
 

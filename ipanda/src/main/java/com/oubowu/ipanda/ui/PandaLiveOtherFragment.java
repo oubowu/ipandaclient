@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,7 +29,7 @@ import com.oubowu.ipanda.viewmodel.PandaLiveOtherViewModel;
 
 import javax.inject.Inject;
 
-public class PandaLiveOtherFragment extends LazyFragment implements Injectable {
+public class PandaLiveOtherFragment extends LazyFragment implements Injectable, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String NAME = "name";
     private static final String ID = "id";
@@ -46,6 +47,10 @@ public class PandaLiveOtherFragment extends LazyFragment implements Injectable {
     ViewModelProvider.Factory mFactory;
 
     private Context mContext;
+
+    private PandaLiveOtherViewModel mPandaLiveOtherViewModel;
+
+    private PandaLiveOtherAdapter mAdapter;
 
     public PandaLiveOtherFragment() {
     }
@@ -75,6 +80,23 @@ public class PandaLiveOtherFragment extends LazyFragment implements Injectable {
     View inflateView(LayoutInflater inflater, ViewGroup container) {
         mBinding = DataBindingUtil.inflate(LayoutInflater.from(container.getContext()), R.layout.fragment_panda_live_other, container, false);
 
+        initSwipeRefreshLayout();
+
+        initRecyclerView(container);
+
+        return mBinding.getRoot();
+    }
+
+    private void initSwipeRefreshLayout() {
+        mBinding.recyclerView.post(() -> {
+            mBinding.swipeRefreshLayout.setProgressViewOffset(false, mPaddingTop, (int) (mPaddingTop * 1.5));
+            mBinding.swipeRefreshLayout.setRefreshing(true);
+            mBinding.swipeRefreshLayout.setOnRefreshListener(this);
+        });
+    }
+
+
+    private void initRecyclerView(ViewGroup container) {
         mBinding.recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
 
             Drawable drawable = ContextCompat.getDrawable(container.getContext(), R.drawable.divider_panda_live_fragment);
@@ -99,33 +121,37 @@ public class PandaLiveOtherFragment extends LazyFragment implements Injectable {
 
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext(), LinearLayoutManager.VERTICAL, false));
 
-        return mBinding.getRoot();
+        mAdapter = new PandaLiveOtherAdapter(new FragmentDataBindingComponent(PandaLiveOtherFragment.this));
+
+        mBinding.recyclerView.setAdapter(mAdapter);
+
+        mAdapter.setClickCallback((view, position) -> {
+            VideoActivity.start(getActivity(), view, mAdapter.getItem(position).vid);
+        });
     }
 
     @Override
     protected void onFragmentVisibleChange(boolean isVisible, boolean isFirstInit) {
         if (isVisible && !isFirstInit) {
 
-            PandaLiveOtherViewModel pandaLiveOtherViewModel = ViewModelProviders.of(this, mFactory).get(PandaLiveOtherViewModel.class);
-
-            pandaLiveOtherViewModel.getRecordTab(mId, 10, 0).observe(this, new ObserverImpl<RecordTab>() {
-                @Override
-                protected void onSuccess(@NonNull RecordTab data) {
-                    mIsFirstInit = true;
-
-                    PandaLiveOtherAdapter adapter = new PandaLiveOtherAdapter(new FragmentDataBindingComponent(PandaLiveOtherFragment.this));
-
-                    mBinding.recyclerView.setAdapter(adapter);
-
-                    adapter.setClickCallback((view, position) -> {
-                        VideoActivity.start(getActivity(), view, adapter.getItem(position).vid);
-                    });
-
-                    adapter.replace(data.video);
-                }
-            });
+            getRecordTab();
 
         }
+    }
+
+    private void getRecordTab() {
+        if (mPandaLiveOtherViewModel == null) {
+            mPandaLiveOtherViewModel = ViewModelProviders.of(this, mFactory).get(PandaLiveOtherViewModel.class);
+        }
+
+        mPandaLiveOtherViewModel.getRecordTab(mId, 10, 0).observe(this, new ObserverImpl<RecordTab>() {
+            @Override
+            protected void onSuccess(@NonNull RecordTab data) {
+                mIsFirstInit = true;
+                mAdapter.replace(data.video);
+                mBinding.swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     @Override
@@ -144,5 +170,10 @@ public class PandaLiveOtherFragment extends LazyFragment implements Injectable {
         super.onDetach();
         mContext = null;
         mListener = null;
+    }
+
+    @Override
+    public void onRefresh() {
+        getRecordTab();
     }
 }

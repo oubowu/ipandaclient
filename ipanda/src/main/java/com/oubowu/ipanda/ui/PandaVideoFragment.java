@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -32,7 +33,7 @@ import com.oubowu.ipanda.viewmodel.PandaVideoViewModel;
 
 import javax.inject.Inject;
 
-public class PandaVideoFragment extends Fragment implements Injectable {
+public class PandaVideoFragment extends Fragment implements Injectable, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String NAME = "name";
     private static final String URL = "url";
@@ -48,6 +49,8 @@ public class PandaVideoFragment extends Fragment implements Injectable {
 
     @Inject
     ViewModelProvider.Factory mFactory;
+
+    private PandaVideoViewModel mPandaVideoViewModel;
 
     public PandaVideoFragment() {
     }
@@ -74,22 +77,6 @@ public class PandaVideoFragment extends Fragment implements Injectable {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_panda_video, container, false, new FragmentDataBindingComponent(this));
 
-        CoordinatorLayout.LayoutParams clp = (CoordinatorLayout.LayoutParams) mBinding.toolbar.getLayoutParams();
-        CoordinatorLayout.Behavior behavior = clp.getBehavior();
-        if (behavior != null && behavior instanceof BarBehavior) {
-            ((BarBehavior) behavior).setOnNestedScrollListener(new BarBehavior.OnNestedScrollListener() {
-                @Override
-                public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
-                    mListener.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
-                }
-
-                @Override
-                public boolean onNestedFling(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, float velocityX, float velocityY, boolean consumed) {
-                    return mListener.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
-                }
-            });
-        }
-
         mBinding.setTitle(mName);
 
         return mBinding.getRoot();
@@ -99,6 +86,50 @@ public class PandaVideoFragment extends Fragment implements Injectable {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        dispatchScrollEvent();
+
+        initSwipeRefreshLayout();
+
+        initRecyclerView();
+
+        getPandaVideoIndex();
+
+    }
+
+    private void initSwipeRefreshLayout() {
+        mBinding.toolbar.post(() -> {
+            mBinding.swipeRefreshLayout.setProgressViewOffset(false, mBinding.toolbar.getBottom(), (int) (mBinding.toolbar.getBottom() * 1.5));
+            mBinding.swipeRefreshLayout.setRefreshing(true);
+            mBinding.swipeRefreshLayout.setOnRefreshListener(this);
+        });
+    }
+
+    private void getPandaVideoIndex() {
+        if (mPandaVideoViewModel == null) {
+            mPandaVideoViewModel = ViewModelProviders.of(this, mFactory).get(PandaVideoViewModel.class);
+        }
+
+        mPandaVideoViewModel.getPandaVideoIndex(mUrl).observe(this, new ObserverImpl<PandaVideoIndex>() {
+            @Override
+            protected void onSuccess(@NonNull PandaVideoIndex data) {
+                if (CommonUtil.isNotEmpty(data.bigImg)) {
+                    PandaVideoIndex.BigImgBean bigImgBean = data.bigImg.get(0);
+                    PandaVideoIndex.ListBean listBean = new PandaVideoIndex.ListBean();
+                    listBean.title = bigImgBean.title;
+                    listBean.image = bigImgBean.image;
+                    listBean.id = bigImgBean.pid;
+                    listBean.url = bigImgBean.url;
+                    listBean.type = bigImgBean.type;
+                    data.list.add(0, listBean);
+                }
+                mPandaVideoAdapter.replace(data.list);
+
+                mBinding.swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+
+    private void initRecyclerView() {
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 
         mPandaVideoAdapter = new PandaVideoAdapter(new FragmentDataBindingComponent(this));
@@ -124,26 +155,24 @@ public class PandaVideoFragment extends Fragment implements Injectable {
                 }
             }
         });
+    }
 
-        PandaVideoViewModel pandaVideoViewModel = ViewModelProviders.of(this, mFactory).get(PandaVideoViewModel.class);
-
-        pandaVideoViewModel.getPandaVideoIndex(mUrl).observe(this, new ObserverImpl<PandaVideoIndex>() {
-            @Override
-            protected void onSuccess(@NonNull PandaVideoIndex data) {
-                if (CommonUtil.isNotEmpty(data.bigImg)) {
-                    PandaVideoIndex.BigImgBean bigImgBean = data.bigImg.get(0);
-                    PandaVideoIndex.ListBean listBean = new PandaVideoIndex.ListBean();
-                    listBean.title = bigImgBean.title;
-                    listBean.image = bigImgBean.image;
-                    listBean.id = bigImgBean.pid;
-                    listBean.url = bigImgBean.url;
-                    listBean.type = bigImgBean.type;
-                    data.list.add(0, listBean);
+    private void dispatchScrollEvent() {
+        CoordinatorLayout.LayoutParams clp = (CoordinatorLayout.LayoutParams) mBinding.toolbar.getLayoutParams();
+        CoordinatorLayout.Behavior behavior = clp.getBehavior();
+        if (behavior != null && behavior instanceof BarBehavior) {
+            ((BarBehavior) behavior).setOnNestedScrollListener(new BarBehavior.OnNestedScrollListener() {
+                @Override
+                public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+                    mListener.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
                 }
-                mPandaVideoAdapter.replace(data.list);
-            }
-        });
 
+                @Override
+                public boolean onNestedFling(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, float velocityX, float velocityY, boolean consumed) {
+                    return mListener.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
+                }
+            });
+        }
     }
 
     @Override
@@ -162,5 +191,10 @@ public class PandaVideoFragment extends Fragment implements Injectable {
         super.onDetach();
         mContext = null;
         mListener = null;
+    }
+
+    @Override
+    public void onRefresh() {
+        getPandaVideoIndex();
     }
 }
