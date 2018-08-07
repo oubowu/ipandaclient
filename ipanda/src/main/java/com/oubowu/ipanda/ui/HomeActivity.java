@@ -1,6 +1,5 @@
 package com.oubowu.ipanda.ui;
 
-import android.accounts.Account;
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
@@ -13,7 +12,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.menu.MenuBuilder;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -24,12 +22,12 @@ import com.oubowu.ipanda.callback.OnFragmentScrollListener;
 import com.oubowu.ipanda.databinding.ActivityHomeBinding;
 import com.oubowu.ipanda.util.BarBehavior;
 import com.oubowu.ipanda.util.BottomNavigationViewHelper;
+import com.oubowu.ipanda.util.HandleBackUtil;
 import com.oubowu.ipanda.util.NavigationController;
 import com.oubowu.ipanda.util.StatusBarUtil;
 import com.oubowu.ipanda.util.ToastUtil;
 import com.oubowu.ipanda.viewmodel.HomeViewModel;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -88,23 +86,9 @@ public class HomeActivity extends AppCompatActivity implements HasSupportFragmen
 
     @Override
     public void onBackPressed() {
-        //        if (!HandleBackUtil.handleBackPress(this)) {
-        //            moveTaskToBack(true);
-        //        }
-        try {
-            try {
-                Account account = new Account("124","122");
-                Field accessId = account.getClass().getDeclaredField("accessId");
-                accessId.setAccessible(true);
-                String s = (String) accessId.get(account);
-                Log.e("HomeActivity","99行-onBackPressed(): "+s);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
+        if (!HandleBackUtil.handleBackPress(this)) {
+            moveTaskToBack(true);
         }
-
     }
 
     @SuppressLint("RestrictedApi")
