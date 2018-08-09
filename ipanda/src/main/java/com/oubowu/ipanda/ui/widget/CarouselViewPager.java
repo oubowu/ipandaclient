@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -20,6 +21,8 @@ import com.oubowu.ipanda.bean.home.HomeIndex;
 import com.oubowu.ipanda.databinding.CarousePagerBinding;
 import com.oubowu.ipanda.databinding.ItemCarousePagerBinding;
 import com.oubowu.ipanda.ui.VideoActivity;
+import com.oubowu.ipanda.ui.WebViewActivity;
+import com.oubowu.ipanda.util.ToastUtil;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -283,7 +286,15 @@ public class CarouselViewPager extends RelativeLayout implements ViewPager.OnPag
         @Override
         public void onClick(View v) {
             HomeIndex.BigImgBean bean = (HomeIndex.BigImgBean) v.getTag(-1);
-            VideoActivity.start((Activity) v.getContext(), v, bean.pid);
+            if (TextUtils.isEmpty(bean.url)) {
+                ToastUtil.showErrorMsg("视频地址不存在！");
+            } else {
+                if (bean.type.equals("2")) {
+                    VideoActivity.start((Activity) v.getContext(), v, bean.pid);
+                } else {
+                    WebViewActivity.start((Activity) v.getContext(), bean.title, bean.url);
+                }
+            }
         }
     }
 

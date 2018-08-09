@@ -161,7 +161,7 @@ public class HostFragment extends Fragment implements Injectable, SwipeRefreshLa
     private void controlSwipeRefreshLayout() {
         mBinding.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 // int topRowVerticalPosition = recyclerView.getChildCount() == 0 ? 0 : recyclerView.getChildAt(0).getTop();
                 float topRowVerticalPosition = mBinding.carouselViewPager.getY();
                 mBinding.swipeRefreshLayout.setEnabled(topRowVerticalPosition >= mBinding.toolbar.getHeight());
