@@ -169,6 +169,12 @@ public class HostFragment extends Fragment implements Injectable, SwipeRefreshLa
         });
 
         mBinding.carouselViewPager.setPageChangeListener(new CarouselViewPager.OnPageChangeListenerAdapter() {
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                mBinding.swipeRefreshLayout.setEnabled(false);
+            }
+
             @Override
             public void onPageScrollStateChanged(int state) {
                 if (mBinding.swipeRefreshLayout.getChildAt(mBinding.swipeRefreshLayout.getChildCount() - 1).getVisibility() == View.VISIBLE) {

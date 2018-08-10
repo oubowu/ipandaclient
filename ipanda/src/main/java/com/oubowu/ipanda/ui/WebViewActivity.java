@@ -226,7 +226,7 @@ public class WebViewActivity extends AppCompatActivity implements HasSupportFrag
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
-                Log.e("WebViewActivity", "66行-onProgressChanged(): " + newProgress);
+                // Log.e("WebViewActivity", "66行-onProgressChanged(): " + newProgress);
             }
 
             @Override
@@ -291,6 +291,9 @@ public class WebViewActivity extends AppCompatActivity implements HasSupportFrag
             settings.setMixedContentMode(settings.getMixedContentMode());
         }
 
+        settings.setLoadWithOverviewMode(true);
+
+
         //默认是false 设置true允许和js交互
         // settings.setJavaScriptEnabled(true);
 
@@ -301,9 +304,9 @@ public class WebViewActivity extends AppCompatActivity implements HasSupportFrag
         // settings.setBuiltInZoomControls(true);
         // //扩大比例的缩放
         // settings.setUseWideViewPort(true);
-         //自适应屏幕
-         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-         settings.setLoadWithOverviewMode(true);
+        //  //自适应屏幕
+        //  settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        //  settings.setLoadWithOverviewMode(true);
 
         //  WebSettings.LOAD_DEFAULT 如果本地缓存可用且没有过期则使用本地缓存，否加载网络数据 默认值
         //  WebSettings.LOAD_CACHE_ELSE_NETWORK 优先加载本地缓存数据，无论缓存是否过期
