@@ -18,4 +18,5 @@ public class FragmentDataBindingComponent implements DataBindingComponent {
     public FragmentBindingAdapters getFragmentBindingAdapters() {
         return mFragmentBindingAdapters;
     }
+
 }

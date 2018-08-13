@@ -37,7 +37,6 @@ public class NavigationController extends FragmentManager.FragmentLifecycleCallb
     public void navigateToHost(String name, String url) {
         Log.e("NavigationController", "跳转首页碎片");
         changeFragment(HostFragment.class, () -> HostFragment.newInstance(name, url));
-
     }
 
     public void navigateToPandaLive(String name, String url) {

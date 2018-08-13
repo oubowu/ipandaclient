@@ -41,7 +41,7 @@ public class PandaVideoFragment extends Fragment implements Injectable, SwipeRef
     private String mName;
     private String mUrl;
 
-    private OnFragmentScrollListener mListener;
+    private OnFragmentScrollListener mScrollListener;
 
     private FragmentPandaVideoBinding mBinding;
     private PandaVideoAdapter mPandaVideoAdapter;
@@ -164,12 +164,12 @@ public class PandaVideoFragment extends Fragment implements Injectable, SwipeRef
             ((BarBehavior) behavior).setOnNestedScrollListener(new BarBehavior.OnNestedScrollListener() {
                 @Override
                 public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
-                    mListener.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+                    mScrollListener.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
                 }
 
                 @Override
                 public boolean onNestedFling(@NonNull CoordinatorLayout coordinatorLayout, @NonNull View child, @NonNull View target, float velocityX, float velocityY, boolean consumed) {
-                    return mListener.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
+                    return mScrollListener.onNestedFling(coordinatorLayout, child, target, velocityX, velocityY, consumed);
                 }
             });
         }
@@ -180,7 +180,7 @@ public class PandaVideoFragment extends Fragment implements Injectable, SwipeRef
         super.onAttach(context);
         mContext = context;
         if (context instanceof OnFragmentScrollListener) {
-            mListener = (OnFragmentScrollListener) context;
+            mScrollListener = (OnFragmentScrollListener) context;
         } else {
             throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
         }
@@ -190,11 +190,12 @@ public class PandaVideoFragment extends Fragment implements Injectable, SwipeRef
     public void onDetach() {
         super.onDetach();
         mContext = null;
-        mListener = null;
+        mScrollListener = null;
     }
 
     @Override
     public void onRefresh() {
         getPandaVideoIndex();
     }
+
 }

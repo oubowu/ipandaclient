@@ -1,6 +1,7 @@
 package com.oubowu.ipanda.ui.adapter;
 
 import android.app.Activity;
+import android.databinding.DataBindingComponent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.util.Log;
@@ -25,7 +26,7 @@ public class PandaVideoAdapter extends DataBoundListAdapter<PandaVideoIndex.List
 
     private android.databinding.DataBindingComponent mComponent;
 
-    public PandaVideoAdapter(android.databinding.DataBindingComponent component) {
+    public PandaVideoAdapter(DataBindingComponent component) {
         mComponent = component;
     }
 
@@ -47,21 +48,27 @@ public class PandaVideoAdapter extends DataBoundListAdapter<PandaVideoIndex.List
         if (itemViewType == TYPE_BIG_IMG) {
             ItemFragmentPandaVideoHeadBinding videoHeadBinding = (ItemFragmentPandaVideoHeadBinding) binding;
             videoHeadBinding.setVideoBean(listBean);
-            videoHeadBinding.setEvent(new EventListenerAdapter(){
+            videoHeadBinding.setEvent(new EventListenerAdapter() {
                 @Override
                 public void clickBigImg(View v, String id) {
-                    Log.e("PandaVideoAdapter","53行-clickBigImg(): "+" ");
+                    Log.e("PandaVideoAdapter", "53行-clickBigImg(): " + " ");
                     VideoActivity.start((Activity) v.getContext(), v, id);
                 }
             });
         } else {
             ItemFragmentPandaVideoBinding pandaVideoBinding = (ItemFragmentPandaVideoBinding) binding;
             pandaVideoBinding.setVideoBean(listBean);
-            pandaVideoBinding.setEvent(new EventListenerAdapter(){
+            pandaVideoBinding.setEvent(new EventListenerAdapter() {
                 @Override
                 public void clickItem(View v, String id) {
                     // TODO: 2018/3/4 跳转另外一个列表
-                    Log.e("PandaVideoAdapter","63行-clickItem(): "+" ");
+                    Log.e("PandaVideoAdapter", "63行-clickItem(): " + " ");
+                    //                    if (mComponent instanceof FragmentDataBindingComponent){
+                    //                        ((FragmentDataBindingComponent) mComponent).getFragment().getChildFragmentManager()
+                    //                                .beginTransaction()
+                    //                                .replace(R.id.cccc, PandaVideoListFragment.newInstance(id, ""))
+                    //                                .commitAllowingStateLoss();
+                    //                    }
                 }
             });
         }

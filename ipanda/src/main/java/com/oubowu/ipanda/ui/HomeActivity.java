@@ -21,6 +21,7 @@ import com.oubowu.ipanda.bean.TabIndex;
 import com.oubowu.ipanda.callback.OnFragmentScrollListener;
 import com.oubowu.ipanda.databinding.ActivityHomeBinding;
 import com.oubowu.ipanda.util.BarBehavior;
+import com.oubowu.ipanda.util.BottomNavigationViewHelper;
 import com.oubowu.ipanda.util.HandleBackUtil;
 import com.oubowu.ipanda.util.NavigationController;
 import com.oubowu.ipanda.util.StatusBarUtil;
@@ -95,7 +96,7 @@ public class HomeActivity extends AppCompatActivity implements HasSupportFragmen
 
         mNavigationView = mHomeBinding.bnv;
 
-//        BottomNavigationViewHelper.disableShiftMode(mNavigationView);
+        BottomNavigationViewHelper.disableShiftMode(mNavigationView);
 
         HomeViewModel homeViewModel = ViewModelProviders.of(this, mFactory).get(HomeViewModel.class);
         homeViewModel.getTabIndex().observe(this, new ObserverImpl<List<TabIndex>>() {
@@ -183,7 +184,6 @@ public class HomeActivity extends AppCompatActivity implements HasSupportFragmen
         }
         return mBarBehavior.onNestedFling(coordinatorLayout, mNavigationView, target, velocityX, velocityY, consumed);
     }
-
 
     //    @Override
     //    public void onNestedScrollListener(int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {

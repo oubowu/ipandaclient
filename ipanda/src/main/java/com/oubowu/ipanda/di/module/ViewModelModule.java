@@ -12,6 +12,7 @@ import com.oubowu.ipanda.viewmodel.PandaBroadcastViewModel;
 import com.oubowu.ipanda.viewmodel.PandaLiveOtherViewModel;
 import com.oubowu.ipanda.viewmodel.PandaLiveSubViewModel;
 import com.oubowu.ipanda.viewmodel.PandaLiveViewModel;
+import com.oubowu.ipanda.viewmodel.PandaVideoListViewModel;
 import com.oubowu.ipanda.viewmodel.PandaVideoViewModel;
 import com.oubowu.ipanda.viewmodel.VideoViewModel;
 import com.oubowu.ipanda.viewmodel.factory.ViewModelFactory;
@@ -77,6 +78,11 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ChinaLiveSubViewModel.class)
     abstract ViewModel bindChinaLiveSubViewModel(ChinaLiveSubViewModel chinaLiveSubViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PandaVideoListViewModel.class)
+    abstract ViewModel bindPandaVideoListViewModel(PandaVideoListViewModel pandaVideoListViewModel);
 
     // IpandaViewModelFactory作为注入，构造函数需要传入参数Map<Class<? extends ViewModel>, Provider<ViewModel>> creators；要实现这个可以写个provideCreators提供传入
     // 使用@Binds可以替代这个做法，不用再写provideCreators了
