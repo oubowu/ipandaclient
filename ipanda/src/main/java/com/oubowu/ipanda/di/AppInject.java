@@ -29,8 +29,8 @@ public class AppInject {
         basicApp.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle bundle) {
-                // activity注入
                 if (activity instanceof HasSupportFragmentInjector) {
+                    // activity注入
                     AndroidInjection.inject(activity);
                 }
                 if (activity instanceof FragmentActivity) {

@@ -2,6 +2,7 @@ package com.oubowu.ipanda.di.module;
 
 
 import com.oubowu.ipanda.ui.HomeActivity;
+import com.oubowu.ipanda.ui.PandaVideoListActivity;
 import com.oubowu.ipanda.ui.VideoActivity;
 import com.oubowu.ipanda.ui.WebViewActivity;
 
@@ -22,5 +23,8 @@ public abstract class ActivityModule {
 
     @ContributesAndroidInjector()
     abstract WebViewActivity contributesWebViewActivity();
+
+    @ContributesAndroidInjector()
+    abstract PandaVideoListActivity contributesPandaVideoListActivity();
 
 }

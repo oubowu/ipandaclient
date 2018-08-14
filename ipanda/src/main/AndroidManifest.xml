@@ -38,6 +38,8 @@
             android:name=".ui.WebViewActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity android:name=".ui.PandaVideoListActivity">
+        </activity>
     </application>
 
 </manifest>

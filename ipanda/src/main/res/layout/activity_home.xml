@@ -33,9 +33,10 @@
             android:background="@drawable/bottom_navigation_rect"
             android:theme="@style/BottomNavigationViewTheme"
             android:elevation="2dp"
-            app:labelVisibilityMode="labeled"
-            app:menu="@menu/navigation_items"/><!--app:itemBackground="@color/white"-->
 
+            app:menu="@menu/navigation_items"/><!--app:itemBackground="@color/white"-->
+        <!--28版本新增-->
+        <!--app:labelVisibilityMode="labeled"-->
     </FrameLayout>
 
 </layout>

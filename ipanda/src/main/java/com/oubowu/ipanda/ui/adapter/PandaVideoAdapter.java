@@ -14,6 +14,7 @@ import com.oubowu.ipanda.bean.pandavideo.PandaVideoIndex;
 import com.oubowu.ipanda.callback.EventListenerAdapter;
 import com.oubowu.ipanda.databinding.ItemFragmentPandaVideoBinding;
 import com.oubowu.ipanda.databinding.ItemFragmentPandaVideoHeadBinding;
+import com.oubowu.ipanda.ui.PandaVideoListActivity;
 import com.oubowu.ipanda.ui.VideoActivity;
 import com.oubowu.ipanda.util.CommonUtil;
 
@@ -69,6 +70,7 @@ public class PandaVideoAdapter extends DataBoundListAdapter<PandaVideoIndex.List
                     //                                .replace(R.id.cccc, PandaVideoListFragment.newInstance(id, ""))
                     //                                .commitAllowingStateLoss();
                     //                    }
+                    PandaVideoListActivity.start((Activity) v.getContext(), id, "视频列表");
                 }
             });
         }
