@@ -5,6 +5,7 @@ import android.databinding.BindingAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.oubowu.ipanda.bean.home.HomeIndex;
@@ -29,6 +30,11 @@ public class BindingAdapters {
             activity.setSupportActionBar(toolbar);
         }
         toolbar.setTitle(title);
+    }
+
+    @BindingAdapter("loadSimpleVideoImageUrl")
+    public void bindImage(ImageView imageView, String url) {
+        Glide.with(imageView.getContext()).load(url).apply(GlideConfig.getInstance()).transition(GlideConfig.getTransitionOptions()).into(imageView);
     }
 
     @BindingAdapter("loadDescImage")

@@ -15,6 +15,11 @@ public class FragmentDataBindingComponent implements DataBindingComponent {
     }
 
     @Override
+    public BindingAdapters getBindingAdapters() {
+        return null;
+    }
+
+    @Override
     public FragmentBindingAdapters getFragmentBindingAdapters() {
         return mFragmentBindingAdapters;
     }

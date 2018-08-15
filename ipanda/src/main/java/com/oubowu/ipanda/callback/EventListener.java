@@ -12,4 +12,6 @@ public interface EventListener {
 
     void clickItem(View v, String id);
 
+    void clickItemWithTitle(View v, String id,String title);
+
 }

@@ -59,18 +59,24 @@ public class PandaVideoAdapter extends DataBoundListAdapter<PandaVideoIndex.List
         } else {
             ItemFragmentPandaVideoBinding pandaVideoBinding = (ItemFragmentPandaVideoBinding) binding;
             pandaVideoBinding.setVideoBean(listBean);
+            pandaVideoBinding.simpleVideoImageView.setVideoLength(listBean.videoLength);
             pandaVideoBinding.setEvent(new EventListenerAdapter() {
+//                @Override
+//                public void clickItem(View v, String id) {
+//                    // TODO: 2018/3/4 跳转另外一个列表
+//                    Log.e("PandaVideoAdapter", "63行-clickItem(): " + " ");
+//                    //                    if (mComponent instanceof FragmentDataBindingComponent){
+//                    //                        ((FragmentDataBindingComponent) mComponent).getFragment().getChildFragmentManager()
+//                    //                                .beginTransaction()
+//                    //                                .replace(R.id.cccc, PandaVideoListFragment.newInstance(id, ""))
+//                    //                                .commitAllowingStateLoss();
+//                    //                    }
+//                    PandaVideoListActivity.start((Activity) v.getContext(), id, "视频列表");
+//                }
+
                 @Override
-                public void clickItem(View v, String id) {
-                    // TODO: 2018/3/4 跳转另外一个列表
-                    Log.e("PandaVideoAdapter", "63行-clickItem(): " + " ");
-                    //                    if (mComponent instanceof FragmentDataBindingComponent){
-                    //                        ((FragmentDataBindingComponent) mComponent).getFragment().getChildFragmentManager()
-                    //                                .beginTransaction()
-                    //                                .replace(R.id.cccc, PandaVideoListFragment.newInstance(id, ""))
-                    //                                .commitAllowingStateLoss();
-                    //                    }
-                    PandaVideoListActivity.start((Activity) v.getContext(), id, "视频列表");
+                public void clickItemWithTitle(View v, String id, String title) {
+                    PandaVideoListActivity.start((Activity) v.getContext(), id, title);
                 }
             });
         }

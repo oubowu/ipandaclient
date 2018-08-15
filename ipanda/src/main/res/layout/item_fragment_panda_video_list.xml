@@ -12,7 +12,7 @@
 
         <variable
             name="videoBean"
-            type="com.oubowu.ipanda.bean.pandavideo.PandaVideoIndex.ListBean"/>
+            type="com.oubowu.ipanda.bean.pandalive.RecordTab.VideoBean"/>
 
     </data>
 
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bottom_navigation_rect"
-        android:onClick="@{(view)->event.clickItemWithTitle(view,videoBean.id,videoBean.title)}"
+        android:onClick="@{(view)->event.clickItemWithTitle(view,videoBean.vid,videoBean.t)}"
         android:padding="4dp">
 
         <com.oubowu.ipanda.ui.widget.SimpleVideoImageView
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:scaleType="centerCrop"
-            app:loadImageUrl="@{videoBean.image}"
+            app:loadSimpleVideoImageUrl="@{videoBean.img}"
             app:wRatio="35%"
             tools:src="@drawable/ic_panda_loading"/>
 
@@ -40,7 +40,7 @@
             android:paddingEnd="8dp"
             android:paddingStart="8dp"
             android:paddingTop="4dp"
-            android:text="@{videoBean.title}"
+            android:text="@{videoBean.t}"
             android:textColor="@color/toolbarSelectTextColor"
             android:textSize="14dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -55,7 +55,7 @@
             android:gravity="start"
             android:paddingEnd="8dp"
             android:paddingStart="8dp"
-            android:text="@{videoBean.brief}"
+            android:text="@{videoBean.len}"
             android:textSize="12dp"
             app:layout_constraintStart_toEndOf="@+id/simpleVideoImageView"
             app:layout_constraintEnd_toEndOf="parent"

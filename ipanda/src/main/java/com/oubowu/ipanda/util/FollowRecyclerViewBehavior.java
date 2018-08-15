@@ -11,12 +11,11 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.oubowu.ipanda.R;
-import com.oubowu.ipanda.ui.widget.CarouselViewPager;
 
 /**
  * Created by Oubowu on 2018/1/16 0:42.
  */
-public class FollowRecyclerViewBehavior extends CoordinatorLayout.Behavior<CarouselViewPager> {
+public class FollowRecyclerViewBehavior extends CoordinatorLayout.Behavior<View> {
 
     private float mFirstTopY = Integer.MIN_VALUE;
     private final int mFollowId;
@@ -25,24 +24,28 @@ public class FollowRecyclerViewBehavior extends CoordinatorLayout.Behavior<Carou
 
     private int mLastHeight;
 
-    private final Drawable mDividerDrawable;
+    private Drawable mDividerDrawable;
+
+    private RecyclerView.ItemDecoration mItemDecoration = null;
 
     public FollowRecyclerViewBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
         final TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.FollowRecyclerViewBehavior);
         mDependenceId = ta.getResourceId(R.styleable.FollowRecyclerViewBehavior_dependenceId, -1);
         mFollowId = ta.getResourceId(R.styleable.FollowRecyclerViewBehavior_followId, -1);
-        int dividerId = ta.getResourceId(R.styleable.FollowRecyclerViewBehavior_dividerId, 0);
+        int dividerId = ta.getResourceId(R.styleable.FollowRecyclerViewBehavior_dividerId, -1);
 
-        mDividerDrawable = ContextCompat.getDrawable(context, dividerId != 0 ? dividerId : R.drawable.divider_host_fragment);
+        if (dividerId != -1) {
+            mDividerDrawable = ContextCompat.getDrawable(context, dividerId);
+        } else {
+            mDividerDrawable = null;
+        }
 
         ta.recycle();
     }
 
-    private RecyclerView.ItemDecoration mItemDecoration = null;
-
     @Override
-    public boolean onDependentViewChanged(CoordinatorLayout parent, CarouselViewPager child, View dependency) {
+    public boolean onDependentViewChanged(CoordinatorLayout parent, View child, View dependency) {
 
         if (mFirstTopY == Integer.MIN_VALUE && dependency.getId() == mDependenceId) {
             child.setY(dependency.getY() + dependency.getHeight());
@@ -61,7 +64,7 @@ public class FollowRecyclerViewBehavior extends CoordinatorLayout.Behavior<Carou
                             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                                 // Log.e("HostFragment", "134行-run(): " + child.getHeight());
                                 if (parent.getChildAdapterPosition(view) == 0) {
-                                    outRect.top = (int) mFirstTopY + child.getHeight() + mDividerDrawable.getIntrinsicHeight();
+                                    outRect.top = (int) mFirstTopY + child.getHeight() + (mDividerDrawable == null ? 0 : mDividerDrawable.getIntrinsicHeight());
                                 } else {
                                     outRect.top = 0;
                                 }
@@ -76,7 +79,7 @@ public class FollowRecyclerViewBehavior extends CoordinatorLayout.Behavior<Carou
                                 super.onScrolled(recyclerView, dx, dy);
                                 View view = recyclerView.getChildAt(0);
                                 if (view != null) {
-                                    child.setY(view.getY() - child.getHeight() - mDividerDrawable.getIntrinsicHeight());
+                                    child.setY(view.getY() - child.getHeight() - (mDividerDrawable == null ? 0 : mDividerDrawable.getIntrinsicHeight()));
                                 }
                             }
                         });
@@ -100,7 +103,7 @@ public class FollowRecyclerViewBehavior extends CoordinatorLayout.Behavior<Carou
     }
 
     @Override
-    public boolean layoutDependsOn(CoordinatorLayout parent, CarouselViewPager child, View dependency) {
+    public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
         return mDependenceId == dependency.getId();
     }
 

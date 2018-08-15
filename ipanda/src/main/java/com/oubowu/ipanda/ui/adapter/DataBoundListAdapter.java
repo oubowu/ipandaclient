@@ -1,5 +1,6 @@
 package com.oubowu.ipanda.ui.adapter;
 
+import android.annotation.SuppressLint;
 import android.databinding.ViewDataBinding;
 import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
@@ -45,6 +46,7 @@ public abstract class DataBoundListAdapter<T, V extends ViewDataBinding> extends
         return mItems == null ? 0 : mItems.size();
     }
 
+    @SuppressLint("CheckResult")
     @MainThread
     public void replace(List<T> newItems) {
         mDataVersion++;

@@ -20,4 +20,9 @@ public class EventListenerAdapter implements EventListener{
     public void clickItem(View v, String id) {
 
     }
+
+    @Override
+    public void clickItemWithTitle(View v, String id, String title) {
+
+    }
 }
