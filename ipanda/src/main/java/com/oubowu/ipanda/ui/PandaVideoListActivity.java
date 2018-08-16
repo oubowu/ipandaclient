@@ -1,9 +1,13 @@
 package com.oubowu.ipanda.ui;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
@@ -18,19 +22,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 
 import com.oubowu.ipanda.R;
 import com.oubowu.ipanda.base.ObserverImpl;
 import com.oubowu.ipanda.bean.base.RecordVideo;
 import com.oubowu.ipanda.bean.pandalive.RecordTab;
+import com.oubowu.ipanda.callback.EventListenerAdapter;
+import com.oubowu.ipanda.callback.VideoCallback;
 import com.oubowu.ipanda.databinding.ActivityPandaVideoListBinding;
 import com.oubowu.ipanda.ui.adapter.ActivityDataBindingComponent;
 import com.oubowu.ipanda.ui.adapter.PandaVideoListAdapter;
 import com.oubowu.ipanda.util.CommonUtil;
 import com.oubowu.ipanda.util.StatusBarUtil;
+import com.oubowu.ipanda.util.ToastUtil;
 import com.oubowu.ipanda.viewmodel.PandaVideoListViewModel;
 import com.oubowu.ipanda.viewmodel.VideoViewModel;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
+import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 
 import javax.inject.Inject;
 
@@ -86,7 +95,7 @@ public class PandaVideoListActivity extends AppCompatActivity implements HasSupp
 
         mBinding.setTitle(title.replace("《", "").replace("》", ""));
 
-//        mBinding.liveDescArrow.setTag(-1, false);
+        mBinding.liveDescArrow.setTag(-1, false);
 
         initRecyclerView();
 
@@ -102,15 +111,40 @@ public class PandaVideoListActivity extends AppCompatActivity implements HasSupp
             @Override
             protected void onSuccess(@NonNull RecordTab data) {
 
+                setArrowEvent();
+
                 getRecordVideo(data);
 
-                RecordTab.VideosetBean videoset = data.videoset;
-                RecordTab.VideoBean videoBean = new RecordTab.VideoBean();
-                videoBean.img = videoset._$0.img;
-                videoBean.t = videoset._$0.desc;
-                data.video.add(0, videoBean);
+                mBinding.setVideoBean(data.videoset._$0);
 
                 mPandaVideoListAdapter.replace(data.video);
+
+//                mBinding.recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+//                    @Override
+//                    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+//                        // Log.e("HostFragment", "134行-run(): " + child.getHeight());
+//                        if (parent.getChildAdapterPosition(view) == 0) {
+//                            // Log.e("PandaVideoListActivity", mBinding.constraintLayout.getHeight() + " " + MeasureUtil.dip2px(view.getContext(), 200));
+//                            outRect.top = (int) (mBinding.constraintLayout.getY() + mBinding.constraintLayout.getHeight() - MeasureUtil
+//                                    .getStatusBarHeight(view.getContext()));
+//                        } else {
+//                            outRect.top = 0;
+//                        }
+//                    }
+//                });
+//                mBinding.recyclerView.invalidateItemDecorations();
+//                mBinding.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//                    @Override
+//                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                        View view = recyclerView.getChildAt(0);
+//                        if (view != null) {
+//                            Log.e("PandaVideoListActivity", "171行-onScrolled(): " + " ");
+//                            mBinding.constraintLayout.setY(view.getY() - mBinding.constraintLayout.getHeight() - MeasureUtil
+//                                    .getStatusBarHeight(view.getContext()));
+//                        }
+//                    }
+//                });
+
 
             }
         });
@@ -138,6 +172,7 @@ public class PandaVideoListActivity extends AppCompatActivity implements HasSupp
                 }
             }
         });
+
     }
 
     private void getRecordVideo(@NonNull RecordTab data) {
@@ -145,49 +180,134 @@ public class PandaVideoListActivity extends AppCompatActivity implements HasSupp
             mVideoViewModel.getRecordVideo(data.video.get(0).vid).observe(PandaVideoListActivity.this, new ObserverImpl<RecordVideo>() {
                 @Override
                 protected void onSuccess(@NonNull RecordVideo data) {
-//                    mBinding.coverVideoPlayer.setUp(data.video.chapters.get(0).url, true, data.title);
-//
-//                    //增加title
-//                    mBinding.coverVideoPlayer.getTitleTextView().setVisibility(View.VISIBLE);
-//
-//                    //设置返回键
-//                    mBinding.coverVideoPlayer.getBackButton().setVisibility(View.VISIBLE);
-//
-//                    //设置旋转
-//                    mOrientationUtils = new OrientationUtils(PandaVideoListActivity.this, mBinding.coverVideoPlayer);
-//
-//                    //设置全屏按键功能,这是使用的是选择屏幕，而不是全屏
-//                    mBinding.coverVideoPlayer.getFullscreenButton().setOnClickListener(v -> mOrientationUtils.resolveByClick());
-//
-//                    //是否可以滑动调整
-//                    mBinding.coverVideoPlayer.setIsTouchWiget(false);
-//
-//                    //设置返回按键功能
-//                    mBinding.coverVideoPlayer.getBackButton().setOnClickListener(v -> onBackPressed());
-//
-//                    mBinding.coverVideoPlayer.startPlayLogic();
-//
-//                    mBinding.coverVideoPlayer.setStandardVideoAllCallBack(new VideoCallback() {
-//                        @Override
-//                        public void onPlayError(String url, Object... objects) {
-//                            ToastUtil.showErrorMsg("播放视频异常");
-//                        }
-//                    });
+                    mBinding.coverVideoPlayer.setUp(data.video.chapters.get(0).url, true, data.title);
+
+                    //增加title
+                    mBinding.coverVideoPlayer.getTitleTextView().setVisibility(View.VISIBLE);
+
+                    //设置返回键
+                    mBinding.coverVideoPlayer.getBackButton().setVisibility(View.VISIBLE);
+
+                    //设置旋转
+                    mOrientationUtils = new OrientationUtils(PandaVideoListActivity.this, mBinding.coverVideoPlayer);
+
+                    //设置全屏按键功能,这是使用的是选择屏幕，而不是全屏
+                    mBinding.coverVideoPlayer.getFullscreenButton().setOnClickListener(v -> mOrientationUtils.resolveByClick());
+
+                    //是否可以滑动调整
+                    mBinding.coverVideoPlayer.setIsTouchWiget(false);
+
+                    //设置返回按键功能
+                    mBinding.coverVideoPlayer.getBackButton().setOnClickListener(v -> onBackPressed());
+
+                    mBinding.coverVideoPlayer.startPlayLogic();
+
+                    mBinding.coverVideoPlayer.setStandardVideoAllCallBack(new VideoCallback() {
+                        @Override
+                        public void onPlayError(String url, Object... objects) {
+                            ToastUtil.showErrorMsg("播放视频异常");
+                        }
+                    });
                 }
             });
         }
     }
 
+    private void setArrowEvent() {
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(mBinding.liveDescArrow.getRotation(), mBinding.liveDescArrow.getRotation() + 180).setDuration(500);
+
+        mBinding.setEvent(new EventListenerAdapter() {
+            @Override
+            public void clickArrow(View v) {
+                super.clickArrow(v);
+                boolean extend = (boolean) mBinding.liveDescArrow.getTag(-1);
+
+                mBinding.liveDescArrow.setClickable(false);
+
+                valueAnimator.setFloatValues(mBinding.liveDescArrow.getRotation(), mBinding.liveDescArrow.getRotation() + 180);
+
+                valueAnimator.addUpdateListener(animation -> {
+                    mBinding.liveDescArrow.setRotation((Float) animation.getAnimatedValue());
+                    float fraction = animation.getAnimatedFraction();
+
+                    if (!extend) {
+                        mBinding.liveDesc.setHeight((int) (fraction * mBinding.liveDescFake.getHeight()));
+                    } else {
+                        mBinding.liveDesc.setHeight((int) ((1 - fraction) * mBinding.liveDescFake.getHeight()));
+                    }
+                    mBinding.recyclerView.invalidateItemDecorations();
+                });
+
+                valueAnimator.addListener(new AnimatorListenerAdapter() {
+
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        View viewRoot = mBinding.liveDesc;
+
+                        int cx = 0;
+                        int cy = 0;
+                        int finalRadius = mBinding.summary.getWidth();
+                        Animator anim;
+                        if (!extend) {
+                            anim = ViewAnimationUtils.createCircularReveal(viewRoot, cx, cy, 0, finalRadius);
+                        } else {
+                            anim = ViewAnimationUtils.createCircularReveal(viewRoot, cx, cy, finalRadius, 0);
+                        }
+                        viewRoot.setVisibility(View.VISIBLE);
+                        anim.setDuration(500);
+                        anim.start();
+
+                        anim.addListener(new Animator.AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(Animator animation) {
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                if (!extend) {
+                                    viewRoot.setVisibility(View.VISIBLE);
+                                } else {
+                                    viewRoot.setVisibility(View.GONE);
+                                }
+                            }
+
+                            @Override
+                            public void onAnimationCancel(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animator animation) {
+
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        mBinding.liveDescArrow.setClickable(true);
+                        valueAnimator.removeAllListeners();
+                        valueAnimator.removeAllUpdateListeners();
+                        mBinding.liveDescArrow.setTag(-1, !extend);
+                    }
+                });
+
+                valueAnimator.start();
+            }
+        });
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
-//        mBinding.coverVideoPlayer.onVideoPause();
+        mBinding.coverVideoPlayer.onVideoPause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-//        mBinding.coverVideoPlayer.onVideoResume();
+        mBinding.coverVideoPlayer.onVideoResume();
     }
 
     @Override
@@ -200,14 +320,14 @@ public class PandaVideoListActivity extends AppCompatActivity implements HasSupp
 
     @Override
     public void onBackPressed() {
-//        //先返回正常状态
-//        if (mOrientationUtils != null && mOrientationUtils.getScreenType() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-//            mBinding.coverVideoPlayer.getFullscreenButton().performClick();
-//            return;
-//        }
-//        //释放所有
-//        mBinding.coverVideoPlayer.setStandardVideoAllCallBack(null);
-//        GSYVideoPlayer.releaseAllVideos();
+        //先返回正常状态
+        if (mOrientationUtils != null && mOrientationUtils.getScreenType() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+            mBinding.coverVideoPlayer.getFullscreenButton().performClick();
+            return;
+        }
+        //释放所有
+        mBinding.coverVideoPlayer.setStandardVideoAllCallBack(null);
+        GSYVideoPlayer.releaseAllVideos();
         super.onBackPressed();
     }
 
