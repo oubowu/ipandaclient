@@ -21,6 +21,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 
@@ -113,38 +114,13 @@ public class PandaVideoListActivity extends AppCompatActivity implements HasSupp
 
                 setArrowEvent();
 
-                getRecordVideo(data);
+                if (CommonUtil.isNotEmpty(data.video)) {
+                    getRecordVideo(data.video.get(0).vid);
+                }
 
                 mBinding.setVideoBean(data.videoset._$0);
 
                 mPandaVideoListAdapter.replace(data.video);
-
-//                mBinding.recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-//                    @Override
-//                    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-//                        // Log.e("HostFragment", "134行-run(): " + child.getHeight());
-//                        if (parent.getChildAdapterPosition(view) == 0) {
-//                            // Log.e("PandaVideoListActivity", mBinding.constraintLayout.getHeight() + " " + MeasureUtil.dip2px(view.getContext(), 200));
-//                            outRect.top = (int) (mBinding.constraintLayout.getY() + mBinding.constraintLayout.getHeight() - MeasureUtil
-//                                    .getStatusBarHeight(view.getContext()));
-//                        } else {
-//                            outRect.top = 0;
-//                        }
-//                    }
-//                });
-//                mBinding.recyclerView.invalidateItemDecorations();
-//                mBinding.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//                    @Override
-//                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                        View view = recyclerView.getChildAt(0);
-//                        if (view != null) {
-//                            Log.e("PandaVideoListActivity", "171行-onScrolled(): " + " ");
-//                            mBinding.constraintLayout.setY(view.getY() - mBinding.constraintLayout.getHeight() - MeasureUtil
-//                                    .getStatusBarHeight(view.getContext()));
-//                        }
-//                    }
-//                });
-
 
             }
         });
@@ -155,6 +131,13 @@ public class PandaVideoListActivity extends AppCompatActivity implements HasSupp
 
         mPandaVideoListAdapter = new PandaVideoListAdapter(new ActivityDataBindingComponent());
 
+        mPandaVideoListAdapter.setEventListener(new EventListenerAdapter() {
+            @Override
+            public void clickItemWithTitle(View v, String id, String title) {
+                getRecordVideo(id);
+            }
+        });
+
         mBinding.recyclerView.setAdapter(mPandaVideoListAdapter);
 
         mBinding.recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
@@ -164,53 +147,53 @@ public class PandaVideoListActivity extends AppCompatActivity implements HasSupp
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                 int position = parent.getChildAdapterPosition(view);
-                outRect.top = drawable.getIntrinsicHeight();
-                outRect.left = drawable.getIntrinsicHeight();
-                outRect.right = drawable.getIntrinsicHeight();
-                if (position == parent.getAdapter().getItemCount() - 1) {
-                    outRect.bottom = drawable.getIntrinsicHeight();
+                if (position == 0) {
+                    outRect.top = 0;
+                } else {
+                    outRect.top = drawable.getIntrinsicHeight();
+                    if (position == parent.getAdapter().getItemCount() - 1) {
+                        outRect.bottom = drawable.getIntrinsicHeight();
+                    }
                 }
             }
         });
 
     }
 
-    private void getRecordVideo(@NonNull RecordTab data) {
-        if (CommonUtil.isNotEmpty(data.video)) {
-            mVideoViewModel.getRecordVideo(data.video.get(0).vid).observe(PandaVideoListActivity.this, new ObserverImpl<RecordVideo>() {
-                @Override
-                protected void onSuccess(@NonNull RecordVideo data) {
-                    mBinding.coverVideoPlayer.setUp(data.video.chapters.get(0).url, true, data.title);
+    private void getRecordVideo(@NonNull String vid) {
+        mVideoViewModel.getRecordVideo(vid).observe(PandaVideoListActivity.this, new ObserverImpl<RecordVideo>() {
+            @Override
+            protected void onSuccess(@NonNull RecordVideo data) {
+                mBinding.coverVideoPlayer.setUp(data.video.chapters.get(0).url, true, data.title);
 
-                    //增加title
-                    mBinding.coverVideoPlayer.getTitleTextView().setVisibility(View.VISIBLE);
+                //增加title
+                mBinding.coverVideoPlayer.getTitleTextView().setVisibility(View.VISIBLE);
 
-                    //设置返回键
-                    mBinding.coverVideoPlayer.getBackButton().setVisibility(View.VISIBLE);
+                //设置返回键
+                mBinding.coverVideoPlayer.getBackButton().setVisibility(View.VISIBLE);
 
-                    //设置旋转
-                    mOrientationUtils = new OrientationUtils(PandaVideoListActivity.this, mBinding.coverVideoPlayer);
+                //设置旋转
+                mOrientationUtils = new OrientationUtils(PandaVideoListActivity.this, mBinding.coverVideoPlayer);
 
-                    //设置全屏按键功能,这是使用的是选择屏幕，而不是全屏
-                    mBinding.coverVideoPlayer.getFullscreenButton().setOnClickListener(v -> mOrientationUtils.resolveByClick());
+                //设置全屏按键功能,这是使用的是选择屏幕，而不是全屏
+                mBinding.coverVideoPlayer.getFullscreenButton().setOnClickListener(v -> mOrientationUtils.resolveByClick());
 
-                    //是否可以滑动调整
-                    mBinding.coverVideoPlayer.setIsTouchWiget(false);
+                //是否可以滑动调整
+                mBinding.coverVideoPlayer.setIsTouchWiget(false);
 
-                    //设置返回按键功能
-                    mBinding.coverVideoPlayer.getBackButton().setOnClickListener(v -> onBackPressed());
+                //设置返回按键功能
+                mBinding.coverVideoPlayer.getBackButton().setOnClickListener(v -> onBackPressed());
 
-                    mBinding.coverVideoPlayer.startPlayLogic();
+                mBinding.coverVideoPlayer.startPlayLogic();
 
-                    mBinding.coverVideoPlayer.setStandardVideoAllCallBack(new VideoCallback() {
-                        @Override
-                        public void onPlayError(String url, Object... objects) {
-                            ToastUtil.showErrorMsg("播放视频异常");
-                        }
-                    });
-                }
-            });
-        }
+                mBinding.coverVideoPlayer.setStandardVideoAllCallBack(new VideoCallback() {
+                    @Override
+                    public void onPlayError(String url, Object... objects) {
+                        ToastUtil.showErrorMsg("播放视频异常");
+                    }
+                });
+            }
+        });
     }
 
     private void setArrowEvent() {
@@ -329,6 +312,17 @@ public class PandaVideoListActivity extends AppCompatActivity implements HasSupp
         mBinding.coverVideoPlayer.setStandardVideoAllCallBack(null);
         GSYVideoPlayer.releaseAllVideos();
         super.onBackPressed();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

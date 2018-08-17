@@ -53,9 +53,9 @@ public class FollowRecyclerViewBehavior extends CoordinatorLayout.Behavior<View>
 
             boolean fitsSystemWindows = ViewCompat.getFitsSystemWindows(parent);
 
-            Log.e("xxx","56行-onDependentViewChanged(): "+fitsSystemWindows);
+            Log.e("xxx", "56行-onDependentViewChanged(): " + fitsSystemWindows);
 
-            int extraHeight = fitsSystemWindows ? MeasureUtil.getStatusBarHeight(child.getContext()) : 0;
+            int extraHeight = (fitsSystemWindows ? MeasureUtil.getStatusBarHeight(child.getContext()) : 0) * 1;
 
             child.setY(dependency.getY() + dependency.getHeight());
 
@@ -75,7 +75,7 @@ public class FollowRecyclerViewBehavior extends CoordinatorLayout.Behavior<View>
                                 // Log.e("HostFragment", "134行-run(): " + child.getHeight());
                                 if (parent.getChildAdapterPosition(view) == 0) {
                                     outRect.top = (int) mFirstTopY + child.getHeight() + (mDividerDrawable == null ? 0 : mDividerDrawable
-                                            .getIntrinsicHeight()-extraHeight);
+                                            .getIntrinsicHeight()) - extraHeight;
                                 } else {
                                     outRect.top = 0;
                                 }
@@ -92,16 +92,15 @@ public class FollowRecyclerViewBehavior extends CoordinatorLayout.Behavior<View>
                         recyclerView.invalidateItemDecorations();
                     }
 
-//                    recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//                        @Override
-//                        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                            super.onScrolled(recyclerView, dx, dy);
-//                            View view = recyclerView.getChildAt(0);
-//                            if (view != null) {
-//                                child.setY(view.getY() - child.getHeight() - (mDividerDrawable == null ? 0 : mDividerDrawable.getIntrinsicHeight())-extraHeight);
-//                            }
-//                        }
-//                    });
+                    recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                        @Override
+                        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                            View view = recyclerView.getChildAt(0);
+                            if (view != null) {
+                                child.setY(view.getY() - child.getHeight() - (mDividerDrawable == null ? 0 : mDividerDrawable.getIntrinsicHeight()) + extraHeight);
+                            }
+                        }
+                    });
 
                     mLastHeight = height;
 
