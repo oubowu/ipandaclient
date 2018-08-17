@@ -135,6 +135,7 @@ public class PandaVideoListActivity extends AppCompatActivity implements HasSupp
             @Override
             public void clickItemWithTitle(View v, String id, String title) {
                 getRecordVideo(id);
+                mBinding.recyclerView.smoothScrollToPosition(0);
             }
         });
 
