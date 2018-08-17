@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
@@ -126,6 +127,7 @@ public class PandaVideoListActivity extends AppCompatActivity implements HasSupp
         });
     }
 
+    @SuppressWarnings("unchecked")
     private void initRecyclerView() {
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -136,6 +138,20 @@ public class PandaVideoListActivity extends AppCompatActivity implements HasSupp
             public void clickItemWithTitle(View v, String id, String title) {
                 getRecordVideo(id);
                 mBinding.recyclerView.smoothScrollToPosition(0);
+
+                final int childCount = mBinding.coordinatorLayout.getChildCount();
+                for (int i = 0; i < childCount; i++) {
+                    final View child = mBinding.coordinatorLayout.getChildAt(i);
+                    if (child.getVisibility() == View.GONE) {
+                        // If the child is GONE, skip...
+                        continue;
+                    }
+                    final CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) child.getLayoutParams();
+                    final CoordinatorLayout.Behavior viewBehavior = lp.getBehavior();
+                    if (viewBehavior != null) {
+                        viewBehavior.onNestedFling(mBinding.coordinatorLayout, child, mBinding.recyclerView, 0, -10000, false);
+                    }
+                }
             }
         });
 
