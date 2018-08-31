@@ -1,5 +1,6 @@
 package com.oubowu.ipanda.util;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.support.annotation.MainThread;
@@ -21,6 +22,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 
     private final MediatorLiveData<Resource<ResultType>> mResult = new MediatorLiveData<>();
 
+    @SuppressLint("CheckResult")
     @MainThread
     public NetworkBoundResource() {
         // 先设置加载中状态
@@ -55,6 +57,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
         }
     }
 
+    @SuppressLint("CheckResult")
     private void fetchFromNetwork(LiveData<ResultType> dbSource) {
         // 网络请求获取数据
         LiveData<ApiResponse<RequestType>> apiResponse = createCall();

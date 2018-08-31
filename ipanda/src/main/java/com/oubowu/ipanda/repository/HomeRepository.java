@@ -1,7 +1,6 @@
 package com.oubowu.ipanda.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -11,6 +10,7 @@ import com.oubowu.ipanda.api.service.IpandaService;
 import com.oubowu.ipanda.bean.TabIndex;
 import com.oubowu.ipanda.db.IpandaDb;
 import com.oubowu.ipanda.db.dao.TabIndexDao;
+import com.oubowu.ipanda.util.CommonUtil;
 import com.oubowu.ipanda.util.MapUtil;
 import com.oubowu.ipanda.util.NetworkBoundResource;
 import com.oubowu.ipanda.util.Resource;
@@ -26,6 +26,8 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class HomeRepository {
+
+    private static final String TAG = "HomeRepository";
 
     private IpandaService mIpandaClientService;
 
@@ -43,106 +45,39 @@ public class HomeRepository {
 
     public LiveData<Resource<List<TabIndex>>> getTabIndex() {
 
-        /*return new NetworkBoundResource<List<TabIndex>, Map<String, List<TabIndex>>>() {
+        return new NetworkBoundResource<List<TabIndex>, Map<String, List<TabIndex>>>() {
 
             @Override
             protected void onCallFailed() {
-                Log.e("HomeRepository", "网络请求失败");
+                Log.e(TAG, "53行-onCallFailed(): " + "网络请求失败");
             }
 
             @Override
             protected void saveCallResponseToDb(@NonNull Map<String, List<TabIndex>> response) {
-                // mResponse = response;
-                Log.e("HomeRepository", "保存请求成功数据到数据库");
+                Log.e(TAG, "59行-saveCallResponseToDb(): " + "保存请求成功数据到数据库");
                 mIpandaDb.runInTransaction(() -> mTabIndexDao.insertTabIndexes(MapUtil.getFirstElement(response)));
             }
 
             @NonNull
             @Override
             protected LiveData<ApiResponse<Map<String, List<TabIndex>>>> createCall() {
+                Log.e(TAG, "65行-createCall(): " + "通过网络请求数据");
                 return mIpandaClientService.getTabIndex();
             }
 
             @Override
             protected boolean shouldCall(@Nullable List<TabIndex> data) {
-                return CommonUtil.isEmpty(data);
+                boolean empty = CommonUtil.isEmpty(data);
+                Log.e(TAG, "70行-shouldCall(): " + "数据库查询数据为空吗？" + empty);
+                return empty;
             }
 
-            @SuppressWarnings("unchecked")
             @Override
             protected LiveData<List<TabIndex>> loadFromDb() {
-                Log.e("HomeRepository", "从数据库加载");
+                Log.e(TAG, "77行-loadFromDb(): " + "从数据库加载数据");
                 return mTabIndexDao.queryTabIndexes();
-            }
-        }.asLiveData();*/
-
-
-        return new NetworkBoundResource<List<TabIndex>, Map<String, List<TabIndex>>>() {
-
-            MutableLiveData<List<TabIndex>> mTabLiveData;
-
-            @Override
-            protected void onCallFailed() {
-                Log.e("HomeRepository", "网络请求失败");
-            }
-
-            @Override
-            protected void saveCallResponseToDb(@NonNull Map<String, List<TabIndex>> response) {
-                List<TabIndex> tabIndices = MapUtil.getFirstElement(response);
-                mTabLiveData.postValue(tabIndices);
-            }
-
-            @NonNull
-            @Override
-            protected LiveData<ApiResponse<Map<String, List<TabIndex>>>> createCall() {
-                return mIpandaClientService.getTabIndex();
-            }
-
-            @Override
-            protected boolean shouldCall(@Nullable List<TabIndex> data) {
-                return true;
-            }
-
-            @Override
-            protected LiveData<List<TabIndex>> loadFromDb() {
-                if (mTabLiveData == null) {
-                    mTabLiveData = new MutableLiveData<>();
-                    mTabLiveData.postValue(null);
-                }
-                return mTabLiveData;
             }
         }.asLiveData();
-
-        /*return new NetworkBoundResource<List<TabIndex>, Map<String, List<TabIndex>>>() {
-
-            @Override
-            protected void onCallFailed() {
-                Log.e("HomeRepository", "网络请求失败");
-            }
-
-            @Override
-            protected void saveCallResponseToDb(@NonNull Map<String, List<TabIndex>> response) {
-
-            }
-
-            @NonNull
-            @Override
-            protected LiveData<ApiResponse<Map<String, List<TabIndex>>>> createCall() {
-                return null;
-            }
-
-            @Override
-            protected boolean shouldCall(@Nullable List<TabIndex> data) {
-                return false;
-            }
-
-            @SuppressWarnings("unchecked")
-            @Override
-            protected LiveData<List<TabIndex>> loadFromDb() {
-                Log.e("HomeRepository", "从数据库加载");
-                return mTabIndexDao.queryTabIndexes();
-            }
-        }.asLiveData();*/
 
     }
 
