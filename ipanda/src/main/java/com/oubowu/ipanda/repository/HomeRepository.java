@@ -46,16 +46,24 @@ public class HomeRepository {
     public LiveData<Resource<List<TabIndex>>> getTabIndex() {
 
         return new NetworkBoundResource<List<TabIndex>, Map<String, List<TabIndex>>>() {
-
             @Override
-            protected void onCallFailed() {
-                Log.e(TAG, "53行-onCallFailed(): " + "网络请求失败");
+            protected boolean shouldLoadFromDb() {
+                boolean shouldLoadFromDb = true;
+                Log.e(TAG, "51行-shouldLoadFromDb(): " + "从数据库加载数据吗？" + shouldLoadFromDb);
+                return shouldLoadFromDb;
             }
 
             @Override
-            protected void saveCallResponseToDb(@NonNull Map<String, List<TabIndex>> response) {
-                Log.e(TAG, "59行-saveCallResponseToDb(): " + "保存请求成功数据到数据库");
-                mIpandaDb.runInTransaction(() -> mTabIndexDao.insertTabIndexes(MapUtil.getFirstElement(response)));
+            protected LiveData<List<TabIndex>> loadFromDb() {
+                Log.e(TAG, "77行-loadFromDb(): " + "从数据库加载数据");
+                return mTabIndexDao.queryTabIndexes();
+            }
+
+            @Override
+            protected boolean shouldFetchFromNetwork(@Nullable List<TabIndex> data) {
+                boolean empty = CommonUtil.isEmpty(data);
+                Log.e(TAG, "70行-shouldCall(): " + "数据库查询数据为空吗？" + empty);
+                return empty && false;
             }
 
             @NonNull
@@ -66,17 +74,19 @@ public class HomeRepository {
             }
 
             @Override
-            protected boolean shouldCall(@Nullable List<TabIndex> data) {
-                boolean empty = CommonUtil.isEmpty(data);
-                Log.e(TAG, "70行-shouldCall(): " + "数据库查询数据为空吗？" + empty);
-                return empty;
+            protected List<TabIndex> saveCallResponseToDb(@NonNull Map<String, List<TabIndex>> response) {
+                Log.e(TAG, "59行-saveCallResponseToDb(): " + "保存请求成功数据到数据库");
+                List<TabIndex> tabIndices = MapUtil.getFirstElement(response);
+                // mIpandaDb.runInTransaction(() -> mTabIndexDao.insertTabIndexes(tabIndices));
+                mTabIndexDao.insertTabIndexes(tabIndices);
+                return tabIndices;
             }
 
             @Override
-            protected LiveData<List<TabIndex>> loadFromDb() {
-                Log.e(TAG, "77行-loadFromDb(): " + "从数据库加载数据");
-                return mTabIndexDao.queryTabIndexes();
+            protected void onCallFailed() {
+                Log.e(TAG, "53行-onCallFailed(): " + "网络请求失败");
             }
+
         }.asLiveData();
 
     }

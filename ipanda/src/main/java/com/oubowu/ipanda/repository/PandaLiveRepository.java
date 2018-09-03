@@ -42,9 +42,10 @@ public class PandaLiveRepository {
             }
 
             @Override
-            protected void saveCallResponseToDb(@NonNull Map<String, List<TabList>> response) {
+            protected List<TabList> saveCallResponseToDb(@NonNull Map<String, List<TabList>> response) {
                 List<TabList> tabList = MapUtil.getFirstElement(response);
                 mListLiveData.postValue(tabList);
+                return tabList;
             }
 
             @NonNull
@@ -54,7 +55,7 @@ public class PandaLiveRepository {
             }
 
             @Override
-            protected boolean shouldCall(@Nullable List<TabList> data) {
+            protected boolean shouldFetchFromNetwork(@Nullable List<TabList> data) {
                 return true;
             }
 

@@ -38,8 +38,9 @@ public class PandaVideoRepository {
             }
 
             @Override
-            protected void saveCallResponseToDb(@NonNull PandaVideoIndex response) {
+            protected PandaVideoIndex saveCallResponseToDb(@NonNull PandaVideoIndex response) {
                 mListLiveData.postValue(response);
+                return response;
             }
 
             @NonNull
@@ -49,7 +50,7 @@ public class PandaVideoRepository {
             }
 
             @Override
-            protected boolean shouldCall(@Nullable PandaVideoIndex data) {
+            protected boolean shouldFetchFromNetwork(@Nullable PandaVideoIndex data) {
                 return true;
             }
 

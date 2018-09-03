@@ -43,9 +43,10 @@ public class PandaBroadcastRepository {
             }
 
             @Override
-            protected void saveCallResponseToDb(@NonNull Map<String, PandaBroadcastIndex> response) {
+            protected PandaBroadcastIndex saveCallResponseToDb(@NonNull Map<String, PandaBroadcastIndex> response) {
                 PandaBroadcastIndex broadcastIndex = MapUtil.getFirstElement(response);
                 mLiveData.postValue(broadcastIndex);
+                return broadcastIndex;
             }
 
             @NonNull
@@ -55,7 +56,7 @@ public class PandaBroadcastRepository {
             }
 
             @Override
-            protected boolean shouldCall(@Nullable PandaBroadcastIndex data) {
+            protected boolean shouldFetchFromNetwork(@Nullable PandaBroadcastIndex data) {
                 return true;
             }
 
@@ -81,8 +82,9 @@ public class PandaBroadcastRepository {
             }
 
             @Override
-            protected void saveCallResponseToDb(@NonNull PandaBroadcastList response) {
+            protected PandaBroadcastList saveCallResponseToDb(@NonNull PandaBroadcastList response) {
                 mLiveData.postValue(response);
+                return response;
             }
 
             @NonNull
@@ -92,7 +94,7 @@ public class PandaBroadcastRepository {
             }
 
             @Override
-            protected boolean shouldCall(@Nullable PandaBroadcastList data) {
+            protected boolean shouldFetchFromNetwork(@Nullable PandaBroadcastList data) {
                 return true;
             }
 
@@ -118,8 +120,9 @@ public class PandaBroadcastRepository {
             }
 
             @Override
-            protected void saveCallResponseToDb(@NonNull PandaBroadcastDetail response) {
+            protected PandaBroadcastDetail saveCallResponseToDb(@NonNull PandaBroadcastDetail response) {
                 mLiveData.postValue(response);
+                return response;
             }
 
             @NonNull
@@ -129,7 +132,7 @@ public class PandaBroadcastRepository {
             }
 
             @Override
-            protected boolean shouldCall(@Nullable PandaBroadcastDetail data) {
+            protected boolean shouldFetchFromNetwork(@Nullable PandaBroadcastDetail data) {
                 return true;
             }
 

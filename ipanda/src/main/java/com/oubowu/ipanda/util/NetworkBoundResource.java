@@ -3,6 +3,7 @@ package com.oubowu.ipanda.util;
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,27 +28,36 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
     public NetworkBoundResource() {
         // 先设置加载中状态
         mResult.setValue(Resource.loading(null));
-        Observable//
-                .create((ObservableOnSubscribe<LiveData<ResultType>>) e -> {
-                    // 从数据库加载数据
-                    LiveData<ResultType> dbSource = loadFromDb();
-                    e.onNext(dbSource);
-                }).subscribeOn(Schedulers.io())//
-                .observeOn(AndroidSchedulers.mainThread())//
-                .subscribe(dbSource -> {
-                    // 监听数据库加载的数据
-                    mResult.addSource(dbSource, data -> {
-                        // 数据库数据变化了的话，首先移除监听
-                        mResult.removeSource(dbSource);
-                        if (shouldCall(data)) {
-                            // 若需要从网络请求数据，加载网络数据
-                            fetchFromNetwork(dbSource);
-                        } else {
-                            // 不需要从网络加载，监听数据库数据变化并赋值
-                            mResult.addSource(dbSource, newData -> setValue(Resource.success(newData)));
-                        }
+        if (shouldLoadFromDb()) {
+            Observable//
+                    .create((ObservableOnSubscribe<LiveData<ResultType>>) e -> {
+                        // 从数据库加载数据
+                        LiveData<ResultType> dbSource = loadFromDb();
+                        e.onNext(dbSource);
+                    }).subscribeOn(Schedulers.io())//
+                    .observeOn(AndroidSchedulers.mainThread())//
+                    .subscribe(dbSource -> {
+                        // 监听数据库加载的数据
+                        mResult.addSource(dbSource, data -> {
+                            // 数据库数据变化了的话，首先移除监听
+                            mResult.removeSource(dbSource);
+                            if (shouldFetchFromNetwork(data)) {
+                                // 若需要从网络请求数据，加载网络数据
+                                fetchFromNetwork(dbSource);
+                            } else {
+                                // 不需要从网络加载，监听数据库数据变化并赋值
+                                mResult.addSource(dbSource, newData -> setValue(Resource.success(newData)));
+                            }
+                        });
                     });
-                });
+        } else if (shouldFetchFromNetwork(null)) {
+            LiveData<ResultType> dbSource = new LiveData<ResultType>() {
+            };
+            fetchFromNetwork(dbSource);
+        } else {
+            setValue(Resource.error("未做数据请求和本地查询", null));
+        }
+
     }
 
     private void setValue(Resource<ResultType> data) {
@@ -72,10 +82,13 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
             if (response != null && response.isSuccessful()) {
                 Observable//
                         .create((ObservableOnSubscribe<LiveData<ResultType>>) e -> {
+                            RequestType requestType = processResponse(response);
                             // 网络请求成功的话，保存数据到数据库中
-                            saveCallResponseToDb(processResponse(response));
+                            ResultType resultType = saveCallResponseToDb(requestType);
                             // 再从数据库读取出数据
-                            LiveData<ResultType> newDbSource = loadFromDb();
+                            //                            LiveData<ResultType> newDbSource = loadFromDb();
+                            MutableLiveData<ResultType> newDbSource = new MutableLiveData<>();
+                            newDbSource.postValue(resultType);
                             e.onNext(newDbSource);
                         })//
                         .subscribeOn(Schedulers.io())//
@@ -98,23 +111,28 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
     }
 
     @MainThread
-    protected abstract void onCallFailed();
-
-    @WorkerThread
-    protected abstract void saveCallResponseToDb(@NonNull RequestType response);
-
-    @WorkerThread
-    protected RequestType processResponse(@NonNull ApiResponse<RequestType> response) {
-        return response.body;
+    protected boolean shouldLoadFromDb() {
+        return true;
     }
+
+    @WorkerThread
+    protected abstract LiveData<ResultType> loadFromDb();
+
+    @MainThread
+    protected abstract boolean shouldFetchFromNetwork(@Nullable ResultType data);
 
     @NonNull
     @MainThread
     protected abstract LiveData<ApiResponse<RequestType>> createCall();
 
-    @MainThread
-    protected abstract boolean shouldCall(@Nullable ResultType data);
+    @WorkerThread
+    private RequestType processResponse(@NonNull ApiResponse<RequestType> response) {
+        return response.body;
+    }
 
     @WorkerThread
-    protected abstract LiveData<ResultType> loadFromDb();
+    protected abstract ResultType saveCallResponseToDb(@NonNull RequestType response);
+
+    @MainThread
+    protected abstract void onCallFailed();
 }

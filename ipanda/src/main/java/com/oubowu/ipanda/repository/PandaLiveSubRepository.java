@@ -44,8 +44,9 @@ public class PandaLiveSubRepository {
             }
 
             @Override
-            protected void saveCallResponseToDb(@NonNull LiveTab response) {
+            protected LiveTab saveCallResponseToDb(@NonNull LiveTab response) {
                 mLiveTabLiveData.postValue(response);
+                return response;
             }
 
             @NonNull
@@ -55,7 +56,7 @@ public class PandaLiveSubRepository {
             }
 
             @Override
-            protected boolean shouldCall(@Nullable LiveTab data) {
+            protected boolean shouldFetchFromNetwork(@Nullable LiveTab data) {
                 return true;
             }
 
@@ -80,9 +81,10 @@ public class PandaLiveSubRepository {
             }
 
             @Override
-            protected void saveCallResponseToDb(@NonNull Map<String, List<MultipleLive>> response) {
+            protected List<MultipleLive> saveCallResponseToDb(@NonNull Map<String, List<MultipleLive>> response) {
                 List<MultipleLive> multipleLives = MapUtil.getFirstElement(response);
                 mMultipleLiveLiveData.postValue(multipleLives);
+                return multipleLives;
             }
 
             @NonNull
@@ -92,7 +94,7 @@ public class PandaLiveSubRepository {
             }
 
             @Override
-            protected boolean shouldCall(@Nullable List<MultipleLive> data) {
+            protected boolean shouldFetchFromNetwork(@Nullable List<MultipleLive> data) {
                 return true;
             }
 
@@ -118,8 +120,9 @@ public class PandaLiveSubRepository {
             }
 
             @Override
-            protected void saveCallResponseToDb(@NonNull WatchTalk response) {
+            protected WatchTalk saveCallResponseToDb(@NonNull WatchTalk response) {
                 mLiveWatchTalkLiveData.postValue(response);
+                return response;
             }
 
             @NonNull
@@ -129,7 +132,7 @@ public class PandaLiveSubRepository {
             }
 
             @Override
-            protected boolean shouldCall(@Nullable WatchTalk data) {
+            protected boolean shouldFetchFromNetwork(@Nullable WatchTalk data) {
                 return true;
             }
 

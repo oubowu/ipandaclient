@@ -43,9 +43,10 @@ public class HostRepository {
             }
 
             @Override
-            protected void saveCallResponseToDb(@NonNull Map<String, HomeIndex> response) {
+            protected HomeIndex saveCallResponseToDb(@NonNull Map<String, HomeIndex> response) {
                 HomeIndex homeIndex = MapUtil.getFirstElement(response);
                 mHomeLiveData.postValue(homeIndex);
+                return homeIndex;
             }
 
             @NonNull
@@ -55,7 +56,7 @@ public class HostRepository {
             }
 
             @Override
-            protected boolean shouldCall(@Nullable HomeIndex data) {
+            protected boolean shouldFetchFromNetwork(@Nullable HomeIndex data) {
                 return true;
             }
 
@@ -80,9 +81,10 @@ public class HostRepository {
             }
 
             @Override
-            protected void saveCallResponseToDb(@NonNull Map<String, List<VideoList>> response) {
+            protected List<VideoList> saveCallResponseToDb(@NonNull Map<String, List<VideoList>> response) {
                 List<VideoList> videoLists = MapUtil.getFirstElement(response);
                 mVideoListLiveData.postValue(videoLists);
+                return videoLists;
             }
 
             @NonNull
@@ -92,7 +94,7 @@ public class HostRepository {
             }
 
             @Override
-            protected boolean shouldCall(@Nullable List<VideoList> data) {
+            protected boolean shouldFetchFromNetwork(@Nullable List<VideoList> data) {
                 return true;
             }
 

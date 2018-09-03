@@ -38,8 +38,9 @@ public class ChinaLiveRepository {
             }
 
             @Override
-            protected void saveCallResponseToDb(@NonNull ChinaLiveTab response) {
+            protected ChinaLiveTab saveCallResponseToDb(@NonNull ChinaLiveTab response) {
                 mLiveData.postValue(response);
+                return response;
             }
 
             @NonNull
@@ -49,7 +50,7 @@ public class ChinaLiveRepository {
             }
 
             @Override
-            protected boolean shouldCall(@Nullable ChinaLiveTab data) {
+            protected boolean shouldFetchFromNetwork(@Nullable ChinaLiveTab data) {
                 return true;
             }
 

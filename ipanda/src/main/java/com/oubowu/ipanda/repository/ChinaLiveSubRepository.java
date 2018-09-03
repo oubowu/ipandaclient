@@ -42,9 +42,10 @@ public class ChinaLiveSubRepository {
             }
 
             @Override
-            protected void saveCallResponseToDb(@NonNull Map<String, List<ChinaLiveDetail>> response) {
+            protected List<ChinaLiveDetail> saveCallResponseToDb(@NonNull Map<String, List<ChinaLiveDetail>> response) {
                 List<ChinaLiveDetail> details = MapUtil.getFirstElement(response);
                 mLiveData.postValue(details);
+                return details;
             }
 
             @NonNull
@@ -54,7 +55,7 @@ public class ChinaLiveSubRepository {
             }
 
             @Override
-            protected boolean shouldCall(@Nullable List<ChinaLiveDetail> data) {
+            protected boolean shouldFetchFromNetwork(@Nullable List<ChinaLiveDetail> data) {
                 return true;
             }
 

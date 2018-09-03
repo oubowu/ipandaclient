@@ -43,8 +43,9 @@ public class VideoRepository {
             }
 
             @Override
-            protected void saveCallResponseToDb(@NonNull RecordVideo response) {
+            protected RecordVideo saveCallResponseToDb(@NonNull RecordVideo response) {
                 mRecordVideoData.postValue(response);
+                return response;
             }
 
             @NonNull
@@ -54,7 +55,7 @@ public class VideoRepository {
             }
 
             @Override
-            protected boolean shouldCall(@Nullable RecordVideo data) {
+            protected boolean shouldFetchFromNetwork(@Nullable RecordVideo data) {
                 return true;
             }
 
@@ -80,8 +81,9 @@ public class VideoRepository {
             }
 
             @Override
-            protected void saveCallResponseToDb(@NonNull LiveVideo response) {
+            protected LiveVideo saveCallResponseToDb(@NonNull LiveVideo response) {
                 mLiveVideoData.postValue(response);
+                return response;
             }
 
             @NonNull
@@ -91,7 +93,7 @@ public class VideoRepository {
             }
 
             @Override
-            protected boolean shouldCall(@Nullable LiveVideo data) {
+            protected boolean shouldFetchFromNetwork(@Nullable LiveVideo data) {
                 return true;
             }
 

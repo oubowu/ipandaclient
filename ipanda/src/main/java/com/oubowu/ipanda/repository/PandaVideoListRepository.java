@@ -38,8 +38,9 @@ public class PandaVideoListRepository {
             }
 
             @Override
-            protected void saveCallResponseToDb(@NonNull RecordTab response) {
+            protected RecordTab saveCallResponseToDb(@NonNull RecordTab response) {
                 mRecordTabLiveData.postValue(response);
+                return response;
             }
 
             @NonNull
@@ -49,7 +50,7 @@ public class PandaVideoListRepository {
             }
 
             @Override
-            protected boolean shouldCall(@Nullable RecordTab data) {
+            protected boolean shouldFetchFromNetwork(@Nullable RecordTab data) {
                 return true;
             }
 

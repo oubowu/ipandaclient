@@ -22,11 +22,13 @@ public class HomeIndex {
      */
 
     public AreaBean area;
+    public WallliveBean walllive;
+    public InteractiveBean interactive;
+
+
     public PandaeyeBean pandaeye;
     public PandaliveBean pandalive;
-    public WallliveBean walllive;
     public ChinaliveBean chinalive;
-    public InteractiveBean interactive;
     public CctvBean cctv;
     public List<BigImgBean> bigImg;
     public List<ListBeanXX> list;
