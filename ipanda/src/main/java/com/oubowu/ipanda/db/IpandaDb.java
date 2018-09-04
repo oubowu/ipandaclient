@@ -7,8 +7,8 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
+import android.util.Log;
 
-import com.orhanobut.logger.Logger;
 import com.oubowu.ipanda.bean.TabIndex;
 import com.oubowu.ipanda.db.dao.TabIndexDao;
 
@@ -19,6 +19,8 @@ import com.oubowu.ipanda.db.dao.TabIndexDao;
         version = 1)
 public abstract class IpandaDb extends RoomDatabase {
 
+    private static final String TAG = "IpandaDb";
+
     @VisibleForTesting
     public static final String DATABASE_NAME = "ipanda.db";
 
@@ -27,7 +29,7 @@ public abstract class IpandaDb extends RoomDatabase {
             @Override
             public void onCreate(@NonNull SupportSQLiteDatabase db) {
                 super.onCreate(db);
-                Logger.e("数据库创建了");
+                Log.e(TAG,"数据库创建了");
             }
         }).build();
     }

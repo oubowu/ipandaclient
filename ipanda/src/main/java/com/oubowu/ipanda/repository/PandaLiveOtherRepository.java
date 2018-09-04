@@ -1,7 +1,6 @@
 package com.oubowu.ipanda.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -30,8 +29,6 @@ public class PandaLiveOtherRepository {
     public LiveData<Resource<RecordTab>> getRecordTab(String vsid, int number, int page) {
         return new NetworkBoundResource<RecordTab, RecordTab>() {
 
-            MutableLiveData<RecordTab> mRecordTabLiveData;
-
             @Override
             protected void onCallFailed() {
 
@@ -39,7 +36,6 @@ public class PandaLiveOtherRepository {
 
             @Override
             protected RecordTab saveCallResponseToDb(@NonNull RecordTab response) {
-                mRecordTabLiveData.postValue(response);
                 return response;
             }
 
@@ -52,15 +48,6 @@ public class PandaLiveOtherRepository {
             @Override
             protected boolean shouldFetchFromNetwork(@Nullable RecordTab data) {
                 return true;
-            }
-
-            @Override
-            protected LiveData<RecordTab> loadFromDb() {
-                if (mRecordTabLiveData == null) {
-                    mRecordTabLiveData = new MutableLiveData<>();
-                    mRecordTabLiveData.postValue(null);
-                }
-                return mRecordTabLiveData;
             }
 
         }.asLiveData();

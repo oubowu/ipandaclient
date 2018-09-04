@@ -55,6 +55,8 @@ import master.flame.danmaku.danmaku.util.SystemClock;
  */
 public class PandaLiveSubFragment extends LazyFragment implements Injectable {
 
+    private static final String TAG = "PandaLiveSubFragment";
+
     private static final String NAME = "name";
     private static final String URL = "url";
     private static final String PADDING_TOP = "paddingTop";
@@ -126,7 +128,7 @@ public class PandaLiveSubFragment extends LazyFragment implements Injectable {
      */
     protected void onFragmentVisibleChange(boolean isVisible, boolean isFirstInit) {
         if (isVisible && !isFirstInit) {
-            Log.e("PandaLiveSubFragment", mName + " 可见并且没有初始化过，网络请求成功");
+            Log.e(TAG, mName + " 可见并且没有初始化过，网络请求成功");
 
             PandaLiveSubViewModel pandaLiveSubViewModel = ViewModelProviders.of(this, mFactory).get(PandaLiveSubViewModel.class);
 
@@ -162,7 +164,7 @@ public class PandaLiveSubFragment extends LazyFragment implements Injectable {
             });
 
         } else if (isVisible && isFirstInit) {
-            Log.e("PandaLiveSubFragment", mName + " 可见并且初始化过，不做网络请求");
+            Log.e(TAG, mName + " 可见并且初始化过，不做网络请求");
             //mBinding.videoView.onVideoResume();
         } else if (!isVisible) {
             mBinding.videoView.onVideoPause();

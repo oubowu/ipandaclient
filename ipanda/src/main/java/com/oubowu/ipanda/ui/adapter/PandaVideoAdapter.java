@@ -23,6 +23,8 @@ import com.oubowu.ipanda.util.CommonUtil;
  */
 public class PandaVideoAdapter extends DataBoundListAdapter<PandaVideoIndex.ListBean, ViewDataBinding> {
 
+    private static final String TAG = "PandaVideoAdapter";
+
     private static final int TYPE_BIG_IMG = 1;
 
     private android.databinding.DataBindingComponent mComponent;
@@ -52,7 +54,7 @@ public class PandaVideoAdapter extends DataBoundListAdapter<PandaVideoIndex.List
             videoHeadBinding.setEvent(new EventListenerAdapter() {
                 @Override
                 public void clickBigImg(View v, String id) {
-                    Log.e("PandaVideoAdapter", "53行-clickBigImg(): " + " ");
+                    Log.e(TAG, "53行-clickBigImg(): " + " "+id);
                     VideoActivity.start((Activity) v.getContext(), v, id);
                 }
             });

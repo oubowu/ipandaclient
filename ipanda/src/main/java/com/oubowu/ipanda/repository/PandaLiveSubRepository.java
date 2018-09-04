@@ -1,7 +1,6 @@
 package com.oubowu.ipanda.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -36,8 +35,6 @@ public class PandaLiveSubRepository {
     public LiveData<Resource<LiveTab>> getLiveTab(String url) {
         return new NetworkBoundResource<LiveTab, LiveTab>() {
 
-            MutableLiveData<LiveTab> mLiveTabLiveData;
-
             @Override
             protected void onCallFailed() {
 
@@ -45,7 +42,6 @@ public class PandaLiveSubRepository {
 
             @Override
             protected LiveTab saveCallResponseToDb(@NonNull LiveTab response) {
-                mLiveTabLiveData.postValue(response);
                 return response;
             }
 
@@ -60,21 +56,11 @@ public class PandaLiveSubRepository {
                 return true;
             }
 
-            @Override
-            protected LiveData<LiveTab> loadFromDb() {
-                if (mLiveTabLiveData == null) {
-                    mLiveTabLiveData = new MutableLiveData<>();
-                    mLiveTabLiveData.postValue(null);
-                }
-                return mLiveTabLiveData;
-            }
         }.asLiveData();
     }
 
     public LiveData<Resource<List<MultipleLive>>> getMultipleLive(String url) {
         return new NetworkBoundResource<List<MultipleLive>, Map<String, List<MultipleLive>>>() {
-            MutableLiveData<List<MultipleLive>> mMultipleLiveLiveData;
-
             @Override
             protected void onCallFailed() {
 
@@ -83,7 +69,6 @@ public class PandaLiveSubRepository {
             @Override
             protected List<MultipleLive> saveCallResponseToDb(@NonNull Map<String, List<MultipleLive>> response) {
                 List<MultipleLive> multipleLives = MapUtil.getFirstElement(response);
-                mMultipleLiveLiveData.postValue(multipleLives);
                 return multipleLives;
             }
 
@@ -98,21 +83,11 @@ public class PandaLiveSubRepository {
                 return true;
             }
 
-            @Override
-            protected LiveData<List<MultipleLive>> loadFromDb() {
-                if (mMultipleLiveLiveData == null) {
-                    mMultipleLiveLiveData = new MutableLiveData<>();
-                    mMultipleLiveLiveData.postValue(null);
-                }
-                return mMultipleLiveLiveData;
-            }
         }.asLiveData();
     }
 
     public LiveData<Resource<WatchTalk>> getLiveWatchTalk(int prepage, int page, String itemid) {
         return new NetworkBoundResource<WatchTalk, WatchTalk>() {
-
-            MutableLiveData<WatchTalk> mLiveWatchTalkLiveData;
 
             @Override
             protected void onCallFailed() {
@@ -121,7 +96,6 @@ public class PandaLiveSubRepository {
 
             @Override
             protected WatchTalk saveCallResponseToDb(@NonNull WatchTalk response) {
-                mLiveWatchTalkLiveData.postValue(response);
                 return response;
             }
 
@@ -136,14 +110,6 @@ public class PandaLiveSubRepository {
                 return true;
             }
 
-            @Override
-            protected LiveData<WatchTalk> loadFromDb() {
-                if (mLiveWatchTalkLiveData == null) {
-                    mLiveWatchTalkLiveData = new MutableLiveData<>();
-                    mLiveWatchTalkLiveData.postValue(null);
-                }
-                return mLiveWatchTalkLiveData;
-            }
         }.asLiveData();
     }
 

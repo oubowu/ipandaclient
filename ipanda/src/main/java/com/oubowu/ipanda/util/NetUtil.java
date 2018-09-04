@@ -23,6 +23,8 @@ import java.util.Enumeration;
  */
 public class NetUtil {
 
+    private static final String TAG = "NetUtil";
+
     private NetUtil() {
         /* cannot be instantiated */
         throw new UnsupportedOperationException("cannot be instantiated");
@@ -119,7 +121,7 @@ public class NetUtil {
                 }
             } else {
                 //当前无网络连接,请在设置中打开网络
-                Log.e("NetUtil","125行-getIPAddress(): "+"当前无网络连接,请在设置中打开网络");
+                Log.e(TAG,"125行-getIPAddress(): "+"当前无网络连接,请在设置中打开网络");
             }
         }
 

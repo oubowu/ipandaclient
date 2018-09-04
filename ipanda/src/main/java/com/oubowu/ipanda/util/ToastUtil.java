@@ -21,6 +21,8 @@ import com.oubowu.ipanda.R;
  */
 public class ToastUtil {
 
+    private static final String TAG = "ToastUtil";
+
     //    private static Context sContext = BasicApp.getInstance();// App生命周期中唯一Context，BaseApplication继承Application
     //    private static LayoutInflater sInflater = LayoutInflater.from(sContext);// 布局加载
     //    private static View sToastView = sInflater.inflate(R.layout.layout_top_toast, null);
@@ -75,7 +77,7 @@ public class ToastUtil {
         if (sContext == null//
                 || ForegroundCallbacks.get().isBackground()// 如果APP回到后台，则不显示
                 || msg == null) {
-            Log.e("ToastUtil", "80行-showMsg(): " + "如果APP回到后台，则不显示");
+            Log.e(TAG, "80行-showMsg(): " + "如果APP回到后台，则不显示");
             return;
         }
 

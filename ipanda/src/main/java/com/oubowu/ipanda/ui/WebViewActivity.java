@@ -46,6 +46,8 @@ import dagger.android.support.HasSupportFragmentInjector;
 
 public class WebViewActivity extends AppCompatActivity implements HasSupportFragmentInjector {
 
+    private static final String TAG = "WebViewActivity";
+
     private static final String ID = "id";
 
     private static final String TITLE = "title";
@@ -243,7 +245,7 @@ public class WebViewActivity extends AppCompatActivity implements HasSupportFrag
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
-                Log.e("WebViewActivity","247行-shouldOverrideUrlLoading(): "+url);
+                Log.e(TAG,"247行-shouldOverrideUrlLoading(): "+url);
 
                 return super.shouldOverrideUrlLoading(view, url);
             }
@@ -253,7 +255,7 @@ public class WebViewActivity extends AppCompatActivity implements HasSupportFrag
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 Uri uri = request.getUrl();
 
-                Log.e("WebViewActivity","251行-shouldOverrideUrlLoading(): "+uri);
+                Log.e(TAG,"251行-shouldOverrideUrlLoading(): "+uri);
 
                 String scheme = uri.getScheme();
                 if (TextUtils.isEmpty(scheme)) {

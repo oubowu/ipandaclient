@@ -5,13 +5,13 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Point;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.orhanobut.logger.Logger;
 import com.oubowu.ipanda.R;
 
 
@@ -24,6 +24,9 @@ import com.oubowu.ipanda.R;
  * UpdateDate：<p>
  */
 public class MeasureUtil {
+
+    private static final String TAG = "MeasureUtil";
+
     /**
      * 获取状态栏的高度
      *
@@ -59,12 +62,12 @@ public class MeasureUtil {
 
         int rid = resources.getIdentifier("config_showNavigationBar", "bool", "android");
         if (rid > 0) {
-            Logger.e("获取导航栏是否显示true or false" + resources.getBoolean(rid) + ""); //获取导航栏是否显示true or false
+            Log.e(TAG,"获取导航栏是否显示true or false" + resources.getBoolean(rid) + ""); //获取导航栏是否显示true or false
         }
 
         int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
         if (resourceId > 0) {
-            Logger.e("获取导航栏高度 " + resources.getDimensionPixelSize(resourceId) + ""); //获取高度
+            Log.e(TAG,"获取导航栏高度 " + resources.getDimensionPixelSize(resourceId) + ""); //获取高度
             return resources.getDimensionPixelSize(resourceId);
         }
 

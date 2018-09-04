@@ -22,6 +22,8 @@ import javax.inject.Inject;
  */
 public class NavigationController extends FragmentManager.FragmentLifecycleCallbacks {
 
+    private static final String TAG = "NavigationController";
+
     private final int mContainerId;
     private final FragmentManager mFragmentManager;
 
@@ -35,27 +37,27 @@ public class NavigationController extends FragmentManager.FragmentLifecycleCallb
     }
 
     public void navigateToHost(String name, String url) {
-        Log.e("NavigationController", "跳转首页碎片");
+        Log.e(TAG, "跳转首页碎片");
         changeFragment(HostFragment.class, () -> HostFragment.newInstance(name, url));
     }
 
     public void navigateToPandaLive(String name, String url) {
-        Log.e("NavigationController", "跳转熊猫直播碎片");
+        Log.e(TAG, "跳转熊猫直播碎片");
         changeFragment(PandaLiveFragment.class, () -> PandaLiveFragment.newInstance(name, url));
     }
 
     public void navigateToPandaVideo(String name, String url) {
-        Log.e("NavigationController", "跳转滚滚视频碎片");
+        Log.e(TAG, "跳转滚滚视频碎片");
         changeFragment(PandaVideoFragment.class, () -> PandaVideoFragment.newInstance(name, url));
     }
 
     public void navigateToPandaBroadcast(String name, String url) {
-        Log.e("NavigationController", "跳转熊猫播报碎片");
+        Log.e(TAG, "跳转熊猫播报碎片");
         changeFragment(PandaBroadcastFragment.class, () -> PandaBroadcastFragment.newInstance(name, url));
     }
 
     public void navigateToChinaLive(String name, String url) {
-        Log.e("NavigationController", "跳转直播中国碎片");
+        Log.e(TAG, "跳转直播中国碎片");
         changeFragment(ChinaLiveFragment.class, () -> ChinaLiveFragment.newInstance(name, url));
     }
 

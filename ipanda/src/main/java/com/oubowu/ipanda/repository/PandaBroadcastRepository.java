@@ -1,7 +1,6 @@
 package com.oubowu.ipanda.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -35,7 +34,7 @@ public class PandaBroadcastRepository {
     public LiveData<Resource<PandaBroadcastIndex>> getPandaBroadcastIndex(String url) {
         return new NetworkBoundResource<PandaBroadcastIndex, Map<String, PandaBroadcastIndex>>() {
 
-            MutableLiveData<PandaBroadcastIndex> mLiveData;
+            //            MutableLiveData<PandaBroadcastIndex> mLiveData;
 
             @Override
             protected void onCallFailed() {
@@ -45,7 +44,7 @@ public class PandaBroadcastRepository {
             @Override
             protected PandaBroadcastIndex saveCallResponseToDb(@NonNull Map<String, PandaBroadcastIndex> response) {
                 PandaBroadcastIndex broadcastIndex = MapUtil.getFirstElement(response);
-                mLiveData.postValue(broadcastIndex);
+                //                mLiveData.postValue(broadcastIndex);
                 return broadcastIndex;
             }
 
@@ -60,21 +59,19 @@ public class PandaBroadcastRepository {
                 return true;
             }
 
-            @Override
-            protected LiveData<PandaBroadcastIndex> loadFromDb() {
-                if (mLiveData == null) {
-                    mLiveData = new MutableLiveData<>();
-                    mLiveData.postValue(null);
-                }
-                return mLiveData;
-            }
+            //            @Override
+            //            protected LiveData<PandaBroadcastIndex> loadFromDb() {
+            //                if (mLiveData == null) {
+            //                    mLiveData = new MutableLiveData<>();
+            //                    mLiveData.postValue(null);
+            //                }
+            //                return mLiveData;
+            //            }
         }.asLiveData();
     }
 
     public LiveData<Resource<PandaBroadcastList>> getPandaBroadcastList(String url) {
         return new NetworkBoundResource<PandaBroadcastList, PandaBroadcastList>() {
-
-            MutableLiveData<PandaBroadcastList> mLiveData;
 
             @Override
             protected void onCallFailed() {
@@ -83,7 +80,6 @@ public class PandaBroadcastRepository {
 
             @Override
             protected PandaBroadcastList saveCallResponseToDb(@NonNull PandaBroadcastList response) {
-                mLiveData.postValue(response);
                 return response;
             }
 
@@ -98,21 +94,11 @@ public class PandaBroadcastRepository {
                 return true;
             }
 
-            @Override
-            protected LiveData<PandaBroadcastList> loadFromDb() {
-                if (mLiveData == null) {
-                    mLiveData = new MutableLiveData<>();
-                    mLiveData.postValue(null);
-                }
-                return mLiveData;
-            }
         }.asLiveData();
     }
 
     public LiveData<Resource<PandaBroadcastDetail>> getPandaBroadcastDetail(String id) {
         return new NetworkBoundResource<PandaBroadcastDetail, PandaBroadcastDetail>() {
-
-            MutableLiveData<PandaBroadcastDetail> mLiveData;
 
             @Override
             protected void onCallFailed() {
@@ -121,7 +107,6 @@ public class PandaBroadcastRepository {
 
             @Override
             protected PandaBroadcastDetail saveCallResponseToDb(@NonNull PandaBroadcastDetail response) {
-                mLiveData.postValue(response);
                 return response;
             }
 
@@ -136,14 +121,6 @@ public class PandaBroadcastRepository {
                 return true;
             }
 
-            @Override
-            protected LiveData<PandaBroadcastDetail> loadFromDb() {
-                if (mLiveData == null) {
-                    mLiveData = new MutableLiveData<>();
-                    mLiveData.postValue(null);
-                }
-                return mLiveData;
-            }
         }.asLiveData();
     }
 

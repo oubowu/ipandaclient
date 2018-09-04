@@ -84,11 +84,11 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
                         .create((ObservableOnSubscribe<LiveData<ResultType>>) e -> {
                             RequestType requestType = processResponse(response);
                             // 网络请求成功的话，保存数据到数据库中
-                            ResultType resultType = saveCallResponseToDb(requestType);
+                            ResultType result = saveCallResponseToDb(requestType);
                             // 再从数据库读取出数据
                             //                            LiveData<ResultType> newDbSource = loadFromDb();
                             MutableLiveData<ResultType> newDbSource = new MutableLiveData<>();
-                            newDbSource.postValue(resultType);
+                            newDbSource.postValue(result);
                             e.onNext(newDbSource);
                         })//
                         .subscribeOn(Schedulers.io())//
@@ -112,11 +112,13 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
 
     @MainThread
     protected boolean shouldLoadFromDb() {
-        return true;
+        return false;
     }
 
     @WorkerThread
-    protected abstract LiveData<ResultType> loadFromDb();
+    protected LiveData<ResultType> loadFromDb() {
+        return null;
+    }
 
     @MainThread
     protected abstract boolean shouldFetchFromNetwork(@Nullable ResultType data);

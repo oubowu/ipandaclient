@@ -40,6 +40,8 @@ import javax.inject.Inject;
 
 public class ChinaLiveSubFragment extends LazyFragment implements Injectable, HandleBackInterface {
 
+    private static final String TAG = "ChinaLiveSubFragment";
+
     private static final String NAME = "name";
     private static final String URL = "url";
     private static final String PADDING_TOP = "paddingTop";
@@ -136,7 +138,7 @@ public class ChinaLiveSubFragment extends LazyFragment implements Injectable, Ha
             });
 
         } else if (isVisible && isFirstInit) {
-            Log.e("ChinaLiveSubFragment", mName + " 可见并且初始化过，不做网络请求");
+            Log.e(TAG, mName + " 可见并且初始化过，不做网络请求");
 
             if (mAdapter != null) {
                 if (mAdapter.hasPlayed()) {

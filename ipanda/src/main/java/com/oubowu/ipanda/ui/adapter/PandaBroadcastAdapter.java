@@ -28,6 +28,8 @@ import java.util.List;
  */
 public class PandaBroadcastAdapter extends DataBoundListAdapter<PandaBroadcastList.ListBean, ViewDataBinding> {
 
+    private static final String TAG = "PandaBroadcastAdapter";
+
     private static final int TYPE_BIG_IMG = 1;
 
     private android.databinding.DataBindingComponent mComponent;
@@ -57,7 +59,7 @@ public class PandaBroadcastAdapter extends DataBoundListAdapter<PandaBroadcastLi
             videoHeadBinding.setEvent(new EventListenerAdapter() {
                 @Override
                 public void clickBigImg(View v, String id) {
-                    Log.e("PandaBroadcastAdapter", "53行-clickBigImg(): " + " ");
+                    Log.e(TAG, "53行-clickBigImg(): " + " ");
                     VideoActivity.start((Activity) v.getContext(), v, id);
                 }
             });
@@ -67,7 +69,7 @@ public class PandaBroadcastAdapter extends DataBoundListAdapter<PandaBroadcastLi
             pandaVideoBinding.setEvent(new EventListenerAdapter() {
                 @Override
                 public void clickItem(View v, String id) {
-                    Log.e("PandaBroadcastAdapter", "64行-clickItem(): " + " ");
+                    Log.e(TAG, "64行-clickItem(): " + " ");
                     WebViewActivity.start((Activity) v.getContext(), id);
 
                     Intent intent1 = new Intent(Intent.ACTION_VIEW, Uri.parse(id));

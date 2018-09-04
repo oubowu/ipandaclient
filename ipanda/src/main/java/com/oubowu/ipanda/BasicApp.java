@@ -39,7 +39,7 @@ public class BasicApp extends Application implements HasActivityInjector {
         super.onCreate();
 
         FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder().methodCount(4).methodOffset(4)
-                .tag("Oubowu")
+                .tag("IpandaLog")
                 .build();
         Logger.printer(new LoggerPrinterPlus());
         Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy) {

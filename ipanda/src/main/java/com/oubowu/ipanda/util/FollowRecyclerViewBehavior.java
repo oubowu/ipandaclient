@@ -19,6 +19,8 @@ import com.oubowu.ipanda.R;
  */
 public class FollowRecyclerViewBehavior extends CoordinatorLayout.Behavior<View> {
 
+    private static final String TAG = "FRVBehavior";
+
     private float mFirstTopY = Integer.MIN_VALUE;
     private final int mFollowId;
 
@@ -53,7 +55,7 @@ public class FollowRecyclerViewBehavior extends CoordinatorLayout.Behavior<View>
 
             boolean fitsSystemWindows = ViewCompat.getFitsSystemWindows(parent);
 
-            Log.e("xxx", "56行-onDependentViewChanged(): " + fitsSystemWindows);
+            Log.e(TAG, "56行-onDependentViewChanged(): " + fitsSystemWindows);
 
             int extraHeight = (fitsSystemWindows ? MeasureUtil.getStatusBarHeight(child.getContext()) : 0) * 1;
 

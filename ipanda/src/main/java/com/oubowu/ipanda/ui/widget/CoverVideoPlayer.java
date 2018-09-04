@@ -19,6 +19,8 @@ import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
 
 public class CoverVideoPlayer extends StandardGSYVideoPlayer {
 
+    private static final String TAG = "CoverVideoPlayer";
+
     ImageView mCoverImage;
 
     String mCoverOriginUrl;
@@ -79,12 +81,12 @@ public class CoverVideoPlayer extends StandardGSYVideoPlayer {
     @Override
     public void onVideoPause() {
         super.onVideoPause();
-        Log.e("CoverVideoPlayer", "80行-onVideoPause(): " + " ");
+        Log.e(TAG, "80行-onVideoPause(): " + " ");
     }
 
     @Override
     public void onVideoResume() {
         super.onVideoResume();
-        Log.e("CoverVideoPlayer", "87行-onVideoResume(): " + " ");
+        Log.e(TAG, "87行-onVideoResume(): " + " ");
     }
 }

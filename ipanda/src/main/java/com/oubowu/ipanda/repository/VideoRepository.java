@@ -1,7 +1,6 @@
 package com.oubowu.ipanda.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -35,8 +34,6 @@ public class VideoRepository {
     public LiveData<Resource<RecordVideo>> getRecordVideo(String pid) {
         return new NetworkBoundResource<RecordVideo, RecordVideo>() {
 
-            MutableLiveData<RecordVideo> mRecordVideoData;
-
             @Override
             protected void onCallFailed() {
 
@@ -44,7 +41,6 @@ public class VideoRepository {
 
             @Override
             protected RecordVideo saveCallResponseToDb(@NonNull RecordVideo response) {
-                mRecordVideoData.postValue(response);
                 return response;
             }
 
@@ -59,21 +55,11 @@ public class VideoRepository {
                 return true;
             }
 
-            @Override
-            protected LiveData<RecordVideo> loadFromDb() {
-                if (mRecordVideoData == null) {
-                    mRecordVideoData = new MutableLiveData<>();
-                    mRecordVideoData.postValue(null);
-                }
-                return mRecordVideoData;
-            }
         }.asLiveData();
     }
 
     public LiveData<Resource<LiveVideo>> getLiveVideo(String id) {
         return new NetworkBoundResource<LiveVideo, LiveVideo>() {
-
-            MutableLiveData<LiveVideo> mLiveVideoData;
 
             @Override
             protected void onCallFailed() {
@@ -82,7 +68,6 @@ public class VideoRepository {
 
             @Override
             protected LiveVideo saveCallResponseToDb(@NonNull LiveVideo response) {
-                mLiveVideoData.postValue(response);
                 return response;
             }
 
@@ -97,14 +82,6 @@ public class VideoRepository {
                 return true;
             }
 
-            @Override
-            protected LiveData<LiveVideo> loadFromDb() {
-                if (mLiveVideoData == null) {
-                    mLiveVideoData = new MutableLiveData<>();
-                    mLiveVideoData.postValue(null);
-                }
-                return mLiveVideoData;
-            }
         }.asLiveData();
     }
 }

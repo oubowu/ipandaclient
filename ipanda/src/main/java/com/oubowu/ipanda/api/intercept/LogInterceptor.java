@@ -21,6 +21,9 @@ import okio.BufferedSource;
  * Created by Oubowu on 2017/12/21 22:06.
  */
 public class LogInterceptor implements Interceptor {
+
+    private static final String TAG = "LogInterceptor";
+
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
 
@@ -39,10 +42,10 @@ public class LogInterceptor implements Interceptor {
 
         final Response response = chain.proceed(request);
 
-        Log.e("Oubowu",
+        Log.e(TAG,
                 "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
 
-        Logger.e("请求网址: \n" + request.url() + " \n " + "请求头部信息：\n" + request.headers() + "响应头部信息：\n" + response.headers());
+        Log.e(TAG,"请求网址: \n" + request.url() + " \n " + "请求头部信息：\n" + request.headers() + "响应头部信息：\n" + response.headers());
 
         final ResponseBody responseBody = response.body();
 
@@ -62,7 +65,7 @@ public class LogInterceptor implements Interceptor {
                 try {
                     charset = contentType.charset(charset);
                 } catch (UnsupportedCharsetException e) {
-                    Logger.e("Couldn't decode the response body; charset is likely malformed.");
+                    Log.e(TAG,"Couldn't decode the response body; charset is likely malformed.");
                     return response;
                 }
             }
@@ -71,7 +74,7 @@ public class LogInterceptor implements Interceptor {
                 Logger.json(buffer.clone().readString(charset));
             }
 
-            Log.e("Oubowu",
+            Log.e(TAG,
                     "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-");
 
         }

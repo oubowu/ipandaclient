@@ -24,6 +24,8 @@ import retrofit2.Response;
  */
 public class ApiResponse<T> {
 
+    private static final String TAG = "ApiResponse";
+
     public int code;
 
     @Nullable
@@ -39,7 +41,7 @@ public class ApiResponse<T> {
 
         if (error instanceof HttpException) {
             code = ((HttpException) error).code();
-            Log.e("ApiResponse","41行-ApiResponse(): "+code+";"+errorMessage);
+            Log.e(TAG,"41行-ApiResponse(): "+code+";"+errorMessage);
             switch (code) {
                 case 403:
                     errorMessage = "没有权限访问此链接！";

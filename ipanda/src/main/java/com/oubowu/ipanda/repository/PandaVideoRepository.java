@@ -1,7 +1,6 @@
 package com.oubowu.ipanda.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -30,8 +29,6 @@ public class PandaVideoRepository {
     public LiveData<Resource<PandaVideoIndex>> getPandaVideoIndex(String url) {
         return new NetworkBoundResource<PandaVideoIndex, PandaVideoIndex>() {
 
-            MutableLiveData<PandaVideoIndex> mListLiveData;
-
             @Override
             protected void onCallFailed() {
 
@@ -39,7 +36,6 @@ public class PandaVideoRepository {
 
             @Override
             protected PandaVideoIndex saveCallResponseToDb(@NonNull PandaVideoIndex response) {
-                mListLiveData.postValue(response);
                 return response;
             }
 
@@ -52,15 +48,6 @@ public class PandaVideoRepository {
             @Override
             protected boolean shouldFetchFromNetwork(@Nullable PandaVideoIndex data) {
                 return true;
-            }
-
-            @Override
-            protected LiveData<PandaVideoIndex> loadFromDb() {
-                if (mListLiveData == null) {
-                    mListLiveData = new MutableLiveData<>();
-                    mListLiveData.postValue(null);
-                }
-                return mListLiveData;
             }
         }.asLiveData();
     }

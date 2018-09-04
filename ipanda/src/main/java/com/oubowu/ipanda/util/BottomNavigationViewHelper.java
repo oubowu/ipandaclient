@@ -12,6 +12,9 @@ import java.lang.reflect.Field;
  * Created by Oubowu on 2018/1/1 14:11.
  */
 public class BottomNavigationViewHelper {
+
+    private static final String TAG = "BNVHelper";
+
     @SuppressLint("RestrictedApi")
     public static void disableShiftMode(BottomNavigationView view) {
 
@@ -42,9 +45,9 @@ public class BottomNavigationViewHelper {
                 item.setChecked(item.getItemData().isChecked());
             }
         } catch (NoSuchFieldException e) {
-            Log.e("BNVHelper", "Unable to get shift mode field", e);
+            Log.e(TAG, "Unable to get shift mode field", e);
         } catch (IllegalAccessException e) {
-            Log.e("BNVHelper", "Unable to change value of shift mode", e);
+            Log.e(TAG, "Unable to change value of shift mode", e);
         }
     }
 }

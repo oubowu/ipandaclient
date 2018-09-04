@@ -1,7 +1,6 @@
 package com.oubowu.ipanda.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -34,8 +33,6 @@ public class PandaLiveRepository {
     public LiveData<Resource<List<TabList>>> getTabList(String url) {
         return new NetworkBoundResource<List<TabList>, Map<String, List<TabList>>>() {
 
-            MutableLiveData<List<TabList>> mListLiveData;
-
             @Override
             protected void onCallFailed() {
 
@@ -44,7 +41,7 @@ public class PandaLiveRepository {
             @Override
             protected List<TabList> saveCallResponseToDb(@NonNull Map<String, List<TabList>> response) {
                 List<TabList> tabList = MapUtil.getFirstElement(response);
-                mListLiveData.postValue(tabList);
+                //                mListLiveData.postValue(tabList);
                 return tabList;
             }
 
@@ -59,14 +56,6 @@ public class PandaLiveRepository {
                 return true;
             }
 
-            @Override
-            protected LiveData<List<TabList>> loadFromDb() {
-                if (mListLiveData == null) {
-                    mListLiveData = new MutableLiveData<>();
-                    mListLiveData.postValue(null);
-                }
-                return mListLiveData;
-            }
         }.asLiveData();
     }
 

@@ -1,7 +1,6 @@
 package com.oubowu.ipanda.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -30,8 +29,6 @@ public class ChinaLiveRepository {
     public LiveData<Resource<ChinaLiveTab>> getChinaLiveTab(String url) {
         return new NetworkBoundResource<ChinaLiveTab, ChinaLiveTab>() {
 
-            MutableLiveData<ChinaLiveTab> mLiveData;
-
             @Override
             protected void onCallFailed() {
 
@@ -39,7 +36,6 @@ public class ChinaLiveRepository {
 
             @Override
             protected ChinaLiveTab saveCallResponseToDb(@NonNull ChinaLiveTab response) {
-                mLiveData.postValue(response);
                 return response;
             }
 
@@ -54,14 +50,6 @@ public class ChinaLiveRepository {
                 return true;
             }
 
-            @Override
-            protected LiveData<ChinaLiveTab> loadFromDb() {
-                if (mLiveData == null) {
-                    mLiveData = new MutableLiveData<>();
-                    mLiveData.postValue(null);
-                }
-                return mLiveData;
-            }
         }.asLiveData();
     }
 

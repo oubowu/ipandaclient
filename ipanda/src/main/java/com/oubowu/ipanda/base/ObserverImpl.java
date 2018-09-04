@@ -19,7 +19,7 @@ public abstract class ObserverImpl<T> implements Observer<Resource<T>> {
                     if (resource.message != null) {
                         onError(resource.message);
                     } else {
-                        onError("异常原因不明");
+                        onError("不明异常原因");
                     }
                     break;
                 case LOADING:

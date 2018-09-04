@@ -1,7 +1,6 @@
 package com.oubowu.ipanda.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -34,8 +33,6 @@ public class ChinaLiveSubRepository {
     public LiveData<Resource<List<ChinaLiveDetail>>> getChinaLiveDetail(String url) {
         return new NetworkBoundResource<List<ChinaLiveDetail>, Map<String, List<ChinaLiveDetail>>>() {
 
-            MutableLiveData<List<ChinaLiveDetail>> mLiveData;
-
             @Override
             protected void onCallFailed() {
 
@@ -44,7 +41,6 @@ public class ChinaLiveSubRepository {
             @Override
             protected List<ChinaLiveDetail> saveCallResponseToDb(@NonNull Map<String, List<ChinaLiveDetail>> response) {
                 List<ChinaLiveDetail> details = MapUtil.getFirstElement(response);
-                mLiveData.postValue(details);
                 return details;
             }
 
@@ -57,15 +53,6 @@ public class ChinaLiveSubRepository {
             @Override
             protected boolean shouldFetchFromNetwork(@Nullable List<ChinaLiveDetail> data) {
                 return true;
-            }
-
-            @Override
-            protected LiveData<List<ChinaLiveDetail>> loadFromDb() {
-                if (mLiveData == null) {
-                    mLiveData = new MutableLiveData<>();
-                    mLiveData.postValue(null);
-                }
-                return mLiveData;
             }
         }.asLiveData();
     }

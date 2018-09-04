@@ -1,8 +1,6 @@
 package com.oubowu.ipanda.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MediatorLiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -35,7 +33,6 @@ public class HostRepository {
 
     public LiveData<Resource<HomeIndex>> getHomeIndex(String url) {
         return new NetworkBoundResource<HomeIndex, Map<String, HomeIndex>>() {
-            MutableLiveData<HomeIndex> mHomeLiveData;
 
             @Override
             protected void onCallFailed() {
@@ -45,7 +42,6 @@ public class HostRepository {
             @Override
             protected HomeIndex saveCallResponseToDb(@NonNull Map<String, HomeIndex> response) {
                 HomeIndex homeIndex = MapUtil.getFirstElement(response);
-                mHomeLiveData.postValue(homeIndex);
                 return homeIndex;
             }
 
@@ -60,20 +56,11 @@ public class HostRepository {
                 return true;
             }
 
-            @Override
-            protected LiveData<HomeIndex> loadFromDb() {
-                if (mHomeLiveData == null) {
-                    mHomeLiveData = new MutableLiveData<>();
-                    mHomeLiveData.postValue(null);
-                }
-                return mHomeLiveData;
-            }
         }.asLiveData();
     }
 
     private LiveData<Resource<List<VideoList>>> getVideoList(String url) {
         return new NetworkBoundResource<List<VideoList>, Map<String, List<VideoList>>>() {
-            MediatorLiveData<List<VideoList>> mVideoListLiveData;
 
             @Override
             protected void onCallFailed() {
@@ -83,7 +70,6 @@ public class HostRepository {
             @Override
             protected List<VideoList> saveCallResponseToDb(@NonNull Map<String, List<VideoList>> response) {
                 List<VideoList> videoLists = MapUtil.getFirstElement(response);
-                mVideoListLiveData.postValue(videoLists);
                 return videoLists;
             }
 
@@ -98,14 +84,6 @@ public class HostRepository {
                 return true;
             }
 
-            @Override
-            protected LiveData<List<VideoList>> loadFromDb() {
-                if (mVideoListLiveData == null) {
-                    mVideoListLiveData = new MediatorLiveData<>();
-                    mVideoListLiveData.postValue(null);
-                }
-                return mVideoListLiveData;
-            }
         }.asLiveData();
     }
 

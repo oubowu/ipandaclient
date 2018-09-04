@@ -45,6 +45,8 @@ import master.flame.danmaku.ui.widget.DanmakuView;
  */
 public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
 
+  private static final String TAG = "DanmakuVideoPlayer";
+
   private BaseDanmakuParser mParser; // 解析器对象
   private IDanmakuView mDanmakuView; // 弹幕view
   private DanmakuContext mDanmakuContext;
@@ -120,7 +122,7 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
 
   @Override
   public void onCompletion() {
-    Log.e("DanmakuVideoPlayer", "137行-onCompletion(): " + " ");
+    Log.e(TAG, "137行-onCompletion(): " + " ");
     // releaseDanmaku(this);
   }
 
@@ -229,10 +231,10 @@ public class DanmakuVideoPlayer extends StandardGSYVideoPlayer {
             @Override
             public void prepared() {
               if (getDanmakuView() != null) {
-                Log.e("DanmakuVideoPlayer", "244行-prepared(): " + " ");
+                Log.e(TAG, "244行-prepared(): " + " ");
                 getDanmakuView().start();
                 if (getDanmakuStartSeekPosition() != -1) {
-                  Log.e("DanmakuVideoPlayer", "247行-prepared(): " + " ");
+                  Log.e(TAG, "247行-prepared(): " + " ");
                   resolveDanmakuSeek(DanmakuVideoPlayer.this, getDanmakuStartSeekPosition());
                   setDanmakuStartSeekPosition(-1);
                 }
