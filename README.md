@@ -1,2 +1,2 @@
-# Ipanda
-Ipanda客户端
+# ipandaclient
+第三方旧版Ipanda客户端
