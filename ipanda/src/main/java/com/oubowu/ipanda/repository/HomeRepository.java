@@ -63,7 +63,7 @@ public class HomeRepository {
             protected boolean shouldFetchFromNetwork(@Nullable List<TabIndex> data) {
                 boolean empty = CommonUtil.isEmpty(data);
                 Log.e(TAG, "70行-shouldCall(): " + "数据库查询数据为空吗？" + empty);
-                return empty && false;
+                return empty;
             }
 
             @NonNull
