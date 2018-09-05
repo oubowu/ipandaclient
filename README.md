@@ -5,12 +5,12 @@
 
 ## 截图
 
-![图片](screenshot/1 (1).png) ![图片](screenshot/1 (2).png)
+![图片](/screenshot/1.png)  ![图片](/screenshot/2.png)
 
-![图片](screenshot/1 (3).png) ![图片](screenshot/1 (4).png)
+![图片](/screenshot/3.png)  ![图片](/screenshot/4.png)
 
-![图片](screenshot/1 (5).png) ![图片](screenshot/1 (6).png)
+![图片](/screenshot/5.png)  ![图片](/screenshot/6.png)
 
-![图片](screenshot/1 (7).png) ![图片](screenshot/1 (8).png)
+![图片](/screenshot/7.png)  ![图片](/screenshot/8.png)
 
-![图片](screenshot/1 (9).png)
+![图片](/screenshot/9.png)
